@@ -24,7 +24,9 @@
 #define GREEN1      PC4
 #define BLUE1       PC3
 
+#include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 uint8_t leds[COLORS][CHANELS];
 uint8_t leds_buff[COLORS][CHANELS];
