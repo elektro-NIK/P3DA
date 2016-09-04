@@ -42,7 +42,7 @@ int main() {
     TCCR0B |= 1<<CS00;
     TIMSK0 |= 1<<TOIE0;
     sei();
-    
+
     for (uint8_t i=0; i<COLORS; i++) {
         for (uint8_t j=0; j<CHANELS; j++) {
             leds[i][j] = 0;
@@ -54,7 +54,7 @@ int main() {
         if (temp == 1) {
             if (leds[GREEN][0] < 255) {
                 leds[GREEN][0]++;
-                leds[RED][1]++;
+                leds[RED][1] = leds[GREEN][0];
             }
             else
                 temp = 2;
@@ -62,7 +62,7 @@ int main() {
         if (temp == 2) {
             if (leds[RED][0] > 0) {
                 leds[RED][0]--;
-                leds[RED][1]--;
+                leds[RED][1] = leds[RED][0];
             }
             else
                 temp = 3;
@@ -70,7 +70,7 @@ int main() {
         if (temp == 3) {
             if (leds[BLUE][0] < 255) {
                 leds[BLUE][0]++;
-                leds[GREEN][1]++;
+                leds[GREEN][1] = leds[BLUE][0];
             }
             else
                 temp = 4;
@@ -78,7 +78,7 @@ int main() {
         if (temp == 4) {
             if (leds[GREEN][0] > 0) {
                 leds[GREEN][0]--;
-                leds[GREEN][1]--;
+                leds[GREEN][1] = leds[GREEN][0];
             }
             else
                 temp = 5;
@@ -86,7 +86,7 @@ int main() {
         if (temp == 5) {
             if (leds[RED][0] < 255) {
                 leds[RED][0]++;
-                leds[BLUE][1]++;
+                leds[BLUE][1] = leds[RED][0];
             }
             else
                 temp = 6;
@@ -94,17 +94,16 @@ int main() {
         if (temp == 6) {
             if (leds[BLUE][0] > 0) {
                 leds[BLUE][0]--;
-                leds[BLUE][1]--;
+                leds[BLUE][1] = leds[BLUE][0];
             }
             else
                 temp = 1;
         }
-        _delay_ms(2);
+        _delay_ms(50);
     }
 }
 
 ISR (TIMER0_OVF_vect) {
-    counter++;
     if (counter == 0) {
         for (uint8_t i=0; i<COLORS; i++) {
             for (uint8_t j=0; j<CHANELS; j++) {
@@ -118,6 +117,7 @@ ISR (TIMER0_OVF_vect) {
         PORT_BLUE0  &= ~(1<<BLUE0);
         PORT_BLUE1  &= ~(1<<BLUE1);
     }
+    counter++;
     if (counter == leds_buff[RED][0])   PORT_RED0   |= 1<<RED0;
     if (counter == leds_buff[RED][1])   PORT_RED1   |= 1<<RED1;
     if (counter == leds_buff[GREEN][0]) PORT_GREEN0 |= 1<<GREEN0;

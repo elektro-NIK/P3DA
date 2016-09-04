@@ -91,10 +91,13 @@ inline void InitPorts() {
 
 void Init() {
     InitPorts();
+    TCCR0B |= 1<<CS00;                      // 1:1 F_T0
+    TIMSK0 |= 1<<TOIE0;
 }
 
 int main() {
     Init();
+    sei();
     while(1){
         _delay_ms(10);
     }
