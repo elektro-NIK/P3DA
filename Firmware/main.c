@@ -2,7 +2,7 @@
 #define GREEN       1
 #define BLUE        2
 
-#define CATHODE      0
+#define CATHODE     0
 #define ANODE       1
 
 #define COLORS      3
@@ -68,13 +68,18 @@
 #define BLUE5       PB5
 /*@}*/
 
+#define PWMBIT      10
+#define MAX16BIT    65535                   // 1<<16-1
+#define MAXPWM      1023                    // 2^PWMBIT-1
+
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-uint8_t leds[COLORS][CHANELS];              // Values RGB LEDs. User change
-uint8_t leds_buff[COLORS][CHANELS];         // Protected buffer RGB values. Program use only
-uint8_t countPWM = 0;                       // Counter for software PWM
+uint16_t leds[COLORS][CHANELS];              // Values RGB LEDs. User change
+uint16_t leds_buff[COLORS][CHANELS];         // Protected buffer RGB values. Program use only
+uint16_t countPWM = 0;                       // Counter for software PWM
 
 inline void InitPorts() {
     DDR_RED0 |= 1<<RED0;
@@ -114,32 +119,33 @@ int main() {
     leds[BLUE][1]  = 0;
 
     // Off inverted chanels
-    leds[RED][2]   = 255;
-    leds[GREEN][2] = 255;
-    leds[BLUE][2]  = 255;
-    leds[RED][3]   = 255;
-    leds[GREEN][3] = 255;
-    leds[BLUE][3]  = 255;
-    leds[RED][4]   = 255;
-    leds[GREEN][4] = 255;
-    leds[BLUE][4]  = 255;
-    leds[RED][5]   = 255;
-    leds[GREEN][5] = 255;
-    leds[BLUE][5]  = 255;
+    leds[RED][2]   = 1023;
+    leds[GREEN][2] = 1023;
+    leds[BLUE][2]  = 1023;
+    leds[RED][3]   = 1023;
+    leds[GREEN][3] = 1023;
+    leds[BLUE][3]  = 1023;
+    leds[RED][4]   = 1023;
+    leds[GREEN][4] = 1023;
+    leds[BLUE][4]  = 1023;
+    leds[RED][5]   = 1023;
+    leds[GREEN][5] = 1023;
+    leds[BLUE][5]  = 1023;
 
     while(1){
-        while(++leds[RED][0]<255) {
-            _delay_ms(3);
+        while(++leds[RED][0]<1024) {
+            _delay_us(10);
         }
         while(--leds[RED][0]>0) {
-            _delay_ms(3);
+            _delay_us(10);
         }
-        _delay_ms(1000);
+        _delay_ms(10);
     }
 }
 
 ISR (TIMER0_OVF_vect) {
-    if (++countPWM == 0) {
+    if (countPWM == MAXPWM) {
+        countPWM = MAX16BIT;
         for (uint8_t i=0; i<COLORS; i++) {
             for (uint8_t j=0; j<CHANELS; j++) {
                 leds_buff[i][j] = leds[i][j];
@@ -186,6 +192,7 @@ ISR (TIMER0_OVF_vect) {
         if (leds_buff[BLUE][5])    PORT_BLUE5  &= ~(1<<BLUE5);
 #endif
     }
+    countPWM++;
     // Common anode or common cathode
 #if COMMON
     if (leds_buff[RED][0]   == countPWM)    PORT_RED0   &= ~(1<<RED0);

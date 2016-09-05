@@ -13,6 +13,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = avr-gcc
 OBJCOPY = avr-objcopy
+SIZE = avr-size
 
 # Flags for compiler
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -g -Os -lm  -mcall-prologues -std=c99
@@ -23,6 +24,7 @@ all: $(TARG)
 $(TARG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@.elf  $(OBJS) -lm
 	$(OBJCOPY) -O ihex -R .eeprom -R .nwram  $@.elf $@.hex
+	$(SIZE) -t $@.hex
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
