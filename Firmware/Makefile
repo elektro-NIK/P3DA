@@ -6,7 +6,8 @@ MCU=atmega328p
 F_CPU=16000000L
 
 # Files in the project
-SRCS = test.c
+
+SRCS = main.c
 
 OBJS = $(SRCS:.c=.o)
 
