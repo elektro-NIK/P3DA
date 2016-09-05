@@ -2,12 +2,12 @@
 #define GREEN       1
 #define BLUE        2
 
-#define CATODE      0
+#define CATHODE      0
 #define ANODE       1
 
 #define COLORS      3
 #define CHANELS     6
-#define COMMON      CATODE                  // Common electrode in RGB. CATODE or ANODE
+#define COMMON      CATHODE                 // Common electrode in RGB. CATHODE or ANODE
 
 /*@{*/ // Ports setup
 #define DDR_RED0    DDRD
@@ -145,7 +145,7 @@ ISR (TIMER0_OVF_vect) {
                 leds_buff[i][j] = leds[i][j];
             }
         }
-        // Common anode or common catode
+        // Common anode or common cathode
 #if COMMON
         if (leds_buff[RED][0])     PORT_RED0   |= 1<<RED0;
         if (leds_buff[GREEN][0])   PORT_GREEN0 |= 1<<GREEN0;
@@ -186,6 +186,7 @@ ISR (TIMER0_OVF_vect) {
         if (leds_buff[BLUE][5])    PORT_BLUE5  &= ~(1<<BLUE5);
 #endif
     }
+    // Common anode or common cathode
 #if COMMON
     if (leds_buff[RED][0]   == countPWM)    PORT_RED0   &= ~(1<<RED0);
     if (leds_buff[GREEN][0] == countPWM)    PORT_GREEN0 &= ~(1<<GREEN0);
