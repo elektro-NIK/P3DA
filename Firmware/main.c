@@ -1,14 +1,3 @@
-#define RED         0
-#define GREEN       1
-#define BLUE        2
-
-#define CATHODE     0
-#define ANODE       1
-
-#define COLORS      3
-#define CHANELS     6
-#define COMMON      CATHODE                 // Common electrode in RGB. CATHODE or ANODE
-
 /*@{*/ // Ports setup
 #define DDR_RED0    DDRD
 #define DDR_GREEN0  DDRD
@@ -68,20 +57,61 @@
 #define BLUE5       PB5
 /*@}*/
 
+/*@{*/ // LEDs setup
+#define RED         0
+#define GREEN       1
+#define BLUE        2
+#define CATHODE     0
+#define ANODE       1
+
+#define COLORS      3
+#define CHANELS     6
+#define COMMON      CATHODE                 // Common electrode in RGB. CATHODE or ANODE
+/*@}*/
+
+/*@{*/ // PWM setup
 #define PWMBIT      10
 #define MAX16BIT    65535                   // 1<<16-1
 #define MAXPWM      1023                    // 2^PWMBIT-1
+/*@}*/
 
+/*@{*/ // USART setup
+#define BAUD 38400
+
+#define USART_RX_BUFFER_SIZE 128            // 2,4,8,16,32,64,128 or 256 bytes
+#define USART_TX_BUFFER_SIZE 128            // 2,4,8,16,32,64,128 or 256 bytes
+#define USART_RX_BUFFER_MASK (USART_RX_BUFFER_SIZE - 1)
+#define USART_TX_BUFFER_MASK (USART_TX_BUFFER_SIZE - 1)
+
+#if (USART_RX_BUFFER_SIZE & USART_RX_BUFFER_MASK)
+#error RX buffer size is not a power of 2
+#endif
+#if (USART_TX_BUFFER_SIZE & USART_TX_BUFFER_MASK)
+#error TX buffer size is not a power of 2
+#endif
+/*@}*/
 
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <util/setbaud.h>
 
-uint16_t leds[COLORS][CHANELS];              // Values RGB LEDs. User change
+/*@{*/ // Global variables
+static uint8_t USART_RxBuf[USART_RX_BUFFER_SIZE];
+static volatile uint8_t USART_RxHead;
+static volatile uint8_t USART_RxTail;
+static uint8_t USART_TxBuf[USART_TX_BUFFER_SIZE];
+static volatile uint8_t USART_TxHead;
+static volatile uint8_t USART_TxTail;
+
+volatile uint16_t leds[COLORS][CHANELS];              // Values RGB LEDs. User changeble
 uint16_t leds_buff[COLORS][CHANELS];         // Protected buffer RGB values. Program use only
 uint16_t countPWM = 0;                       // Counter for software PWM
+/*@}*/
 
-inline void InitPorts() {
+/*@{*/ // Functions section
+
+void InitPorts() {
     DDR_RED0 |= 1<<RED0;
     DDR_RED1 |= 1<<RED1;
     DDR_RED2 |= 1<<RED2;
@@ -102,48 +132,63 @@ inline void InitPorts() {
     DDR_BLUE5 |= 1<<BLUE5;
 }
 
+void USART0_Init() {
+    UBRR0H = UBRRH_VALUE;
+    UBRR0L = UBRRL_VALUE;
+    #if USE_2X
+    UCSR0A |= 1<<U2X0;
+    #else
+    UCSR0A &= ~(1<<U2X0);
+    #endif
+    UCSR0B |= 1<<RXEN0 | 1<<TXEN0 | 1<<RXCIE0;                      // Enable RX & TX, enable interrupt for end of RX
+    USART_RxTail = 0;
+    USART_RxHead = 0;
+    USART_TxTail = 0;
+    USART_TxHead = 0;
+}
+
 void Init() {
     InitPorts();
-    TCCR0B |= 1<<CS00;                      // 1:1 F_T0
+    TCCR0B |= 1<<CS01;                      // 1:1 F_T0
     TIMSK0 |= 1<<TOIE0;
+    USART0_Init();
 }
+
+uint8_t USART0_Receive() {
+    uint8_t tmptail;
+    while (USART_RxHead == USART_RxTail) {}                         // Wait for incomming data
+    tmptail = (USART_RxTail + 1) & USART_RX_BUFFER_MASK;        // Calculate buffer index
+    USART_RxTail = tmptail;                                     // Store new index
+    return USART_RxBuf[tmptail];
+}
+
+void USART0_Transmit (uint8_t data) {
+    uint8_t tmphead;
+    tmphead = (USART_TxHead + 1) & USART_TX_BUFFER_MASK;            // Calculate buffer index
+    while (tmphead == USART_TxTail) {}                              // Wait for free space in buffer
+    USART_TxBuf[tmphead] = data;
+    USART_TxHead = tmphead;                                         // Store new index
+    UCSR0B |= 1<<UDRIE0;
+}
+
+uint8_t DataInReceiveBuffer() {
+    return (USART_RxHead != USART_RxTail);                          // Return 0 (FALSE) if the receive buffer is empty
+}
+
+/*@}*/
 
 int main() {
     Init();
     sei();
-
-    leds[GREEN][0] = 0;
-    leds[BLUE][0]  = 0;
-    leds[RED][1]   = 0;
-    leds[GREEN][1] = 0;
-    leds[BLUE][1]  = 0;
-
-    // Off inverted chanels
-    leds[RED][2]   = 1023;
-    leds[GREEN][2] = 1023;
-    leds[BLUE][2]  = 1023;
-    leds[RED][3]   = 1023;
-    leds[GREEN][3] = 1023;
-    leds[BLUE][3]  = 1023;
-    leds[RED][4]   = 1023;
-    leds[GREEN][4] = 1023;
-    leds[BLUE][4]  = 1023;
-    leds[RED][5]   = 1023;
-    leds[GREEN][5] = 1023;
-    leds[BLUE][5]  = 1023;
-
     while(1){
-        while(++leds[RED][0]<1024) {
-            _delay_us(10);
-        }
-        while(--leds[RED][0]>0) {
-            _delay_us(10);
-        }
-        _delay_ms(10);
+        USART0_Transmit(USART0_Receive());
     }
 }
 
+/*@{*/ // Interrupts section
+
 ISR (TIMER0_OVF_vect) {
+    sei();
     if (countPWM == MAXPWM) {
         countPWM = MAX16BIT;
         for (uint8_t i=0; i<COLORS; i++) {
@@ -234,3 +279,28 @@ ISR (TIMER0_OVF_vect) {
     if (leds_buff[BLUE][5]  == countPWM)    PORT_BLUE5  |= 1<<BLUE5;
 #endif
 }
+
+ISR (USART_RX_vect) {
+    uint8_t data;
+    uint8_t tmphead;
+    data = UDR0;
+    tmphead = (USART_RxHead + 1) & USART_RX_BUFFER_MASK;            // Calculate buffer index
+    USART_RxHead = tmphead;                                         // Store new index
+    if (tmphead == USART_RxTail) {
+        /* ERROR! Receive buffer overflow */                        // TODO: refactory
+    }
+    USART_RxBuf[tmphead] = data;                                    // Store received data in buffer
+}
+
+ISR (USART_UDRE_vect) {
+    uint8_t tmptail;
+    if (USART_TxHead != USART_TxTail) {                             // Check if all data is transmitted
+        tmptail = (USART_TxTail + 1) & USART_TX_BUFFER_MASK;        // Calculate buffer index
+        USART_TxTail = tmptail;                                     // Store new index
+        UDR0 = USART_TxBuf[tmptail];                                // Start transmition
+    }
+    else
+        UCSR0B &= ~(1<<UDRIE0);
+}
+
+/*@}*/
