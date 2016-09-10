@@ -43,18 +43,18 @@
 #define RED1        PC5
 #define GREEN1      PC4
 #define BLUE1       PC3
-#define RED2        PB5
-#define GREEN2      PB5
-#define BLUE2       PB5
-#define RED3        PB5
-#define GREEN3      PB5
-#define BLUE3       PB5
-#define RED4        PB5
-#define GREEN4      PB5
-#define BLUE4       PB5
-#define RED5        PB5
-#define GREEN5      PB5
-#define BLUE5       PB5
+#define RED2        PB6
+#define GREEN2      PB6
+#define BLUE2       PB6
+#define RED3        PB6
+#define GREEN3      PB6
+#define BLUE3       PB6
+#define RED4        PB6
+#define GREEN4      PB6
+#define BLUE4       PB6
+#define RED5        PB6
+#define GREEN5      PB6
+#define BLUE5       PB6
 /*@}*/
 
 /*@{*/ // LEDs setup
@@ -70,9 +70,8 @@
 /*@}*/
 
 /*@{*/ // PWM setup
-#define PWMBIT      10
-#define MAX16BIT    65535                   // 1<<16-1
-#define MAXPWM      1023                    // 2^PWMBIT-1
+#define PWMDEPTH    9
+#define MAXPWM      511                 // (2^PWMDEPTH) - 1
 /*@}*/
 
 /*@{*/ // USART setup
@@ -92,7 +91,6 @@
 /*@}*/
 
 #include <avr/io.h>
-#include <util/delay.h>
 #include <avr/interrupt.h>
 #include <util/setbaud.h>
 
@@ -106,7 +104,7 @@ static volatile uint8_t USART_TxTail;
 
 volatile uint16_t leds[COLORS][CHANELS];              // Values RGB LEDs. User changeble
 uint16_t leds_buff[COLORS][CHANELS];         // Protected buffer RGB values. Program use only
-uint16_t countPWM = 0;                       // Counter for software PWM
+volatile uint16_t countPWM = 0;                       // Counter for software PWM
 /*@}*/
 
 /*@{*/ // Functions section
@@ -149,7 +147,7 @@ void USART0_Init() {
 
 void Init() {
     InitPorts();
-    TCCR0B |= 1<<CS01;                      // 1:1 F_T0
+    TCCR0B |= 1<<CS01;                      // F_T0 = F_CPU / 8
     TIMSK0 |= 1<<TOIE0;
     USART0_Init();
 }
@@ -180,17 +178,21 @@ uint8_t DataInReceiveBuffer() {
 int main() {
     Init();
     sei();
+    DDRB |= 1<<PB5;
+    leds[RED][1] = 255;
+    USART0_Transmit('A');
     while(1){
-        USART0_Transmit(USART0_Receive());
+        
     }
 }
 
 /*@{*/ // Interrupts section
 
 ISR (TIMER0_OVF_vect) {
-    sei();
-    if (countPWM == MAXPWM) {
-        countPWM = MAX16BIT;
+    PORTB |= 1<<PB5;
+    TCNT0 = 200;
+    if (countPWM++ == MAXPWM) {
+        countPWM = 0;
         for (uint8_t i=0; i<COLORS; i++) {
             for (uint8_t j=0; j<CHANELS; j++) {
                 leds_buff[i][j] = leds[i][j];
@@ -237,7 +239,6 @@ ISR (TIMER0_OVF_vect) {
         if (leds_buff[BLUE][5])    PORT_BLUE5  &= ~(1<<BLUE5);
 #endif
     }
-    countPWM++;
     // Common anode or common cathode
 #if COMMON
     if (leds_buff[RED][0]   == countPWM)    PORT_RED0   &= ~(1<<RED0);
@@ -278,6 +279,7 @@ ISR (TIMER0_OVF_vect) {
     if (leds_buff[GREEN][5] == countPWM)    PORT_GREEN5 |= 1<<GREEN5;
     if (leds_buff[BLUE][5]  == countPWM)    PORT_BLUE5  |= 1<<BLUE5;
 #endif
+    PORTB &= ~(1<<PB5);
 }
 
 ISR (USART_RX_vect) {
