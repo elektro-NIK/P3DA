@@ -54,7 +54,7 @@
 #define BLUE4       PB6
 #define RED5        PB6
 #define GREEN5      PB6
-#define BLUE5       PB6
+#define BLUE5       PB5
 /*@}*/
 
 /*@{*/ // LEDs setup
@@ -66,7 +66,7 @@
 
 #define COLORS      3
 #define CHANELS     6
-#define COMMON      CATHODE                 // Common electrode in RGB. CATHODE or ANODE
+#define COMMON      ANODE                 // Common electrode in RGB. CATHODE or ANODE
 /*@}*/
 
 /*@{*/ // PWM setup
@@ -173,23 +173,52 @@ uint8_t DataInReceiveBuffer() {
     return (USART_RxHead != USART_RxTail);                          // Return 0 (FALSE) if the receive buffer is empty
 }
 
+uint8_t hex2int(uint8_t hex) {
+    if (hex >= '0' && hex <= '9') return hex -'0';
+    else if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
+    else if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
+    else return 0;
+}
+
+uint8_t char2int(uint8_t x) {
+    if (x >= '0' && x <= '9') return x - '0';
+    else return 0;
+}
+
 /*@}*/
 
 int main() {
     Init();
     sei();
-    DDRB |= 1<<PB5;
-    leds[RED][1] = 255;
+    leds[BLUE][5] = MAXPWM;
     USART0_Transmit('A');
     while(1){
-        
+        if (DataInReceiveBuffer()) {
+            uint8_t temp = USART0_Receive();
+            if (temp == '#') {
+                    temp = USART0_Receive();
+                    switch(temp) {
+                        case 'S':
+                            temp = char2int(USART0_Receive());
+                            uint8_t buf[9];
+                            for (uint8_t i=0; i<9; i++) {
+                                buf[i] = hex2int(USART0_Receive());
+                            }
+                            leds[RED][temp]   = (buf[0] << 8 | buf[1] << 4 | buf[2]) & 0x1FF;
+                            leds[GREEN][temp] = (buf[3] << 8 | buf[4] << 4 | buf[5]) & 0x1FF;
+                            leds[BLUE][temp]  = (buf[6] << 8 | buf[7] << 4 | buf[8]) & 0x1FF;
+                            break;
+                        default:
+                            break;
+                    }
+            }
+        }
     }
 }
 
 /*@{*/ // Interrupts section
 
 ISR (TIMER0_OVF_vect) {
-    PORTB |= 1<<PB5;
     TCNT0 = 200;
     if (countPWM++ == MAXPWM) {
         countPWM = 0;
@@ -199,87 +228,134 @@ ISR (TIMER0_OVF_vect) {
             }
         }
         // Common anode or common cathode
-#if COMMON
+#if COMMON == CATHODE
+    #if CHANELS > 0
         if (leds_buff[RED][0])     PORT_RED0   |= 1<<RED0;
         if (leds_buff[GREEN][0])   PORT_GREEN0 |= 1<<GREEN0;
         if (leds_buff[BLUE][0])    PORT_BLUE0  |= 1<<BLUE0;
+    #endif
+    #if CHANELS > 1
         if (leds_buff[RED][1])     PORT_RED1   |= 1<<RED1;
         if (leds_buff[GREEN][1])   PORT_GREEN1 |= 1<<GREEN1;
         if (leds_buff[BLUE][1])    PORT_BLUE1  |= 1<<BLUE1;
+    #endif
+    #if CHANELS > 2
         if (leds_buff[RED][2])     PORT_RED2   |= 1<<RED2;
         if (leds_buff[GREEN][2])   PORT_GREEN2 |= 1<<GREEN2;
         if (leds_buff[BLUE][2])    PORT_BLUE2  |= 1<<BLUE2;
+    #endif
+    #if CHANELS > 3
         if (leds_buff[RED][3])     PORT_RED3   |= 1<<RED3;
         if (leds_buff[GREEN][3])   PORT_GREEN3 |= 1<<GREEN3;
         if (leds_buff[BLUE][3])    PORT_BLUE3  |= 1<<BLUE3;
+    #endif
+    #if CHANELS > 4
         if (leds_buff[RED][4])     PORT_RED4   |= 1<<RED4;
         if (leds_buff[GREEN][4])   PORT_GREEN4 |= 1<<GREEN4;
         if (leds_buff[BLUE][4])    PORT_BLUE4  |= 1<<BLUE4;
+    #endif
+    #if CHANELS > 5
         if (leds_buff[RED][5])     PORT_RED5   |= 1<<RED5;
         if (leds_buff[GREEN][5])   PORT_GREEN5 |= 1<<GREEN5;
         if (leds_buff[BLUE][5])    PORT_BLUE5  |= 1<<BLUE5;
-#else
+    #endif
+#elif COMMON == ANODE
+    #if CHANELS > 0
         if (leds_buff[RED][0])     PORT_RED0   &= ~(1<<RED0);
         if (leds_buff[GREEN][0])   PORT_GREEN0 &= ~(1<<GREEN0);
         if (leds_buff[BLUE][0])    PORT_BLUE0  &= ~(1<<BLUE0);
+    #endif
+    #if CHANELS > 1
         if (leds_buff[RED][1])     PORT_RED1   &= ~(1<<RED1);
         if (leds_buff[GREEN][1])   PORT_GREEN1 &= ~(1<<GREEN1);
         if (leds_buff[BLUE][1])    PORT_BLUE1  &= ~(1<<BLUE1);
+    #endif
+    #if CHANELS > 2
         if (leds_buff[RED][2])     PORT_RED2   &= ~(1<<RED2);
         if (leds_buff[GREEN][2])   PORT_GREEN2 &= ~(1<<GREEN2);
         if (leds_buff[BLUE][2])    PORT_BLUE2  &= ~(1<<BLUE2);
+    #endif
+    #if CHANELS > 3
         if (leds_buff[RED][3])     PORT_RED3   &= ~(1<<RED3);
         if (leds_buff[GREEN][3])   PORT_GREEN3 &= ~(1<<GREEN3);
         if (leds_buff[BLUE][3])    PORT_BLUE3  &= ~(1<<BLUE3);
+    #endif
+    #if CHANELS > 4
         if (leds_buff[RED][4])     PORT_RED4   &= ~(1<<RED4);
         if (leds_buff[GREEN][4])   PORT_GREEN4 &= ~(1<<GREEN4);
         if (leds_buff[BLUE][4])    PORT_BLUE4  &= ~(1<<BLUE4);
+    #endif
+    #if CHANELS > 5
         if (leds_buff[RED][5])     PORT_RED5   &= ~(1<<RED5);
         if (leds_buff[GREEN][5])   PORT_GREEN5 &= ~(1<<GREEN5);
         if (leds_buff[BLUE][5])    PORT_BLUE5  &= ~(1<<BLUE5);
+    #endif
 #endif
     }
     // Common anode or common cathode
-#if COMMON
+#if COMMON == CATHODE
+    #if CHANELS > 0
     if (leds_buff[RED][0]   == countPWM)    PORT_RED0   &= ~(1<<RED0);
     if (leds_buff[GREEN][0] == countPWM)    PORT_GREEN0 &= ~(1<<GREEN0);
     if (leds_buff[BLUE][0]  == countPWM)    PORT_BLUE0  &= ~(1<<BLUE0);
+    #endif
+    #if CHANELS > 1
     if (leds_buff[RED][1]   == countPWM)    PORT_RED1   &= ~(1<<RED1);
     if (leds_buff[GREEN][1] == countPWM)    PORT_GREEN1 &= ~(1<<GREEN1);
     if (leds_buff[BLUE][1]  == countPWM)    PORT_BLUE1  &= ~(1<<BLUE1);
+    #endif
+    #if CHANELS > 2
     if (leds_buff[RED][2]   == countPWM)    PORT_RED2   &= ~(1<<RED2);
     if (leds_buff[GREEN][2] == countPWM)    PORT_GREEN2 &= ~(1<<GREEN2);
     if (leds_buff[BLUE][2]  == countPWM)    PORT_BLUE2  &= ~(1<<BLUE2);
+    #endif
+    #if CHANELS > 3
     if (leds_buff[RED][3]   == countPWM)    PORT_RED3   &= ~(1<<RED3);
     if (leds_buff[GREEN][3] == countPWM)    PORT_GREEN3 &= ~(1<<GREEN3);
     if (leds_buff[BLUE][3]  == countPWM)    PORT_BLUE3  &= ~(1<<BLUE3);
+    #endif
+    #if CHANELS > 4
     if (leds_buff[RED][4]   == countPWM)    PORT_RED4   &= ~(1<<RED4);
     if (leds_buff[GREEN][4] == countPWM)    PORT_GREEN4 &= ~(1<<GREEN4);
     if (leds_buff[BLUE][4]  == countPWM)    PORT_BLUE4  &= ~(1<<BLUE4);
+    #endif
+    #if CHANELS > 5
     if (leds_buff[RED][5]   == countPWM)    PORT_RED5   &= ~(1<<RED5);
     if (leds_buff[GREEN][5] == countPWM)    PORT_GREEN5 &= ~(1<<GREEN5);
     if (leds_buff[BLUE][5]  == countPWM)    PORT_BLUE5  &= ~(1<<BLUE5);
-#else
+    #endif
+#elif COMMON == ANODE
+    #if CHANELS > 1
     if (leds_buff[RED][0]   == countPWM)    PORT_RED0   |= 1<<RED0;
     if (leds_buff[GREEN][0] == countPWM)    PORT_GREEN0 |= 1<<GREEN0;
     if (leds_buff[BLUE][0]  == countPWM)    PORT_BLUE0  |= 1<<BLUE0;
+    #endif
+    #if CHANELS > 1
     if (leds_buff[RED][1]   == countPWM)    PORT_RED1   |= 1<<RED1;
     if (leds_buff[GREEN][1] == countPWM)    PORT_GREEN1 |= 1<<GREEN1;
     if (leds_buff[BLUE][1]  == countPWM)    PORT_BLUE1  |= 1<<BLUE1;
+    #endif
+    #if CHANELS > 2
     if (leds_buff[RED][2]   == countPWM)    PORT_RED2   |= 1<<RED2;
     if (leds_buff[GREEN][2] == countPWM)    PORT_GREEN2 |= 1<<GREEN2;
     if (leds_buff[BLUE][2]  == countPWM)    PORT_BLUE2  |= 1<<BLUE2;
+    #endif
+    #if CHANELS > 3
     if (leds_buff[RED][3]   == countPWM)    PORT_RED3   |= 1<<RED3;
     if (leds_buff[GREEN][3] == countPWM)    PORT_GREEN3 |= 1<<GREEN3;
     if (leds_buff[BLUE][3]  == countPWM)    PORT_BLUE3  |= 1<<BLUE3;
+    #endif
+    #if CHANELS > 4
     if (leds_buff[RED][4]   == countPWM)    PORT_RED4   |= 1<<RED4;
     if (leds_buff[GREEN][4] == countPWM)    PORT_GREEN4 |= 1<<GREEN4;
     if (leds_buff[BLUE][4]  == countPWM)    PORT_BLUE4  |= 1<<BLUE4;
+    #endif
+    #if CHANELS > 5
     if (leds_buff[RED][5]   == countPWM)    PORT_RED5   |= 1<<RED5;
     if (leds_buff[GREEN][5] == countPWM)    PORT_GREEN5 |= 1<<GREEN5;
     if (leds_buff[BLUE][5]  == countPWM)    PORT_BLUE5  |= 1<<BLUE5;
+    #endif
 #endif
-    PORTB &= ~(1<<PB5);
 }
 
 ISR (USART_RX_vect) {
