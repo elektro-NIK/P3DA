@@ -7,4 +7,5 @@ Features:
 - common anode or cathode
 
 /software/test.py - rainbow ilumination on 0 channel
+
 /software/main.py - GUI for setting color on 0 channel
