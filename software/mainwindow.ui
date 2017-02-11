@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
@@ -59,344 +59,6 @@
         <string>Light</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0" colspan="2">
-         <widget class="QGroupBox" name="groupBox_last_colors">
-          <property name="title">
-           <string>Last colors</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="1" column="1">
-            <widget class="QPushButton" name="pushButton_last07">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_last06">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QPushButton" name="pushButton_last08">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QPushButton" name="pushButton_last16">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QPushButton" name="pushButton_last18">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_last17">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_last01">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
-             </property>
-             <property name="default">
-              <bool>false</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_last02">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="pushButton_last03">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="pushButton_last11">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_last12">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="4">
-            <widget class="QPushButton" name="pushButton_last19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QPushButton" name="pushButton_last09">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QPushButton" name="pushButton_last14">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QPushButton" name="pushButton_last04">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QPushButton" name="pushButton_last05">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="5">
-            <widget class="QPushButton" name="pushButton_last10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5">
-            <widget class="QPushButton" name="pushButton_last15">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="5">
-            <widget class="QPushButton" name="pushButton_last20">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="pushButton_last13">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="2" column="0" colspan="2">
          <widget class="QGroupBox" name="groupBox_color_bright">
           <property name="enabled">
@@ -514,34 +176,6 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="6" rowspan="5">
-            <widget class="QDial" name="dial_bright">
-             <property name="maximum">
-              <number>255</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-             <property name="sliderPosition">
-              <number>0</number>
-             </property>
-             <property name="tracking">
-              <bool>false</bool>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="invertedAppearance">
-              <bool>false</bool>
-             </property>
-             <property name="invertedControls">
-              <bool>false</bool>
-             </property>
-             <property name="notchesVisible">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="4" rowspan="2" colspan="2">
             <widget class="QSpinBox" name="spinBox_r">
              <property name="wrapping">
@@ -580,37 +214,6 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
-            <widget class="QSlider" name="horizontalSlider_r">
-             <property name="maximum">
-              <number>255</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-             <property name="sliderPosition">
-              <number>0</number>
-             </property>
-             <property name="tracking">
-              <bool>true</bool>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="invertedAppearance">
-              <bool>false</bool>
-             </property>
-             <property name="invertedControls">
-              <bool>false</bool>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::NoTicks</enum>
-             </property>
-             <property name="tickInterval">
-              <number>0</number>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="7" rowspan="5">
             <widget class="QLCDNumber" name="lcdNumber_bright">
              <property name="frameShape">
@@ -644,15 +247,522 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>108</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
              <property name="text">
               <string>#000000</string>
              </property>
              <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3" rowspan="2">
+            <widget class="QSlider" name="horizontalSlider_r">
+             <property name="maximum">
+              <number>255</number>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="sliderPosition">
+              <number>0</number>
+             </property>
+             <property name="tracking">
               <bool>true</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="invertedControls">
+              <bool>false</bool>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::NoTicks</enum>
+             </property>
+             <property name="tickInterval">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6" rowspan="5">
+            <widget class="QDial" name="dial_bright">
+             <property name="maximum">
+              <number>255</number>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="sliderPosition">
+              <number>0</number>
+             </property>
+             <property name="tracking">
+              <bool>false</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="invertedControls">
+              <bool>false</bool>
+             </property>
+             <property name="notchesVisible">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QGroupBox" name="groupBox_last_colors">
+          <property name="title">
+           <string>Last colors</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="4" column="3">
+            <widget class="QPushButton" name="pushButton_last18">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#999999</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="pushButton_last11">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#7f7f00</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QPushButton" name="pushButton_last15">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#000000</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QPushButton" name="pushButton_last04">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#ffff00</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QPushButton" name="pushButton_last17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#666666</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QPushButton" name="pushButton_last05">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#ff00ff</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton_last12">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#7f007f</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QPushButton" name="pushButton_last08">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#7f0000</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QPushButton" name="pushButton_last16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#333333</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_last07">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#ffffff</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QPushButton" name="pushButton_last14">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#7f7f7f</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="5">
+            <widget class="QPushButton" name="pushButton_last20">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#0369cf</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QPushButton" name="pushButton_last09">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#007f00</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QPushButton" name="pushButton_last13">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#007f7f</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QPushButton" name="pushButton_last10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#00007f</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_last02">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#00ff00</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="4">
+            <widget class="QPushButton" name="pushButton_last19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#cccccc</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QPushButton" name="pushButton_last03">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#0000ff</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="pushButton_last01">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#ff0000</string>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+             <property name="default">
+              <bool>false</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_last06">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 0px;
+background-color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>#00ffff</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+          <zorder>pushButton_last01</zorder>
+          <zorder>pushButton_last07</zorder>
+          <zorder>pushButton_last06</zorder>
+          <zorder>pushButton_last08</zorder>
+          <zorder>pushButton_last16</zorder>
+          <zorder>pushButton_last18</zorder>
+          <zorder>pushButton_last17</zorder>
+          <zorder>pushButton_last02</zorder>
+          <zorder>pushButton_last03</zorder>
+          <zorder>pushButton_last11</zorder>
+          <zorder>pushButton_last12</zorder>
+          <zorder>pushButton_last19</zorder>
+          <zorder>pushButton_last09</zorder>
+          <zorder>pushButton_last14</zorder>
+          <zorder>pushButton_last04</zorder>
+          <zorder>pushButton_last05</zorder>
+          <zorder>pushButton_last10</zorder>
+          <zorder>pushButton_last15</zorder>
+          <zorder>pushButton_last20</zorder>
+          <zorder>pushButton_last13</zorder>
          </widget>
         </item>
        </layout>
@@ -666,24 +776,14 @@
         <string>Ilumination</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox_effect1">
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_effect2">
           <property name="title">
-           <string>Effect 1</string>
+           <string>Effect2</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="3" column="2">
-            <widget class="QSpinBox" name="spinBox_time1">
-             <property name="maximum">
-              <number>1000</number>
-             </property>
-             <property name="value">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4" rowspan="5" colspan="4">
-            <widget class="QPlainTextEdit" name="plainTextEdit_input1">
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="2" rowspan="5">
+            <widget class="QPlainTextEdit" name="plainTextEdit_input2">
              <property name="font">
               <font>
                <family>Ubuntu Mono</family>
@@ -701,32 +801,42 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="3">
-            <widget class="QLabel" name="label_7">
+           <item row="3" column="0">
+            <widget class="QSpinBox" name="spinBox_time2">
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_16">
              <property name="text">
               <string>ms</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="2" colspan="2">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
+           <item row="1" column="0" colspan="2">
+            <widget class="QComboBox" name="comboBox_effect2"/>
            </item>
-           <item row="1" column="2" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect1"/>
-           </item>
-           <item row="0" column="2" colspan="2">
-            <widget class="QLabel" name="label_9">
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_11">
              <property name="text">
               <string>Effect</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="2" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply1">
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QPushButton" name="pushButton_apply2">
              <property name="text">
               <string>Apply</string>
              </property>
@@ -735,7 +845,76 @@
           </layout>
          </widget>
         </item>
-        <item row="1" column="1" colspan="2">
+        <item row="2" column="0">
+         <widget class="QGroupBox" name="groupBox_effect3">
+          <property name="title">
+           <string>Effect3</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="3" column="0">
+            <widget class="QSpinBox" name="spinBox_time3">
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>ms</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Effect</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QComboBox" name="comboBox_effect3"/>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QPushButton" name="pushButton_apply3">
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4" rowspan="5">
+            <widget class="QPlainTextEdit" name="plainTextEdit_input3">
+             <property name="font">
+              <font>
+               <family>Ubuntu Mono</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="plainText">
+              <string>#ffffff
+#ffff00
+#ff00ff
+#ff0000
+#00ffff
+#00ff00
+#000000</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="1">
          <widget class="QGroupBox" name="groupBox_effect4">
           <property name="title">
            <string>Effect4</string>
@@ -804,14 +983,14 @@
           </layout>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QGroupBox" name="groupBox_effect3">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_effect1">
           <property name="title">
-           <string>Effect3</string>
+           <string>Effect 1</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="3" column="0">
-            <widget class="QSpinBox" name="spinBox_time3">
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="3" column="2">
+            <widget class="QSpinBox" name="spinBox_time1">
              <property name="maximum">
               <number>1000</number>
              </property>
@@ -820,8 +999,39 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="2" rowspan="5">
-            <widget class="QPlainTextEdit" name="plainTextEdit_input3">
+           <item row="4" column="2" colspan="2">
+            <widget class="QPushButton" name="pushButton_apply1">
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>ms</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2" colspan="2">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2" colspan="2">
+            <widget class="QComboBox" name="comboBox_effect1"/>
+           </item>
+           <item row="0" column="2" colspan="2">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Effect</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4" rowspan="5">
+            <widget class="QPlainTextEdit" name="plainTextEdit_input1">
              <property name="font">
               <font>
                <family>Ubuntu Mono</family>
@@ -836,106 +1046,6 @@
 #00ffff
 #00ff00
 #000000</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_17">
-             <property name="text">
-              <string>ms</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_13">
-             <property name="text">
-              <string>Effect</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect3"/>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QLabel" name="label_12">
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply3">
-             <property name="text">
-              <string>Apply</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QGroupBox" name="groupBox_effect2">
-          <property name="title">
-           <string>Effect2</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="2" rowspan="5">
-            <widget class="QPlainTextEdit" name="plainTextEdit_input2">
-             <property name="font">
-              <font>
-               <family>Ubuntu Mono</family>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="plainText">
-              <string>#ffffff
-#ffff00
-#ff00ff
-#ff0000
-#00ffff
-#00ff00
-#000000</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QSpinBox" name="spinBox_time2">
-             <property name="maximum">
-              <number>1000</number>
-             </property>
-             <property name="value">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>ms</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect2"/>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>Effect</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply2">
-             <property name="text">
-              <string>Apply</string>
              </property>
             </widget>
            </item>
@@ -1773,12 +1883,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>542</x>
-     <y>399</y>
+     <x>455</x>
+     <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>636</x>
-     <y>411</y>
+     <x>521</x>
+     <y>443</y>
     </hint>
    </hints>
   </connection>
@@ -1789,12 +1899,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>555</x>
-     <y>439</y>
+     <x>455</x>
+     <y>475</y>
     </hint>
     <hint type="destinationlabel">
-     <x>657</x>
-     <y>448</y>
+     <x>521</x>
+     <y>481</y>
     </hint>
    </hints>
   </connection>
@@ -1805,28 +1915,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>538</x>
-     <y>471</y>
+     <x>455</x>
+     <y>513</y>
     </hint>
     <hint type="destinationlabel">
-     <x>634</x>
-     <y>481</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dial_bright</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>lcdNumber_bright</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>577</x>
-     <y>295</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>656</x>
-     <y>295</y>
+     <x>521</x>
+     <y>519</y>
     </hint>
    </hints>
   </connection>
@@ -1837,12 +1931,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>239</y>
+     <x>206</x>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
-     <x>323</x>
-     <y>237</y>
+     <x>357</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -1853,12 +1947,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>241</x>
-     <y>342</y>
+     <x>206</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>340</x>
-     <y>347</y>
+     <x>357</x>
+     <y>337</y>
     </hint>
    </hints>
   </connection>
@@ -1869,11 +1963,11 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>314</x>
-     <y>438</y>
+     <x>357</x>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
-     <x>267</x>
+     <x>206</x>
      <y>441</y>
     </hint>
    </hints>
@@ -1885,12 +1979,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>436</y>
+     <x>206</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
-     <x>341</x>
-     <y>431</y>
+     <x>357</x>
+     <y>445</y>
     </hint>
    </hints>
   </connection>
@@ -1901,12 +1995,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>335</x>
-     <y>338</y>
+     <x>357</x>
+     <y>337</y>
     </hint>
     <hint type="destinationlabel">
-     <x>258</x>
-     <y>335</y>
+     <x>206</x>
+     <y>333</y>
     </hint>
    </hints>
   </connection>
@@ -1917,12 +2011,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>245</y>
+     <x>357</x>
+     <y>229</y>
     </hint>
     <hint type="destinationlabel">
-     <x>262</x>
-     <y>239</y>
+     <x>206</x>
+     <y>225</y>
     </hint>
    </hints>
   </connection>
@@ -1933,12 +2027,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>650</x>
-     <y>398</y>
+     <x>521</x>
+     <y>443</y>
     </hint>
     <hint type="destinationlabel">
-     <x>583</x>
-     <y>403</y>
+     <x>455</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -1949,12 +2043,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>659</x>
-     <y>436</y>
+     <x>521</x>
+     <y>481</y>
     </hint>
     <hint type="destinationlabel">
-     <x>572</x>
-     <y>447</y>
+     <x>455</x>
+     <y>475</y>
     </hint>
    </hints>
   </connection>
@@ -1965,12 +2059,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>649</x>
-     <y>475</y>
+     <x>521</x>
+     <y>519</y>
     </hint>
     <hint type="destinationlabel">
-     <x>583</x>
-     <y>480</y>
+     <x>455</x>
+     <y>513</y>
     </hint>
    </hints>
   </connection>
@@ -1981,12 +2075,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>484</x>
-     <y>166</y>
+     <x>162</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
-     <x>597</x>
-     <y>163</y>
+     <x>411</x>
+     <y>157</y>
     </hint>
    </hints>
   </connection>
@@ -1997,12 +2091,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>600</x>
-     <y>181</y>
+     <x>411</x>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>444</x>
-     <y>165</y>
+     <x>162</x>
+     <y>153</y>
     </hint>
    </hints>
   </connection>
@@ -2013,12 +2107,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>545</x>
-     <y>317</y>
+     <x>162</x>
+     <y>313</y>
     </hint>
     <hint type="destinationlabel">
-     <x>599</x>
-     <y>319</y>
+     <x>411</x>
+     <y>317</y>
     </hint>
    </hints>
   </connection>
@@ -2029,12 +2123,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>615</x>
-     <y>313</y>
+     <x>411</x>
+     <y>317</y>
     </hint>
     <hint type="destinationlabel">
-     <x>467</x>
-     <y>322</y>
+     <x>162</x>
+     <y>313</y>
     </hint>
    </hints>
   </connection>
@@ -2045,12 +2139,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>557</x>
+     <x>162</x>
      <y>473</y>
     </hint>
     <hint type="destinationlabel">
-     <x>617</x>
-     <y>472</y>
+     <x>411</x>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
@@ -2061,12 +2155,28 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>616</x>
+     <x>411</x>
+     <y>477</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>473</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_bright</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>lcdNumber_bright</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>614</x>
      <y>466</y>
     </hint>
     <hint type="destinationlabel">
-     <x>450</x>
-     <y>470</y>
+     <x>646</x>
+     <y>473</y>
     </hint>
    </hints>
   </connection>
