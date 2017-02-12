@@ -5,6 +5,7 @@ import serial
 import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtCore import QTimer
 
 
 def gamma(x): return round((x / 255) ** 2.8 * 511)
@@ -75,7 +76,7 @@ class MainWin(QMainWindow):
         self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
-        # self.updatemainpage()
+        self.updatepalette()
 
     def palettebutton(self, button):
         color = button.text()
@@ -161,9 +162,47 @@ class MainWin(QMainWindow):
             print(msg)
         self.con.write(msg)
 
-    def updatemainpage(self):
+    def updatepalette(self):
         color = self.ui.pushButton_last01.text()
-        self.ui.pushButton_last01.setStyleSheet('background-color: {0}'.format(color))
+        self.ui.pushButton_last01.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last02.text()
+        self.ui.pushButton_last02.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last03.text()
+        self.ui.pushButton_last03.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last04.text()
+        self.ui.pushButton_last04.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last05.text()
+        self.ui.pushButton_last05.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last06.text()
+        self.ui.pushButton_last06.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last07.text()
+        self.ui.pushButton_last07.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last08.text()
+        self.ui.pushButton_last08.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last09.text()
+        self.ui.pushButton_last09.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last10.text()
+        self.ui.pushButton_last10.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last11.text()
+        self.ui.pushButton_last11.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last12.text()
+        self.ui.pushButton_last12.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last13.text()
+        self.ui.pushButton_last13.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last14.text()
+        self.ui.pushButton_last14.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last15.text()
+        self.ui.pushButton_last15.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last16.text()
+        self.ui.pushButton_last16.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last17.text()
+        self.ui.pushButton_last17.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last18.text()
+        self.ui.pushButton_last18.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last19.text()
+        self.ui.pushButton_last19.setStyleSheet('background-color: {}'.format(color))
+        color = self.ui.pushButton_last20.text()
+        self.ui.pushButton_last20.setStyleSheet('background-color: {}'.format(color))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
