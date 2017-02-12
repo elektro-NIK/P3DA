@@ -69,7 +69,9 @@ class MainWin(QMainWindow):
         self.ui.pushButton_last18.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last18))
         self.ui.pushButton_last19.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last19))
         self.ui.pushButton_last20.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last20))
-        self.ui.dial_bright.sliderReleased.connect(self.dialbright)
+        self.rgb = [0, 0, 0]
+        self.ui.dial_bright.sliderPressed.connect(self.savergb)
+        self.ui.dial_bright.sliderMoved.connect(self.dialbright)
         self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
@@ -78,15 +80,33 @@ class MainWin(QMainWindow):
     def palettebutton(self, button):
         color = button.text()
         r, g, b = self.hex2rgb(color)
+        bright = int((r + g + b) / 3)
+        self.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
+        self.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
+        self.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
         self.ui.horizontalSlider_r.setValue(r)
         self.ui.horizontalSlider_g.setValue(g)
         self.ui.horizontalSlider_b.setValue(b)
+        self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
+        self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
+        self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
+        self.ui.pushButton_color.setText(color)
+        self.ui.pushButton_color.setStyleSheet('background-color: {0}'.format(color))
+        self.ui.dial_bright.setSliderPosition(bright)
+        self.ui.lcdNumber_bright.display(bright)
+        for i in range(6):
+            self.setcolor(r, g, b, i)
 
-    def dialbright(self):
-        value = self.ui.dial_bright.value()
+    def savergb(self):
         r = self.ui.horizontalSlider_r.value()
         g = self.ui.horizontalSlider_g.value()
         b = self.ui.horizontalSlider_b.value()
+        self.rgb = [r, g, b]
+
+    def dialbright(self, value):
+        r = self.rgb[0]
+        g = self.rgb[1]
+        b = self.rgb[2]
         avr = (r+g+b) / 3
         add = value - avr
         if add > 0:
@@ -97,9 +117,22 @@ class MainWin(QMainWindow):
             r += add * r / avr
             g += add * g / avr
             b += add * b / avr
-        self.ui.horizontalSlider_r.setValue(int(r))
-        self.ui.horizontalSlider_g.setValue(int(g))
-        self.ui.horizontalSlider_b.setValue(int(b))
+        r = int(r)
+        g = int(g)
+        b = int(b)
+        self.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
+        self.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
+        self.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
+        self.ui.horizontalSlider_r.setValue(r)
+        self.ui.horizontalSlider_g.setValue(g)
+        self.ui.horizontalSlider_b.setValue(b)
+        self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
+        self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
+        self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
+        self.ui.pushButton_color.setText(self.rgb2hex(r, g, b))
+        self.ui.pushButton_color.setStyleSheet('background-color: {0}'.format(self.rgb2hex(r, g, b)))
+        for i in range(6):
+            self.setcolor(r, g, b, i)
 
     def slidercolor(self):
         r = self.ui.horizontalSlider_r.value()
@@ -124,7 +157,8 @@ class MainWin(QMainWindow):
 
     def setcolor(self, r, g, b, ch):
         msg = '#S{:1}{:03x}{:03x}{:03x}'.format(ch, gamma(r), gamma(g), gamma(b))
-        if ch == 0: print(msg)
+        if ch == 0:
+            print(msg)
         self.con.write(msg)
 
     def updatemainpage(self):
