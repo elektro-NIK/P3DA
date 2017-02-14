@@ -5,7 +5,6 @@ import serial
 import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtCore import QTimer
 
 
 def gamma(x): return round((x / 255) ** 2.8 * 511)
@@ -47,53 +46,56 @@ class MainWin(QMainWindow):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
+        # initializing
+        self.rgb = [0, 0, 0]
         self.con = Connection(baud=38400)
         if len(self.con.devicesonline()) == 0:
             self.ui.statusbar.showMessage('No serial adapter found!', msecs=3000)
-        self.ui.pushButton_last01.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last01))
-        self.ui.pushButton_last02.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last02))
-        self.ui.pushButton_last03.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last03))
-        self.ui.pushButton_last04.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last04))
-        self.ui.pushButton_last05.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last05))
-        self.ui.pushButton_last06.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last06))
-        self.ui.pushButton_last07.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last07))
-        self.ui.pushButton_last08.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last08))
-        self.ui.pushButton_last09.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last09))
-        self.ui.pushButton_last10.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last10))
-        self.ui.pushButton_last11.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last11))
-        self.ui.pushButton_last12.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last12))
-        self.ui.pushButton_last13.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last13))
-        self.ui.pushButton_last14.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last14))
-        self.ui.pushButton_last15.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last15))
-        self.ui.pushButton_last16.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last16))
-        self.ui.pushButton_last17.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last17))
-        self.ui.pushButton_last18.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last18))
-        self.ui.pushButton_last19.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last19))
-        self.ui.pushButton_last20.clicked.connect(lambda: self.palettebutton(self.ui.pushButton_last20))
-        self.rgb = [0, 0, 0]
-        self.ui.dial_bright.sliderPressed.connect(self.savergb)
-        self.ui.dial_bright.sliderMoved.connect(self.dialbright)
+        self.ui.pushButton_color.setStyleSheet(self.getstyle('#000000'))
+        # connect palette buttons
+        for i in range(20):
+            exec('self.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
+        # other connections
+        self.connectsliders()
+        self.connectdial()
+        self.updatepalette()
+
+    def connectsliders(self):
         self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
         self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
-        self.updatepalette()
 
-    def palettebutton(self, button):
-        color = button.text()
-        r, g, b = self.hex2rgb(color)
-        bright = int((r + g + b) / 3)
+    def disconnectsliders(self):
         self.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
         self.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
         self.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
+
+    def connectdial(self):
+        self.ui.dial_bright.sliderPressed.connect(self.savergb)
+        self.ui.dial_bright.sliderMoved.connect(self.dialbright)
+        self.ui.dial_bright.valueChanged.connect(self.dialbright_mod)
+
+    def disconnectdial(self):
+        self.ui.dial_bright.sliderPressed.disconnect(self.savergb)
+        self.ui.dial_bright.sliderMoved.disconnect(self.dialbright)
+        self.ui.dial_bright.valueChanged.disconnect(self.dialbright_mod)
+
+    def palettebutton(self):
+        color = self.sender().text()
+        r, g, b = self.hex2rgb(color)
+        self.rgb = [r, g, b]
+        bright = int((r + g + b) / 3)
+        self.disconnectsliders()
         self.ui.horizontalSlider_r.setValue(r)
         self.ui.horizontalSlider_g.setValue(g)
         self.ui.horizontalSlider_b.setValue(b)
-        self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
+        self.connectsliders()
         self.ui.pushButton_color.setText(color)
-        self.ui.pushButton_color.setStyleSheet('background-color: {0}'.format(color))
+        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.disconnectdial()
         self.ui.dial_bright.setSliderPosition(bright)
+        self.ui.dial_bright.setValue(bright)
+        self.connectdial()
         self.ui.lcdNumber_bright.display(bright)
         for i in range(6):
             self.setcolor(r, g, b, i)
@@ -104,11 +106,14 @@ class MainWin(QMainWindow):
         b = self.ui.horizontalSlider_b.value()
         self.rgb = [r, g, b]
 
+    def dialbright_mod(self, value):
+        self.dialbright(value)
+
     def dialbright(self, value):
         r = self.rgb[0]
         g = self.rgb[1]
         b = self.rgb[2]
-        avr = (r+g+b) / 3
+        avr = (r+g+b) / 3 if any([r, g, b]) else 1
         add = value - avr
         if add > 0:
             r += add * (255 - r) / (255 - avr)
@@ -121,17 +126,14 @@ class MainWin(QMainWindow):
         r = int(r)
         g = int(g)
         b = int(b)
-        self.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
-        self.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
-        self.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
+        self.disconnectsliders()
         self.ui.horizontalSlider_r.setValue(r)
         self.ui.horizontalSlider_g.setValue(g)
         self.ui.horizontalSlider_b.setValue(b)
-        self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
+        self.connectsliders()
+        self.ui.lcdNumber_bright.display(value)
         self.ui.pushButton_color.setText(self.rgb2hex(r, g, b))
-        self.ui.pushButton_color.setStyleSheet('background-color: {0}'.format(self.rgb2hex(r, g, b)))
+        self.ui.pushButton_color.setStyleSheet(self.getstyle(self.rgb2hex(r, g, b)))
         for i in range(6):
             self.setcolor(r, g, b, i)
 
@@ -142,8 +144,11 @@ class MainWin(QMainWindow):
         color = self.rgb2hex(r, g, b)
         bright = int((r + g + b) / 3)
         self.ui.pushButton_color.setText(color)
-        self.ui.pushButton_color.setStyleSheet('background-color: {0}'.format(color))
+        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.disconnectdial()
         self.ui.dial_bright.setSliderPosition(bright)
+        self.ui.dial_bright.setValue(bright)
+        self.connectdial()
         self.ui.lcdNumber_bright.display(bright)
         for i in range(6):
             self.setcolor(r, g, b, i)
@@ -163,46 +168,16 @@ class MainWin(QMainWindow):
         self.con.write(msg)
 
     def updatepalette(self):
-        color = self.ui.pushButton_last01.text()
-        self.ui.pushButton_last01.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last02.text()
-        self.ui.pushButton_last02.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last03.text()
-        self.ui.pushButton_last03.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last04.text()
-        self.ui.pushButton_last04.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last05.text()
-        self.ui.pushButton_last05.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last06.text()
-        self.ui.pushButton_last06.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last07.text()
-        self.ui.pushButton_last07.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last08.text()
-        self.ui.pushButton_last08.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last09.text()
-        self.ui.pushButton_last09.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last10.text()
-        self.ui.pushButton_last10.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last11.text()
-        self.ui.pushButton_last11.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last12.text()
-        self.ui.pushButton_last12.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last13.text()
-        self.ui.pushButton_last13.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last14.text()
-        self.ui.pushButton_last14.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last15.text()
-        self.ui.pushButton_last15.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last16.text()
-        self.ui.pushButton_last16.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last17.text()
-        self.ui.pushButton_last17.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last18.text()
-        self.ui.pushButton_last18.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last19.text()
-        self.ui.pushButton_last19.setStyleSheet('background-color: {}'.format(color))
-        color = self.ui.pushButton_last20.text()
-        self.ui.pushButton_last20.setStyleSheet('background-color: {}'.format(color))
+        colors = list()                                                               # in exec don't work '=' with self
+        for i in range(20):
+            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i+1))
+            exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i+1, self.getstyle(colors[-1])))
+
+    def getstyle(self, background):
+        r, g, b = self.hex2rgb(background)
+        textcolor = '#000000' if (r + 2.4*g + b)/4.4 > 127 else '#ffffff'
+        return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
