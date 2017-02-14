@@ -74,12 +74,12 @@ class MainWin(QMainWindow):
     def connectdial(self):
         self.ui.dial_bright.sliderPressed.connect(self.savergb)
         self.ui.dial_bright.sliderMoved.connect(self.dialbright)
-        self.ui.dial_bright.valueChanged.connect(self.dialbright_mod)
+        self.ui.dial_bright.valueChanged.connect(self.dialbright)
 
     def disconnectdial(self):
         self.ui.dial_bright.sliderPressed.disconnect(self.savergb)
         self.ui.dial_bright.sliderMoved.disconnect(self.dialbright)
-        self.ui.dial_bright.valueChanged.disconnect(self.dialbright_mod)
+        self.ui.dial_bright.valueChanged.disconnect(self.dialbright)
 
     def palettebutton(self):
         color = self.sender().text()
@@ -106,9 +106,6 @@ class MainWin(QMainWindow):
         g = self.ui.horizontalSlider_g.value()
         b = self.ui.horizontalSlider_b.value()
         self.rgb = [r, g, b]
-
-    def dialbright_mod(self, value):
-        self.dialbright(value)
 
     def dialbright(self, value):
         r = self.rgb[0]
@@ -180,6 +177,7 @@ class MainWin(QMainWindow):
         return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
 
     def colorselector(self):
+        # noinspection PyArgumentList
         dialog = QColorDialog().getColor()
         temp = '{:x}'.format(dialog.rgb())
         color = '#{}'.format(temp[2:])
