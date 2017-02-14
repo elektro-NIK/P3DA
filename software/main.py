@@ -4,7 +4,7 @@ import sys
 import serial
 import serial.tools.list_ports
 import mainwindow_ui
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
 
 
 def gamma(x): return round((x / 255) ** 2.8 * 511)
@@ -56,6 +56,7 @@ class MainWin(QMainWindow):
         for i in range(20):
             exec('self.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
         # other connections
+        self.ui.pushButton_color.clicked.connect(self.colorselector)
         self.connectsliders()
         self.connectdial()
         self.updatepalette()
@@ -177,6 +178,27 @@ class MainWin(QMainWindow):
         r, g, b = self.hex2rgb(background)
         textcolor = '#000000' if (r + 2.4*g + b)/4.4 > 127 else '#ffffff'
         return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
+
+    def colorselector(self):
+        dialog = QColorDialog().getColor()
+        temp = '{:x}'.format(dialog.rgb())
+        color = '#{}'.format(temp[2:])
+        r, g, b = self.hex2rgb(color)
+        bright = int((r + g + b) / 3)
+        self.disconnectsliders()
+        self.ui.horizontalSlider_r.setValue(r)
+        self.ui.horizontalSlider_g.setValue(g)
+        self.ui.horizontalSlider_b.setValue(b)
+        self.connectsliders()
+        self.ui.pushButton_color.setText(color)
+        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.disconnectdial()
+        self.ui.dial_bright.setSliderPosition(bright)
+        self.ui.dial_bright.setValue(bright)
+        self.connectdial()
+        self.ui.lcdNumber_bright.display(bright)
+        for i in range(6):
+            self.setcolor(r, g, b, i)
 
 
 if __name__ == "__main__":
