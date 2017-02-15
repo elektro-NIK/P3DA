@@ -12,19 +12,11 @@ def gamma(x): return round((x / 255) ** 2.8 * 511)
 
 class Connection:
     def __init__(self, dev=None, baud=9600, timeout=0.1):
-        if not dev:
-            devs = list(self.devicesonline().keys())
-            dev = devs[0] if devs else None
-        self.con = self.createconnection(dev, baud, timeout)
+        self.dev, self.baud, self.timeout = dev, baud, timeout
+        self.con = None
 
-    @staticmethod
-    def devicesonline():
-        coms = serial.tools.list_ports.comports()
-        return {i.device: i.description for i in coms[::-1]}
-
-    @staticmethod
-    def createconnection(dev, baud, timeout):
-        return serial.Serial(port=dev, baudrate=baud, timeout=timeout) if dev else None
+    def createconnection(self):
+        self.con = serial.Serial(port=self.dev, baudrate=self.baud, timeout=self.timeout)
 
     def write(self, msg):
         self.con.write(msg.encode())
@@ -39,6 +31,14 @@ class Connection:
         self.con.close()
         self.con = None
 
+    @staticmethod
+    def devicesonline():
+        coms = serial.tools.list_ports.comports()
+        return {i.device: i.description for i in coms[::-1]}
+
+    def connectionisopen(self):
+        return bool(self.con)
+
 
 class MainWin(QMainWindow):
     # noinspection PyArgumentList
@@ -49,16 +49,43 @@ class MainWin(QMainWindow):
         # initializing
         self.rgb = [0, 0, 0]
         self.con = Connection(baud=38400)
-        if len(self.con.devicesonline()) == 0:
-            self.ui.statusbar.showMessage('No serial adapter found!', msecs=3000)
-        self.ui.pushButton_color.setStyleSheet(self.getstyle('#000000'))
         # connect palette buttons
         for i in range(20):
             exec('self.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
         # other connections
         self.ui.pushButton_color.clicked.connect(self.colorselector)
+        self.ui.tabWidget.currentChanged.connect(self.updatetab)
         self.connectsliders()
         self.connectdial()
+        self.updatetab(0)
+
+    def updatetab(self, val):
+        if not self.con.connectionisopen():
+            devs = self.detectdevices()
+            print(devs)
+        self.ui.statusbar.showMessage('No serial adapter found!', msecs=3000)
+        # 0: 'Light',
+        # 1: 'Ilumination',
+        # 2: 'Sound',
+        # 3: 'Ext. backlight',
+        # 4: 'Setup'
+        if val == 0:
+            self.updatetablight()
+        elif val == 1:
+            pass
+        elif val == 2:
+            pass
+        elif val == 3:
+            pass
+        elif val == 4:
+            pass
+        else:
+            print("Error! Value over of index")
+        print(val)
+
+    def updatetablight(self):
+        color = self.ui.pushButton_color.text()
+        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
         self.updatepalette()
 
     def connectsliders(self):
@@ -111,7 +138,7 @@ class MainWin(QMainWindow):
         r = self.rgb[0]
         g = self.rgb[1]
         b = self.rgb[2]
-        avr = (r+g+b) / 3 if any([r, g, b]) else 1
+        avr = (r + g + b) / 3 if any([r, g, b]) else 1
         add = value - avr
         if add > 0:
             r += add * (255 - r) / (255 - avr)
@@ -166,14 +193,14 @@ class MainWin(QMainWindow):
         self.con.write(msg)
 
     def updatepalette(self):
-        colors = list()                                                               # in exec don't work '=' with self
+        colors = list()  # in exec don't work '=' with self
         for i in range(20):
-            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i+1))
-            exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i+1, self.getstyle(colors[-1])))
+            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i + 1))
+            exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i + 1, self.getstyle(colors[-1])))
 
     def getstyle(self, background):
         r, g, b = self.hex2rgb(background)
-        textcolor = '#000000' if (r + 2.4*g + b)/4.4 > 127 else '#ffffff'
+        textcolor = '#000000' if (r + 2.4 * g + b) / 4.4 > 127 else '#ffffff'
         return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
 
     def colorselector(self):
@@ -198,6 +225,15 @@ class MainWin(QMainWindow):
         for i in range(6):
             self.setcolor(r, g, b, i)
 
+    def detectdevices(self):
+        res = []
+        coms = list(self.con.devicesonline().keys())
+        for i in coms:
+            print('trying', i)
+            self.con.dev = i
+            self.con.createconnection()
+            self.con.write('#T')
+            print(self.con.read(2))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
