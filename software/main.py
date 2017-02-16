@@ -7,16 +7,17 @@ import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
 
 
-def gamma(x): return round((x / 255) ** 2.8 * 511)
-
-
 class Connection:
     def __init__(self, dev=None, baud=9600, timeout=0.1):
         self.dev, self.baud, self.timeout = dev, baud, timeout
         self.con = None
 
-    def createconnection(self):
-        self.con = serial.Serial(port=self.dev, baudrate=self.baud, timeout=self.timeout)
+    def createconnection(self, dev=None):
+        self.dev = dev if dev else self.dev
+        try:
+            self.con = serial.Serial(port=self.dev, baudrate=self.baud, timeout=self.timeout)
+        except serial.serialutil.SerialException:
+            pass
 
     def write(self, msg):
         self.con.write(msg.encode())
@@ -40,98 +41,98 @@ class Connection:
         return bool(self.con)
 
 
-class MainWin(QMainWindow):
-    # noinspection PyArgumentList
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.ui = mainwindow_ui.Ui_MainWindow()
-        self.ui.setupUi(self)
-        # initializing
+class Color:
+    @staticmethod
+    def hex2rgb(color):
+        return int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16)
+
+    @staticmethod
+    def rgb2hex(r, g, b):
+        return '#{:02x}{:02x}{:02x}'.format(r, g, b)
+
+    @staticmethod
+    def plainbuttonstyle(background):
+        r, g, b = Color.hex2rgb(background)
+        textcolor = '#000000' if (r + 2.4 * g + b) / 4.4 > 127 else '#ffffff'
+        return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
+
+
+class Tab:
+    def __init__(self, obj):
+        self.main = obj
+
+    def updatetab(self, connect):
+        pass
+
+
+class TabLight(Tab):
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.main = obj
         self.rgb = [0, 0, 0]
-        self.con = Connection(baud=38400)
-        # connect palette buttons
-        for i in range(20):
-            exec('self.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
-        # other connections
-        self.ui.pushButton_color.clicked.connect(self.colorselector)
-        self.ui.tabWidget.currentChanged.connect(self.updatetab)
-        self.connectsliders()
-        self.connectdial()
-        self.updatetab(0)
 
-    def updatetab(self, val):
-        if not self.con.connectionisopen():
-            devs = self.detectdevices()
-            print(devs)
-        self.ui.statusbar.showMessage('No serial adapter found!', msecs=3000)
-        # 0: 'Light',
-        # 1: 'Ilumination',
-        # 2: 'Sound',
-        # 3: 'Ext. backlight',
-        # 4: 'Setup'
-        if val == 0:
-            self.updatetablight()
-        elif val == 1:
-            pass
-        elif val == 2:
-            pass
-        elif val == 3:
-            pass
-        elif val == 4:
-            pass
-        else:
-            print("Error! Value over of index")
-        print(val)
-
-    def updatetablight(self):
-        color = self.ui.pushButton_color.text()
-        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+    def updatetab(self, connect):
+        color = self.main.ui.pushButton_color.text()
+        self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
+        if connect:
+            self.main.ui.pushButton_color.clicked.connect(self.colorselector)
+            for i in range(20):
+                exec('self.obj.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
+            self.connectsliders()
+            self.connectdial()
         self.updatepalette()
 
+    def updatepalette(self):
+        colors = list()  # in exec don't work '=' with self
+        for i in range(20):
+            exec('colors.append(self.main.ui.pushButton_last{:02}.text())'.format(i + 1))
+            style = Color.plainbuttonstyle(colors[-1])
+            exec('self.main.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i + 1, style))
+
     def connectsliders(self):
-        self.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
-        self.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
+        self.main.ui.horizontalSlider_r.valueChanged.connect(self.slidercolor)
+        self.main.ui.horizontalSlider_g.valueChanged.connect(self.slidercolor)
+        self.main.ui.horizontalSlider_b.valueChanged.connect(self.slidercolor)
 
     def disconnectsliders(self):
-        self.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
-        self.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
-        self.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
+        self.main.ui.horizontalSlider_r.valueChanged.disconnect(self.slidercolor)
+        self.main.ui.horizontalSlider_g.valueChanged.disconnect(self.slidercolor)
+        self.main.ui.horizontalSlider_b.valueChanged.disconnect(self.slidercolor)
 
     def connectdial(self):
-        self.ui.dial_bright.sliderPressed.connect(self.savergb)
-        self.ui.dial_bright.sliderMoved.connect(self.dialbright)
-        self.ui.dial_bright.valueChanged.connect(self.dialbright)
+        self.main.ui.dial_bright.sliderPressed.connect(self.savergb)
+        self.main.ui.dial_bright.sliderMoved.connect(self.dialbright)
+        self.main.ui.dial_bright.valueChanged.connect(self.dialbright)
 
     def disconnectdial(self):
-        self.ui.dial_bright.sliderPressed.disconnect(self.savergb)
-        self.ui.dial_bright.sliderMoved.disconnect(self.dialbright)
-        self.ui.dial_bright.valueChanged.disconnect(self.dialbright)
+        self.main.ui.dial_bright.sliderPressed.disconnect(self.savergb)
+        self.main.ui.dial_bright.sliderMoved.disconnect(self.dialbright)
+        self.main.ui.dial_bright.valueChanged.disconnect(self.dialbright)
 
     def palettebutton(self):
-        color = self.sender().text()
-        r, g, b = self.hex2rgb(color)
+        color = self.main.sender().text()
+        r, g, b = Color.hex2rgb(color)
         self.rgb = [r, g, b]
         bright = int((r + g + b) / 3)
         self.disconnectsliders()
-        self.ui.horizontalSlider_r.setValue(r)
-        self.ui.horizontalSlider_g.setValue(g)
-        self.ui.horizontalSlider_b.setValue(b)
+        self.main.ui.horizontalSlider_r.setValue(r)
+        self.main.ui.horizontalSlider_g.setValue(g)
+        self.main.ui.horizontalSlider_b.setValue(b)
         self.connectsliders()
-        self.ui.pushButton_color.setText(color)
-        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.main.ui.pushButton_color.setText(color)
+        self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
         self.disconnectdial()
-        self.ui.dial_bright.setSliderPosition(bright)
-        self.ui.dial_bright.setValue(bright)
+        self.main.ui.dial_bright.setSliderPosition(bright)
+        self.main.ui.dial_bright.setValue(bright)
         self.connectdial()
-        self.ui.lcdNumber_bright.display(bright)
+        self.main.ui.lcdNumber_bright.display(bright)
         for i in range(6):
-            self.setcolor(r, g, b, i)
+            self.main.setcolor(r, g, b, i)
 
     def savergb(self):
-        r = self.ui.horizontalSlider_r.value()
-        g = self.ui.horizontalSlider_g.value()
-        b = self.ui.horizontalSlider_b.value()
+        r = self.main.ui.horizontalSlider_r.value()
+        g = self.main.ui.horizontalSlider_g.value()
+        b = self.main.ui.horizontalSlider_b.value()
         self.rgb = [r, g, b]
 
     def dialbright(self, value):
@@ -152,88 +153,151 @@ class MainWin(QMainWindow):
         g = int(g)
         b = int(b)
         self.disconnectsliders()
-        self.ui.horizontalSlider_r.setValue(r)
-        self.ui.horizontalSlider_g.setValue(g)
-        self.ui.horizontalSlider_b.setValue(b)
+        self.main.ui.horizontalSlider_r.setValue(r)
+        self.main.ui.horizontalSlider_g.setValue(g)
+        self.main.ui.horizontalSlider_b.setValue(b)
         self.connectsliders()
-        self.ui.lcdNumber_bright.display(value)
-        self.ui.pushButton_color.setText(self.rgb2hex(r, g, b))
-        self.ui.pushButton_color.setStyleSheet(self.getstyle(self.rgb2hex(r, g, b)))
+        self.main.ui.lcdNumber_bright.display(value)
+        self.main.ui.pushButton_color.setText(Color.rgb2hex(r, g, b))
+        self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(Color.rgb2hex(r, g, b)))
         for i in range(6):
-            self.setcolor(r, g, b, i)
+            self.main.setcolor(r, g, b, i)
 
     def slidercolor(self):
-        r = self.ui.horizontalSlider_r.value()
-        g = self.ui.horizontalSlider_g.value()
-        b = self.ui.horizontalSlider_b.value()
-        color = self.rgb2hex(r, g, b)
+        r = self.main.ui.horizontalSlider_r.value()
+        g = self.main.ui.horizontalSlider_g.value()
+        b = self.main.ui.horizontalSlider_b.value()
+        color = Color.rgb2hex(r, g, b)
         bright = int((r + g + b) / 3)
-        self.ui.pushButton_color.setText(color)
-        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.main.ui.pushButton_color.setText(color)
+        self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
         self.disconnectdial()
-        self.ui.dial_bright.setSliderPosition(bright)
-        self.ui.dial_bright.setValue(bright)
+        self.main.ui.dial_bright.setSliderPosition(bright)
+        self.main.ui.dial_bright.setValue(bright)
         self.connectdial()
-        self.ui.lcdNumber_bright.display(bright)
+        self.main.ui.lcdNumber_bright.display(bright)
         for i in range(6):
-            self.setcolor(r, g, b, i)
-
-    @staticmethod
-    def hex2rgb(color):
-        return int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16)
-
-    @staticmethod
-    def rgb2hex(r, g, b):
-        return '#{:02x}{:02x}{:02x}'.format(r, g, b)
-
-    def setcolor(self, r, g, b, ch):
-        msg = '#S{:1}{:03x}{:03x}{:03x}'.format(ch, gamma(r), gamma(g), gamma(b))
-        if ch == 0:
-            print(msg)
-        self.con.write(msg)
-
-    def updatepalette(self):
-        colors = list()  # in exec don't work '=' with self
-        for i in range(20):
-            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i + 1))
-            exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i + 1, self.getstyle(colors[-1])))
-
-    def getstyle(self, background):
-        r, g, b = self.hex2rgb(background)
-        textcolor = '#000000' if (r + 2.4 * g + b) / 4.4 > 127 else '#ffffff'
-        return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
+            self.main.setcolor(r, g, b, i)
 
     def colorselector(self):
         # noinspection PyArgumentList
         dialog = QColorDialog().getColor()
         temp = '{:x}'.format(dialog.rgb())
         color = '#{}'.format(temp[2:])
-        r, g, b = self.hex2rgb(color)
+        r, g, b = Color.hex2rgb(color)
         bright = int((r + g + b) / 3)
         self.disconnectsliders()
-        self.ui.horizontalSlider_r.setValue(r)
-        self.ui.horizontalSlider_g.setValue(g)
-        self.ui.horizontalSlider_b.setValue(b)
+        self.main.ui.horizontalSlider_r.setValue(r)
+        self.main.ui.horizontalSlider_g.setValue(g)
+        self.main.ui.horizontalSlider_b.setValue(b)
         self.connectsliders()
-        self.ui.pushButton_color.setText(color)
-        self.ui.pushButton_color.setStyleSheet(self.getstyle(color))
+        self.main.ui.pushButton_color.setText(color)
+        self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
         self.disconnectdial()
-        self.ui.dial_bright.setSliderPosition(bright)
-        self.ui.dial_bright.setValue(bright)
+        self.main.ui.dial_bright.setSliderPosition(bright)
+        self.main.ui.dial_bright.setValue(bright)
         self.connectdial()
-        self.ui.lcdNumber_bright.display(bright)
+        self.main.ui.lcdNumber_bright.display(bright)
         for i in range(6):
-            self.setcolor(r, g, b, i)
+            self.main.setcolor(r, g, b, i)
+
+
+class TabIlumination(Tab):
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.main = obj
+
+    def updatetab(self, connect):  # TODO: all tab update
+        pass
+
+
+class TabSound(Tab):  # TODO: this tab
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.main = obj
+
+
+class TabExtBacklight(Tab):  # TODO: this tab
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.main = obj
+
+
+class TabSetup(Tab):  # TODO: this tab
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.main = obj
+
+
+class MainWin(QMainWindow):
+    # noinspection PyArgumentList
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui = mainwindow_ui.Ui_MainWindow()
+        self.ui.setupUi(self)
+        # initializing classes
+        self.con = Connection(baud=38400)
+        self.tablight = TabLight(self)
+        self.tabilumination = TabIlumination(self)
+        self.tabsound = TabSound(self)
+        self.tabextbacklight = TabExtBacklight(self)
+        self.tabsetup = TabSetup(self)
+        self.gamma = self.ui.doubleSpinBox_gamma.value()
+        r = self.ui.horizontalSlider_wb_r.value()
+        g = self.ui.horizontalSlider_wb_g.value()
+        b = self.ui.horizontalSlider_wb_b.value()
+        self.wb = {'R': r, 'G': g, 'B': b}
+        # try connection
+        try:
+            self.con.createconnection(self.detectdevices()[0])
+        except IndexError:
+            pass
+        msg = 'Connected to {}'.format(self.con.dev) if self.con.con else 'No serial adapter found!'
+        self.ui.statusbar.showMessage(msg)
+        # init
+        self.ui.tabWidget.currentChanged.connect(self.updatetab)
+        self.updatetab(0)
+
+    def updatetab(self, val):
+        switch = {0: self.tablight.updatetab,
+                  1: self.tabilumination.updatetab,
+                  2: self.tabsound.updatetab,
+                  3: self.tabextbacklight.updatetab,
+                  4: self.tabsetup.updatetab}
+        switch[val](connect=self.con.connectionisopen())
 
     def detectdevices(self):
+        baddevices = ['Android Platform']  # bug with write on 38400 baud
         res = []
-        coms = list(self.con.devicesonline().keys())
+        devs = self.con.devicesonline()
+        coms = list(devs.keys())
         for i in coms:
-            print('trying', i)
-            self.con.dev = i
-            self.con.createconnection()
-            self.con.write('#T')
-            print(self.con.read(2))
+            bad = False
+            for j in baddevices:
+                if j in devs[i]:
+                    bad = True
+            if not bad:
+                self.con.dev = i
+                self.con.createconnection()
+                self.con.write('#T', )
+                answ = self.con.read(3)
+                if answ == '#OK':
+                    res.append(i)
+                self.con.close()
+        return res
+
+    def setcolor(self, r, g, b, ch):
+        msg = '#S{:1}{:03x}{:03x}{:03x}'.format(ch,
+                                                self.gammacorrection(r, 'R'),
+                                                self.gammacorrection(g, 'G'),
+                                                self.gammacorrection(b, 'B'))
+        if ch == 0:
+            print(msg)
+        self.main.con.write(msg)
+
+    def gammacorrection(self, val, color):
+        return round((val / 255) ** self.gamma * self.wb[color])
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

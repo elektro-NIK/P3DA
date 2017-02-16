@@ -786,7 +786,7 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QPlainTextEdit" name="plainTextEdit_input2">
              <property name="font">
               <font>
-               <family>Ubuntu Mono</family>
+               <family>Courier New</family>
                <pointsize>12</pointsize>
               </font>
              </property>
@@ -804,7 +804,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time2">
              <property name="maximum">
-              <number>1000</number>
+              <number>10000</number>
              </property>
              <property name="value">
               <number>500</number>
@@ -854,7 +854,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time3">
              <property name="maximum">
-              <number>1000</number>
+              <number>10000</number>
              </property>
              <property name="value">
               <number>500</number>
@@ -896,7 +896,7 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QPlainTextEdit" name="plainTextEdit_input3">
              <property name="font">
               <font>
-               <family>Ubuntu Mono</family>
+               <family>Courier New</family>
                <pointsize>12</pointsize>
               </font>
              </property>
@@ -924,7 +924,7 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QPlainTextEdit" name="plainTextEdit_input4">
              <property name="font">
               <font>
-               <family>Ubuntu Mono</family>
+               <family>Courier New</family>
                <pointsize>12</pointsize>
               </font>
              </property>
@@ -942,7 +942,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time4">
              <property name="maximum">
-              <number>1000</number>
+              <number>10000</number>
              </property>
              <property name="value">
               <number>500</number>
@@ -992,7 +992,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="2">
             <widget class="QSpinBox" name="spinBox_time1">
              <property name="maximum">
-              <number>1000</number>
+              <number>10000</number>
              </property>
              <property name="value">
               <number>500</number>
@@ -1034,7 +1034,7 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QPlainTextEdit" name="plainTextEdit_input1">
              <property name="font">
               <font>
-               <family>Ubuntu Mono</family>
+               <family>Courier New</family>
                <pointsize>12</pointsize>
               </font>
              </property>
@@ -1603,13 +1603,13 @@ background-color: rgb(0, 0, 0);</string>
            <item row="0" column="1">
             <widget class="QSlider" name="horizontalSlider_wb_r">
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="sliderPosition">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="tracking">
               <bool>true</bool>
@@ -1662,10 +1662,10 @@ background-color: rgb(0, 0, 0);</string>
               <bool>false</bool>
              </property>
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
             </widget>
            </item>
@@ -1682,10 +1682,10 @@ background-color: rgb(0, 0, 0);</string>
            <item row="1" column="1">
             <widget class="QSlider" name="horizontalSlider_wb_g">
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -1705,10 +1705,10 @@ background-color: rgb(0, 0, 0);</string>
            <item row="2" column="1">
             <widget class="QSlider" name="horizontalSlider_wb_b">
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -1736,10 +1736,10 @@ background-color: rgb(0, 0, 0);</string>
               <bool>false</bool>
              </property>
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
             </widget>
            </item>
@@ -1764,10 +1764,10 @@ background-color: rgb(0, 0, 0);</string>
               <bool>false</bool>
              </property>
              <property name="maximum">
-              <number>255</number>
+              <number>511</number>
              </property>
              <property name="value">
-              <number>255</number>
+              <number>511</number>
              </property>
             </widget>
            </item>
@@ -1887,8 +1887,8 @@ background-color: rgb(0, 0, 0);</string>
      <y>431</y>
     </hint>
     <hint type="destinationlabel">
-     <x>521</x>
-     <y>443</y>
+     <x>513</x>
+     <y>441</y>
     </hint>
    </hints>
   </connection>
@@ -1899,12 +1899,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
-     <y>475</y>
+     <x>464</x>
+     <y>473</y>
     </hint>
     <hint type="destinationlabel">
-     <x>521</x>
-     <y>481</y>
+     <x>513</x>
+     <y>474</y>
     </hint>
    </hints>
   </connection>
@@ -1915,12 +1915,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
-     <y>513</y>
+     <x>464</x>
+     <y>506</y>
     </hint>
     <hint type="destinationlabel">
-     <x>521</x>
-     <y>519</y>
+     <x>513</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -1931,12 +1931,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>225</y>
+     <x>301</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
-     <x>357</x>
-     <y>229</y>
+     <x>354</x>
+     <y>206</y>
     </hint>
    </hints>
   </connection>
@@ -1947,12 +1947,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>333</y>
+     <x>301</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>357</x>
-     <y>337</y>
+     <x>354</x>
+     <y>317</y>
     </hint>
    </hints>
   </connection>
@@ -1963,12 +1963,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>357</x>
-     <y>445</y>
+     <x>354</x>
+     <y>428</y>
     </hint>
     <hint type="destinationlabel">
-     <x>206</x>
-     <y>441</y>
+     <x>301</x>
+     <y>427</y>
     </hint>
    </hints>
   </connection>
@@ -1979,12 +1979,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>441</y>
+     <x>301</x>
+     <y>427</y>
     </hint>
     <hint type="destinationlabel">
-     <x>357</x>
-     <y>445</y>
+     <x>354</x>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1995,12 +1995,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>357</x>
-     <y>337</y>
+     <x>354</x>
+     <y>317</y>
     </hint>
     <hint type="destinationlabel">
-     <x>206</x>
-     <y>333</y>
+     <x>301</x>
+     <y>316</y>
     </hint>
    </hints>
   </connection>
@@ -2011,12 +2011,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>357</x>
-     <y>229</y>
+     <x>354</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
-     <x>206</x>
-     <y>225</y>
+     <x>301</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
@@ -2027,8 +2027,8 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>521</x>
-     <y>443</y>
+     <x>513</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
      <x>455</x>
@@ -2043,12 +2043,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>521</x>
-     <y>481</y>
+     <x>513</x>
+     <y>474</y>
     </hint>
     <hint type="destinationlabel">
-     <x>455</x>
-     <y>475</y>
+     <x>464</x>
+     <y>473</y>
     </hint>
    </hints>
   </connection>
@@ -2059,12 +2059,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>521</x>
-     <y>519</y>
+     <x>513</x>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
-     <x>455</x>
-     <y>513</y>
+     <x>464</x>
+     <y>506</y>
     </hint>
    </hints>
   </connection>
@@ -2075,12 +2075,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>153</y>
+     <x>222</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>411</x>
-     <y>157</y>
+     <x>416</x>
+     <y>139</y>
     </hint>
    </hints>
   </connection>
@@ -2091,12 +2091,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>411</x>
-     <y>157</y>
+     <x>416</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>162</x>
-     <y>153</y>
+     <x>222</x>
+     <y>139</y>
     </hint>
    </hints>
   </connection>
@@ -2107,12 +2107,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>313</y>
+     <x>222</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
-     <x>411</x>
-     <y>317</y>
+     <x>416</x>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -2123,12 +2123,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>411</x>
-     <y>317</y>
+     <x>416</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
-     <x>162</x>
-     <y>313</y>
+     <x>222</x>
+     <y>300</y>
     </hint>
    </hints>
   </connection>
@@ -2139,12 +2139,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>473</y>
+     <x>222</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>411</x>
-     <y>477</y>
+     <x>416</x>
+     <y>462</y>
     </hint>
    </hints>
   </connection>
@@ -2155,12 +2155,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>411</x>
-     <y>477</y>
+     <x>416</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>162</x>
-     <y>473</y>
+     <x>222</x>
+     <y>462</y>
     </hint>
    </hints>
   </connection>
@@ -2177,6 +2177,22 @@ background-color: rgb(0, 0, 0);</string>
     <hint type="destinationlabel">
      <x>646</x>
      <y>473</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dial_bright</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdNumber_bright</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>587</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>440</y>
     </hint>
    </hints>
   </connection>
