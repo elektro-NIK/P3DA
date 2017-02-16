@@ -190,8 +190,6 @@ uint8_t char2int(uint8_t x) {
 int main() {
     Init();
     sei();
-    leds[BLUE][5] = MAXPWM;
-    USART0_Transmit('A');
     while(1){
         if (DataInReceiveBuffer()) {
             uint8_t temp = USART0_Receive();
@@ -208,6 +206,10 @@ int main() {
                             leds[GREEN][temp] = (buf[3] << 8 | buf[4] << 4 | buf[5]) & 0x1FF;
                             leds[BLUE][temp]  = (buf[6] << 8 | buf[7] << 4 | buf[8]) & 0x1FF;
                             break;
+                        case 'T':
+                            USART0_Transmit('#');
+                            USART0_Transmit('O');
+                            USART0_Transmit('K');
                         default:
                             break;
                     }

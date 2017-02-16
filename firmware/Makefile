@@ -19,7 +19,7 @@ SIZE = avr-size
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Wall -g -Os -lm  -mcall-prologues -std=c99
 LDFLAGS = -mmcu=$(MCU) -Wall -g -Os
 
-all: $(TARG)
+all: $(TARG) clean prog
 
 $(TARG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@.elf  $(OBJS) -lm

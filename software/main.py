@@ -77,7 +77,7 @@ class TabLight(Tab):
         if connect:
             self.main.ui.pushButton_color.clicked.connect(self.colorselector)
             for i in range(20):
-                exec('self.obj.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
+                exec('self.main.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
             self.connectsliders()
             self.connectdial()
         self.updatepalette()
@@ -279,7 +279,7 @@ class MainWin(QMainWindow):
             if not bad:
                 self.con.dev = i
                 self.con.createconnection()
-                self.con.write('#T', )
+                self.con.write('#T')
                 answ = self.con.read(3)
                 if answ == '#OK':
                     res.append(i)
@@ -293,7 +293,7 @@ class MainWin(QMainWindow):
                                                 self.gammacorrection(b, 'B'))
         if ch == 0:
             print(msg)
-        self.main.con.write(msg)
+        self.con.write(msg)
 
     def gammacorrection(self, val, color):
         return round((val / 255) ** self.gamma * self.wb[color])
