@@ -83,7 +83,7 @@ class TabLight(Tab):
         self.updatepalette()
 
     def updatepalette(self):
-        colors = list()  # in exec don't work '=' with self
+        colors, _ = list(), self  # in exec don't work '=' with self
         for i in range(20):
             exec('colors.append(self.main.ui.pushButton_last{:02}.text())'.format(i + 1))
             style = Color.plainbuttonstyle(colors[-1])
