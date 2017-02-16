@@ -68,7 +68,6 @@ class Tab:
 class TabLight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        self.main = obj
         self.rgb = [0, 0, 0]
 
     def updatetab(self, connect):
@@ -205,28 +204,41 @@ class TabLight(Tab):
 class TabIlumination(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        self.main = obj
 
     def updatetab(self, connect):  # TODO: all tab update
-        pass
+        text = list()
+        for i in range(4):
+            exec('text.append(self.main.ui.plainTextEdit_input{}.toPlainText().split())'.format(i+1))
+        temp = [self.checkinput(i) for i in text]
+        print(temp)
+
+    @staticmethod
+    def checkinput(x):
+        flag = True
+        for i in x:
+            if len(i) == 7:
+                try:
+                    int(i[1:], 16)
+                except ValueError:
+                    flag = False
+            else:
+                flag = False
+        return flag
 
 
 class TabSound(Tab):  # TODO: this tab
     def __init__(self, obj):
         super().__init__(obj)
-        self.main = obj
 
 
 class TabExtBacklight(Tab):  # TODO: this tab
     def __init__(self, obj):
         super().__init__(obj)
-        self.main = obj
 
 
 class TabSetup(Tab):  # TODO: this tab
     def __init__(self, obj):
         super().__init__(obj)
-        self.main = obj
 
 
 class MainWin(QMainWindow):
