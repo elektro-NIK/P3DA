@@ -5,10 +5,11 @@ import serial
 import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
+from PyQt5.QtCore import QTimer
 
 
 class Connection:
-    def __init__(self, dev=None, baud=9600, timeout=0.1):
+    def __init__(self, dev=None, baud=9600, timeout=1):
         self.dev, self.baud, self.timeout = dev, baud, timeout
         self.con = None
 
@@ -61,7 +62,7 @@ class Tab:
     def __init__(self, obj):
         self.main = obj
 
-    def updatetab(self, connect):
+    def enabletab(self, flag):
         pass
 
 
@@ -69,17 +70,20 @@ class TabLight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
         self.rgb = [0, 0, 0]
-
-    def updatetab(self, connect):
+        # connections
+        self.main.ui.pushButton_color.clicked.connect(self.colorselector)
+        for i in range(20):
+            exec('self.main.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
+        self.connectsliders()
+        self.connectdial()
+        # update styles
         color = self.main.ui.pushButton_color.text()
         self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
-        if connect:
-            self.main.ui.pushButton_color.clicked.connect(self.colorselector)
-            for i in range(20):
-                exec('self.main.ui.pushButton_last{:02}.clicked.connect(self.palettebutton)'.format(i + 1))
-            self.connectsliders()
-            self.connectdial()
         self.updatepalette()
+
+    def enabletab(self, flag):
+        self.main.ui.groupBox_last_colors.setEnabled(flag)
+        self.main.ui.groupBox_color_bright.setEnabled(flag)
 
     def updatepalette(self):
         colors, _ = list(), self  # in exec don't work '=' with self
@@ -204,41 +208,105 @@ class TabLight(Tab):
 class TabIlumination(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-
-    def updatetab(self, connect):  # TODO: all tab update
-        text = list()
+        self.colorlist = []
+        self.cursor = 0
+        self.timer = QTimer()
+        # noinspection PyUnresolvedReferences
+        self.timer.timeout.connect(self.test1)
+        # TODO: connections
         for i in range(4):
-            exec('text.append(self.main.ui.plainTextEdit_input{}.toPlainText().split())'.format(i+1))
-        temp = [self.checkinput(i) for i in text]
-        print(temp)
+            exec('self.main.ui.plainTextEdit_input{}.textChanged.connect(self.checkinput)'.format(i+1))
+            exec('self.main.ui.pushButton_effect{}.toggled.connect(self.effectbutton)'.format(i+1))
+        # TODO: update styles
+        self.main.ui.comboBox_effect1.addItems(['q', 'w', 'e', 'r', 't', 'y'])
+
+    def effectbutton(self, flag):
+        for i in range(4):
+            exec('self.main.ui.pushButton_effect{}.setEnabled(not flag)'.format(i+1))
+        self.main.sender().setEnabled(True)
+        num = int(self.main.sender().objectName()[17])                                        # read num of effect field
+        if flag:
+            exec('self.effect(num = self.main.ui.comboBox_effect{}.currentIndex(),\
+                              colors = self.main.ui.plainTextEdit_input{}.toPlainText().split(),\
+                              interval = self.main.ui.spinBox_time{}.value())'.format(num, num, num))
+        else:
+            self.timer.stop()
+
+    def effect(self, num, colors, interval):
+        switch = {0: self.effect_change,
+                  1: self.effect_black}
+        time, self.colorlist = switch[num](colors, interval)
+        self.cursor = 0
+        self.timer.start(time)
 
     @staticmethod
-    def checkinput(x):
-        flag = True
-        for i in x:
-            if len(i) == 7:
+    def effect_change(colors, interval):
+        return interval, colors
+
+    def effect_black(self, colors, interval):
+        colors = [Color.hex2rgb(i) for i in colors]
+        return 2000, ['#ffff00', '#0ffff0', '#00ffff', '#f00fff', '#ff00ff', '#fff00f']
+
+    def test1(self):
+        print(self.colorlist[self.cursor])
+        self.cursor = self.cursor + 1 if self.cursor < len(self.colorlist)-1 else 0
+
+    def enabletab(self, flag):
+        for i in range(4):
+            exec('self.main.ui.groupBox_effect{}.setEnabled(flag)'.format(i+1))
+
+    def checkinput(self):
+        text = self.main.sender().toPlainText()
+        style = 'background-color: #ff0000' if not self.checktext(text) else ''
+        self.main.sender().setStyleSheet(style)
+
+    @staticmethod
+    def checktext(text):
+        for i in text.split():
+            if len(i) == 6+1:
                 try:
                     int(i[1:], 16)
                 except ValueError:
-                    flag = False
+                    return False
             else:
-                flag = False
-        return flag
+                return False
+        return True
 
 
-class TabSound(Tab):  # TODO: this tab
+class TabSound(Tab):
     def __init__(self, obj):
         super().__init__(obj)
+        # TODO: connections
+        # TODO: update styles
+
+    def enabletab(self, flag):
+        self.main.ui.comboBox_player.setEnabled(flag)
+        self.main.ui.comboBox_effect_music.setEnabled(flag)
+        self.main.ui.groupBox_low.setEnabled(flag)
+        self.main.ui.groupBox_medium.setEnabled(flag)
+        self.main.ui.groupBox_high.setEnabled(flag)
 
 
-class TabExtBacklight(Tab):  # TODO: this tab
+class TabExtBacklight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
+        # TODO: connections
+        # TODO: update styles
+
+    def enabletab(self, flag):
+        self.main.ui.groupBox_setup_ext.setEnabled(flag)
 
 
-class TabSetup(Tab):  # TODO: this tab
+class TabSetup(Tab):
     def __init__(self, obj):
         super().__init__(obj)
+        # TODO: connections
+        # TODO: update styles
+
+    def enabletab(self, flag):
+        self.main.ui.comboBox_device.setEnabled(flag)
+        self.main.ui.groupBox_wb.setEnabled(flag)
+        self.main.ui.groupBox_gamma.setEnabled(flag)
 
 
 class MainWin(QMainWindow):
@@ -247,36 +315,37 @@ class MainWin(QMainWindow):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
-        # initializing classes
-        self.con = Connection(baud=38400)
-        self.tablight = TabLight(self)
-        self.tabilumination = TabIlumination(self)
-        self.tabsound = TabSound(self)
-        self.tabextbacklight = TabExtBacklight(self)
-        self.tabsetup = TabSetup(self)
-        self.gamma = self.ui.doubleSpinBox_gamma.value()
-        r = self.ui.horizontalSlider_wb_r.value()
-        g = self.ui.horizontalSlider_wb_g.value()
-        b = self.ui.horizontalSlider_wb_b.value()
-        self.wb = {'R': r, 'G': g, 'B': b}
         # try connection
+        self.con = Connection(baud=38400)
         try:
             self.con.createconnection(self.detectdevices()[0])
         except IndexError:
             pass
         msg = 'Connected to {}'.format(self.con.dev) if self.con.con else 'No serial adapter found!'
         self.ui.statusbar.showMessage(msg)
+        # initializing classes
+        self.tablight = TabLight(self)
+        self.tabilumination = TabIlumination(self)
+        self.tabsound = TabSound(self)
+        self.tabextbacklight = TabExtBacklight(self)
+        self.tabsetup = TabSetup(self)
+        # corrections
+        self.gamma = self.ui.doubleSpinBox_gamma.value()
+        r = self.ui.horizontalSlider_wb_r.value()
+        g = self.ui.horizontalSlider_wb_g.value()
+        b = self.ui.horizontalSlider_wb_b.value()
+        self.wb = {'R': r, 'G': g, 'B': b}
         # init
         self.ui.tabWidget.currentChanged.connect(self.updatetab)
         self.updatetab(0)
 
     def updatetab(self, val):
-        switch = {0: self.tablight.updatetab,
-                  1: self.tabilumination.updatetab,
-                  2: self.tabsound.updatetab,
-                  3: self.tabextbacklight.updatetab,
-                  4: self.tabsetup.updatetab}
-        switch[val](connect=self.con.connectionisopen())
+        switch = {0: self.tablight.enabletab,
+                  1: self.tabilumination.enabletab,
+                  2: self.tabsound.enabletab,
+                  3: self.tabextbacklight.enabletab,
+                  4: self.tabsetup.enabletab}
+        switch[val](flag=self.con.connectionisopen())
 
     def detectdevices(self):
         baddevices = ['Android Platform']  # bug with write on 38400 baud
@@ -289,8 +358,8 @@ class MainWin(QMainWindow):
                 if j in devs[i]:
                     bad = True
             if not bad:
-                self.con.dev = i
-                self.con.createconnection()
+                self.con.createconnection(i)
+                serial.time.sleep(1.5)
                 self.con.write('#T')
                 answ = self.con.read(3)
                 if answ == '#OK':

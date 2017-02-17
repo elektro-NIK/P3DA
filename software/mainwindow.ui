@@ -11,12 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>P3DA</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -76,6 +79,9 @@
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="3" column="3" rowspan="2">
             <widget class="QSlider" name="horizontalSlider_b">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>255</number>
              </property>
@@ -89,6 +95,9 @@
            </item>
            <item row="2" column="3">
             <widget class="QSlider" name="horizontalSlider_g">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>255</number>
              </property>
@@ -102,6 +111,9 @@
            </item>
            <item row="3" column="4" rowspan="2" colspan="2">
             <widget class="QSpinBox" name="spinBox_b">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="wrapping">
               <bool>false</bool>
              </property>
@@ -131,15 +143,15 @@
            <item row="2" column="2">
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>&amp;Green</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_g</cstring>
+              <string>Green</string>
              </property>
             </widget>
            </item>
            <item row="2" column="4" colspan="2">
             <widget class="QSpinBox" name="spinBox_g">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="wrapping">
               <bool>false</bool>
              </property>
@@ -169,15 +181,15 @@
            <item row="3" column="2" rowspan="2">
             <widget class="QLabel" name="label_3">
              <property name="text">
-              <string>&amp;Blue</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_b</cstring>
+              <string>Blue</string>
              </property>
             </widget>
            </item>
            <item row="0" column="4" rowspan="2" colspan="2">
             <widget class="QSpinBox" name="spinBox_r">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="wrapping">
               <bool>false</bool>
              </property>
@@ -207,15 +219,15 @@
            <item row="0" column="2" rowspan="2">
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>&amp;Red</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_r</cstring>
+              <string>Red</string>
              </property>
             </widget>
            </item>
            <item row="0" column="7" rowspan="5">
             <widget class="QLCDNumber" name="lcdNumber_bright">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
@@ -241,6 +253,9 @@
            </item>
            <item row="0" column="0" rowspan="5">
             <widget class="QPushButton" name="pushButton_color">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -267,6 +282,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="3" rowspan="2">
             <widget class="QSlider" name="horizontalSlider_r">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>255</number>
              </property>
@@ -298,6 +316,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="6" rowspan="5">
             <widget class="QDial" name="dial_bright">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>255</number>
              </property>
@@ -329,12 +350,18 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="0" column="0" colspan="2">
          <widget class="QGroupBox" name="groupBox_last_colors">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Last colors</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="4" column="3">
             <widget class="QPushButton" name="pushButton_last18">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -355,6 +382,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="2" column="0">
             <widget class="QPushButton" name="pushButton_last11">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -375,6 +405,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="2" column="5">
             <widget class="QPushButton" name="pushButton_last15">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -395,6 +428,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="4">
             <widget class="QPushButton" name="pushButton_last04">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -415,6 +451,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="4" column="1">
             <widget class="QPushButton" name="pushButton_last17">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -435,6 +474,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="5">
             <widget class="QPushButton" name="pushButton_last05">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -455,6 +497,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="pushButton_last12">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -475,6 +520,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="3">
             <widget class="QPushButton" name="pushButton_last08">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -495,6 +543,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="4" column="0">
             <widget class="QPushButton" name="pushButton_last16">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -515,6 +566,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_last07">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -535,6 +589,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="2" column="4">
             <widget class="QPushButton" name="pushButton_last14">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -555,6 +612,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="4" column="5">
             <widget class="QPushButton" name="pushButton_last20">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -575,6 +635,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="4">
             <widget class="QPushButton" name="pushButton_last09">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -595,6 +658,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="2" column="3">
             <widget class="QPushButton" name="pushButton_last13">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -615,6 +681,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="5">
             <widget class="QPushButton" name="pushButton_last10">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -635,6 +704,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_last02">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -655,6 +727,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="4" column="4">
             <widget class="QPushButton" name="pushButton_last19">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -675,6 +750,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="3">
             <widget class="QPushButton" name="pushButton_last03">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -695,6 +773,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="pushButton_last01">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -724,6 +805,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="0">
             <widget class="QPushButton" name="pushButton_last06">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -778,12 +862,18 @@ background-color: rgb(0, 0, 0);</string>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="1">
          <widget class="QGroupBox" name="groupBox_effect2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Effect2</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="2" rowspan="5">
             <widget class="QPlainTextEdit" name="plainTextEdit_input2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -803,6 +893,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -819,7 +912,11 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect2"/>
+            <widget class="QComboBox" name="comboBox_effect2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="label_11">
@@ -836,9 +933,15 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="4" column="0" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply2">
+            <widget class="QPushButton" name="pushButton_effect2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="text">
-              <string>Apply</string>
+              <string>On/off</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -847,12 +950,18 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="2" column="0">
          <widget class="QGroupBox" name="groupBox_effect3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Effect3</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -876,7 +985,11 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect3"/>
+            <widget class="QComboBox" name="comboBox_effect3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0" colspan="2">
             <widget class="QLabel" name="label_12">
@@ -886,14 +999,23 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="4" column="0" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply3">
+            <widget class="QPushButton" name="pushButton_effect3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="text">
-              <string>Apply</string>
+              <string>On/off</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="0" column="4" rowspan="5">
             <widget class="QPlainTextEdit" name="plainTextEdit_input3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -916,12 +1038,18 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="2" column="1">
          <widget class="QGroupBox" name="groupBox_effect4">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Effect4</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_10">
            <item row="0" column="2" rowspan="5">
             <widget class="QPlainTextEdit" name="plainTextEdit_input4">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -941,6 +1069,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="3" column="0">
             <widget class="QSpinBox" name="spinBox_time4">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -964,7 +1095,11 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect4"/>
+            <widget class="QComboBox" name="comboBox_effect4">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="label_15">
@@ -974,9 +1109,15 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="4" column="0" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply4">
+            <widget class="QPushButton" name="pushButton_effect4">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="text">
-              <string>Apply</string>
+              <string>On/off</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -985,12 +1126,18 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox_effect1">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Effect 1</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="3" column="2">
             <widget class="QSpinBox" name="spinBox_time1">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -1000,9 +1147,15 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="4" column="2" colspan="2">
-            <widget class="QPushButton" name="pushButton_apply1">
+            <widget class="QPushButton" name="pushButton_effect1">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="text">
-              <string>Apply</string>
+              <string>On/off</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1021,7 +1174,11 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="1" column="2" colspan="2">
-            <widget class="QComboBox" name="comboBox_effect1"/>
+            <widget class="QComboBox" name="comboBox_effect1">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item row="0" column="2" colspan="2">
             <widget class="QLabel" name="label_9">
@@ -1032,6 +1189,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="0" column="4" rowspan="5">
             <widget class="QPlainTextEdit" name="plainTextEdit_input1">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -1073,13 +1233,24 @@ background-color: rgb(0, 0, 0);</string>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
+          <property name="buddy">
+           <cstring>comboBox_player</cstring>
+          </property>
          </widget>
         </item>
         <item row="0" column="1" colspan="3">
-         <widget class="QComboBox" name="comboBox_player"/>
+         <widget class="QComboBox" name="comboBox_player">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="0" column="8">
-         <widget class="QComboBox" name="comboBox_effect_music"/>
+         <widget class="QComboBox" name="comboBox_effect_music">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="8" rowspan="3">
          <widget class="QPlainTextEdit" name="plainTextEdit_bitdetector">
@@ -1107,6 +1278,9 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="1" column="0" colspan="5">
          <widget class="QGroupBox" name="groupBox_low">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Low</string>
           </property>
@@ -1151,6 +1325,9 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>Hz</string>
              </property>
+             <property name="buddy">
+              <cstring>pushButton_color_low</cstring>
+             </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="2">
@@ -1180,6 +1357,9 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="2" column="0" colspan="5">
          <widget class="QGroupBox" name="groupBox_medium">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Medium</string>
           </property>
@@ -1224,6 +1404,9 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>Hz</string>
              </property>
+             <property name="buddy">
+              <cstring>pushButton_color_medium</cstring>
+             </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="2">
@@ -1253,6 +1436,9 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="3" column="0" colspan="5">
          <widget class="QGroupBox" name="groupBox_high">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>High</string>
           </property>
@@ -1274,6 +1460,9 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QLabel" name="label_26">
              <property name="text">
               <string>Hz</string>
+             </property>
+             <property name="buddy">
+              <cstring>pushButton_color_high</cstring>
              </property>
             </widget>
            </item>
@@ -1338,6 +1527,9 @@ background-color: rgb(0, 0, 0);</string>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
+          <property name="buddy">
+           <cstring>comboBox_effect_music</cstring>
+          </property>
          </widget>
         </item>
        </layout>
@@ -1348,7 +1540,10 @@ background-color: rgb(0, 0, 0);</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0" colspan="2">
-         <widget class="QGroupBox" name="groupBox_setup">
+         <widget class="QGroupBox" name="groupBox_setup_ext">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Setup</string>
           </property>
@@ -1357,6 +1552,9 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QLabel" name="label_4">
              <property name="text">
               <string>1st zone</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_ch1</cstring>
              </property>
             </widget>
            </item>
@@ -1385,12 +1583,18 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>3rd zone</string>
              </property>
+             <property name="buddy">
+              <cstring>spinBox_ch3</cstring>
+             </property>
             </widget>
            </item>
            <item row="11" column="0">
             <widget class="QLabel" name="label_5">
              <property name="text">
               <string>6th zone</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_ch6</cstring>
              </property>
             </widget>
            </item>
@@ -1399,6 +1603,9 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>4th zone</string>
              </property>
+             <property name="buddy">
+              <cstring>spinBox_ch4</cstring>
+             </property>
             </widget>
            </item>
            <item row="9" column="0">
@@ -1406,12 +1613,18 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>5th zone</string>
              </property>
+             <property name="buddy">
+              <cstring>spinBox_ch5</cstring>
+             </property>
             </widget>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="label_27">
              <property name="text">
               <string>2nd zone</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_ch2</cstring>
              </property>
             </widget>
            </item>
@@ -1460,6 +1673,9 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QLabel" name="label_36">
              <property name="text">
               <string>Update interval</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_update</cstring>
              </property>
             </widget>
            </item>
@@ -1552,6 +1768,9 @@ background-color: rgb(0, 0, 0);</string>
              <property name="text">
               <string>Effect</string>
              </property>
+             <property name="buddy">
+              <cstring>comboBox_effect_backlight</cstring>
+             </property>
             </widget>
            </item>
            <item row="3" column="4">
@@ -1561,6 +1780,9 @@ background-color: rgb(0, 0, 0);</string>
             <widget class="QLabel" name="label_39">
              <property name="text">
               <string>Effect time</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_effect</cstring>
              </property>
             </widget>
            </item>
@@ -1596,6 +1818,9 @@ background-color: rgb(0, 0, 0);</string>
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="1" column="0">
          <widget class="QGroupBox" name="groupBox_wb">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>White balance</string>
           </property>
@@ -1634,10 +1859,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="0" column="0">
             <widget class="QLabel" name="label_20">
              <property name="text">
-              <string>&amp;Red</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_r</cstring>
+              <string>Red</string>
              </property>
             </widget>
            </item>
@@ -1672,10 +1894,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="1" column="0">
             <widget class="QLabel" name="label_19">
              <property name="text">
-              <string>&amp;Green</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_g</cstring>
+              <string>Green</string>
              </property>
             </widget>
            </item>
@@ -1695,10 +1914,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="2" column="0">
             <widget class="QLabel" name="label_21">
              <property name="text">
-              <string>&amp;Blue</string>
-             </property>
-             <property name="buddy">
-              <cstring>horizontalSlider_b</cstring>
+              <string>Blue</string>
              </property>
             </widget>
            </item>
@@ -1776,6 +1992,9 @@ background-color: rgb(0, 0, 0);</string>
         </item>
         <item row="1" column="2">
          <widget class="QGroupBox" name="groupBox_gamma">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>Gamma</string>
           </property>
@@ -1809,12 +2028,33 @@ background-color: rgb(0, 0, 0);</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_14">
            <item row="0" column="0">
-            <widget class="QComboBox" name="comboBox_device"/>
+            <widget class="QComboBox" name="comboBox_device">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
-           <item row="0" column="1">
+           <item row="0" column="2">
             <widget class="QLabel" name="label_device">
              <property name="text">
               <string>None</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButton_update">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/update.svg</normaloff>icons/update.svg</iconset>
              </property>
             </widget>
            </item>
@@ -1828,52 +2068,87 @@ background-color: rgb(0, 0, 0);</string>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAbout_P3DA">
-   <property name="text">
-    <string>&amp;About P3DA</string>
-   </property>
-  </action>
-  <action name="actionAbout_Qt">
-   <property name="text">
-    <string>About &amp;Qt</string>
-   </property>
-  </action>
-  <action name="actionOpen">
-   <property name="text">
-    <string>&amp;Open</string>
-   </property>
-  </action>
-  <action name="actionSave">
-   <property name="text">
-    <string>&amp;Save</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>&amp;Exit</string>
-   </property>
-  </action>
-  <action name="actionPaste">
-   <property name="text">
-    <string>&amp;Paste</string>
-   </property>
-  </action>
-  <action name="actionCopy">
-   <property name="text">
-    <string>&amp;Copy</string>
-   </property>
-  </action>
-  <action name="actionCut">
-   <property name="text">
-    <string>C&amp;ut</string>
-   </property>
-  </action>
-  <action name="actionOptions">
-   <property name="text">
-    <string>&amp;Options</string>
-   </property>
-  </action>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>pushButton_color</tabstop>
+  <tabstop>horizontalSlider_r</tabstop>
+  <tabstop>spinBox_r</tabstop>
+  <tabstop>horizontalSlider_g</tabstop>
+  <tabstop>spinBox_g</tabstop>
+  <tabstop>horizontalSlider_b</tabstop>
+  <tabstop>spinBox_b</tabstop>
+  <tabstop>dial_bright</tabstop>
+  <tabstop>pushButton_last01</tabstop>
+  <tabstop>pushButton_last02</tabstop>
+  <tabstop>pushButton_last03</tabstop>
+  <tabstop>pushButton_last04</tabstop>
+  <tabstop>pushButton_last05</tabstop>
+  <tabstop>pushButton_last06</tabstop>
+  <tabstop>pushButton_last07</tabstop>
+  <tabstop>pushButton_last08</tabstop>
+  <tabstop>pushButton_last09</tabstop>
+  <tabstop>pushButton_last10</tabstop>
+  <tabstop>pushButton_last11</tabstop>
+  <tabstop>pushButton_last12</tabstop>
+  <tabstop>pushButton_last13</tabstop>
+  <tabstop>pushButton_last14</tabstop>
+  <tabstop>pushButton_last15</tabstop>
+  <tabstop>pushButton_last16</tabstop>
+  <tabstop>pushButton_last17</tabstop>
+  <tabstop>pushButton_last18</tabstop>
+  <tabstop>pushButton_last19</tabstop>
+  <tabstop>pushButton_last20</tabstop>
+  <tabstop>plainTextEdit_input1</tabstop>
+  <tabstop>comboBox_effect1</tabstop>
+  <tabstop>spinBox_time1</tabstop>
+  <tabstop>pushButton_effect1</tabstop>
+  <tabstop>plainTextEdit_input2</tabstop>
+  <tabstop>comboBox_effect2</tabstop>
+  <tabstop>spinBox_time2</tabstop>
+  <tabstop>pushButton_effect2</tabstop>
+  <tabstop>plainTextEdit_input3</tabstop>
+  <tabstop>comboBox_effect3</tabstop>
+  <tabstop>spinBox_time3</tabstop>
+  <tabstop>pushButton_effect3</tabstop>
+  <tabstop>plainTextEdit_input4</tabstop>
+  <tabstop>comboBox_effect4</tabstop>
+  <tabstop>spinBox_time4</tabstop>
+  <tabstop>pushButton_effect4</tabstop>
+  <tabstop>comboBox_player</tabstop>
+  <tabstop>horizontalSlider_freq_low</tabstop>
+  <tabstop>spinBox_freq_low</tabstop>
+  <tabstop>pushButton_color_low</tabstop>
+  <tabstop>horizontalSlider_freq_medium</tabstop>
+  <tabstop>spinBox_freq_medium</tabstop>
+  <tabstop>pushButton_color_medium</tabstop>
+  <tabstop>horizontalSlider_freq_high</tabstop>
+  <tabstop>spinBox_freq_high</tabstop>
+  <tabstop>pushButton_color_high</tabstop>
+  <tabstop>comboBox_effect_music</tabstop>
+  <tabstop>plainTextEdit_bitdetector</tabstop>
+  <tabstop>pushButton_zones</tabstop>
+  <tabstop>pushButton_on_off</tabstop>
+  <tabstop>spinBox_ch1</tabstop>
+  <tabstop>spinBox_ch2</tabstop>
+  <tabstop>spinBox_ch3</tabstop>
+  <tabstop>spinBox_ch4</tabstop>
+  <tabstop>spinBox_ch5</tabstop>
+  <tabstop>spinBox_ch6</tabstop>
+  <tabstop>spinBox_update</tabstop>
+  <tabstop>comboBox_effect_backlight</tabstop>
+  <tabstop>spinBox_effect</tabstop>
+  <tabstop>comboBox_device</tabstop>
+  <tabstop>pushButton_update</tabstop>
+  <tabstop>horizontalSlider_wb_r</tabstop>
+  <tabstop>spinBox_wb_r</tabstop>
+  <tabstop>horizontalSlider_wb_g</tabstop>
+  <tabstop>spinBox_wb_g</tabstop>
+  <tabstop>horizontalSlider_wb_b</tabstop>
+  <tabstop>spinBox_wb_b</tabstop>
+  <tabstop>doubleSpinBox_gamma</tabstop>
+  <tabstop>graphicsView_gamma</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -1931,12 +2206,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>205</y>
+     <x>260</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
-     <y>206</y>
+     <y>209</y>
     </hint>
    </hints>
   </connection>
@@ -1947,12 +2222,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>316</y>
+     <x>260</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
-     <y>317</y>
+     <y>319</y>
     </hint>
    </hints>
   </connection>
@@ -1964,11 +2239,11 @@ background-color: rgb(0, 0, 0);</string>
    <hints>
     <hint type="sourcelabel">
      <x>354</x>
-     <y>428</y>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
-     <x>301</x>
-     <y>427</y>
+     <x>260</x>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1979,12 +2254,12 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>427</y>
+     <x>260</x>
+     <y>428</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>
-     <y>428</y>
+     <y>429</y>
     </hint>
    </hints>
   </connection>
@@ -1996,11 +2271,11 @@ background-color: rgb(0, 0, 0);</string>
    <hints>
     <hint type="sourcelabel">
      <x>354</x>
-     <y>317</y>
+     <y>319</y>
     </hint>
     <hint type="destinationlabel">
-     <x>301</x>
-     <y>316</y>
+     <x>260</x>
+     <y>318</y>
     </hint>
    </hints>
   </connection>
@@ -2012,11 +2287,11 @@ background-color: rgb(0, 0, 0);</string>
    <hints>
     <hint type="sourcelabel">
      <x>354</x>
-     <y>206</y>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel">
-     <x>301</x>
-     <y>205</y>
+     <x>260</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -2075,7 +2350,7 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
+     <x>218</x>
      <y>139</y>
     </hint>
     <hint type="destinationlabel">
@@ -2095,7 +2370,7 @@ background-color: rgb(0, 0, 0);</string>
      <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>222</x>
+     <x>218</x>
      <y>139</y>
     </hint>
    </hints>
@@ -2107,7 +2382,7 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
+     <x>218</x>
      <y>300</y>
     </hint>
     <hint type="destinationlabel">
@@ -2127,7 +2402,7 @@ background-color: rgb(0, 0, 0);</string>
      <y>301</y>
     </hint>
     <hint type="destinationlabel">
-     <x>222</x>
+     <x>218</x>
      <y>300</y>
     </hint>
    </hints>
@@ -2139,7 +2414,7 @@ background-color: rgb(0, 0, 0);</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
+     <x>218</x>
      <y>462</y>
     </hint>
     <hint type="destinationlabel">
@@ -2159,7 +2434,7 @@ background-color: rgb(0, 0, 0);</string>
      <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>222</x>
+     <x>218</x>
      <y>462</y>
     </hint>
    </hints>
