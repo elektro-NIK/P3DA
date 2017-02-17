@@ -58,6 +58,65 @@ class Color:
         return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
 
 
+# TODO: smoots, strobs refactor
+class Effect:
+    @staticmethod
+    def change(colors, interval):
+        return interval, colors
+
+    @staticmethod
+    def fadeblack(colors, interval):
+        for i in range(len(colors)):
+            colors.insert(i * 2 + 1, '#000000')
+        return Effect.smooth(colors, interval / 2)
+
+    @staticmethod
+    def fadewhite(colors, interval):
+        for i in range(len(colors)):
+            colors.insert(i * 2 + 1, '#ffffff')
+        return Effect.smooth(colors, interval / 2)
+
+    @staticmethod
+    def smooth(colors, interval):
+        colors = [Color.hex2rgb(i) for i in colors]
+        step = interval / 11 if interval / 11 < 255 else 255
+        res = []
+        for i in range(len(colors)):
+            start, finish = colors[i - 1], colors[i]
+            steps = {'R': (finish[0] - start[0]) / step,
+                     'G': (finish[1] - start[1]) / step,
+                     'B': (finish[2] - start[2]) / step}
+            r, g, b = start
+            for j in range(int(step)):
+                res.append(Color.rgb2hex(int(r), int(g), int(b)))
+                r, g, b = r + steps['R'], g + steps['G'], b + steps['B']
+        return interval / step, res
+
+    @staticmethod
+    def strob(colors, interval):
+        res = []
+        for i in colors:
+            flash = [i]
+            time = 20
+            while time < interval:
+                flash.append('#000000')
+                time += 20
+            res += flash
+        return 20, res
+
+    @staticmethod
+    def strob2(colors, interval):
+        res = []
+        for i in colors:
+            flash = [i, '#000000', '#000000', '#000000', i]
+            time = 20 * 5
+            while time < interval:
+                flash.append('#000000')
+                time += 20
+            res += flash
+        return 20, res
+
+
 class Tab:
     def __init__(self, obj):
         self.main = obj
@@ -212,53 +271,55 @@ class TabIlumination(Tab):
         self.cursor = 0
         self.timer = QTimer()
         # noinspection PyUnresolvedReferences
-        self.timer.timeout.connect(self.test1)
-        # TODO: connections
+        self.timer.timeout.connect(self.setcolorinterrupt)
+        # connections
         for i in range(4):
             exec('self.main.ui.plainTextEdit_input{}.textChanged.connect(self.checkinput)'.format(i+1))
             exec('self.main.ui.pushButton_effect{}.toggled.connect(self.effectbutton)'.format(i+1))
-        # TODO: update styles
-        self.main.ui.comboBox_effect1.addItems(['q', 'w', 'e', 'r', 't', 'y'])
-
-    def effectbutton(self, flag):
+        # update styles
         for i in range(4):
-            exec('self.main.ui.pushButton_effect{}.setEnabled(not flag)'.format(i+1))
-        self.main.sender().setEnabled(True)
-        num = int(self.main.sender().objectName()[17])                                        # read num of effect field
-        if flag:
-            exec('self.effect(num = self.main.ui.comboBox_effect{}.currentIndex(),\
-                              colors = self.main.ui.plainTextEdit_input{}.toPlainText().split(),\
-                              interval = self.main.ui.spinBox_time{}.value())'.format(num, num, num))
-        else:
-            self.timer.stop()
-
-    def effect(self, num, colors, interval):
-        switch = {0: self.effect_change,
-                  1: self.effect_black}
-        time, self.colorlist = switch[num](colors, interval)
-        self.cursor = 0
-        self.timer.start(time)
-
-    @staticmethod
-    def effect_change(colors, interval):
-        return interval, colors
-
-    def effect_black(self, colors, interval):
-        colors = [Color.hex2rgb(i) for i in colors]
-        return 2000, ['#ffff00', '#0ffff0', '#00ffff', '#f00fff', '#ff00ff', '#fff00f']
-
-    def test1(self):
-        print(self.colorlist[self.cursor])
-        self.cursor = self.cursor + 1 if self.cursor < len(self.colorlist)-1 else 0
+            _ = ["Change", "Fade black", "Fade white", "Smooth", "Strob", "Double stob"]
+            exec('self.main.ui.comboBox_effect{}.addItems(_)'.format(i+1))
 
     def enabletab(self, flag):
         for i in range(4):
             exec('self.main.ui.groupBox_effect{}.setEnabled(flag)'.format(i+1))
 
+    def effectbutton(self, flag):
+        for i in range(4):
+            exec('self.main.ui.pushButton_effect{}.setEnabled(not flag)'.format(i + 1))
+        self.main.sender().setEnabled(True)
+        num = int(self.main.sender().objectName()[17])  # read num of effect field
+        if flag:
+            exec('self.effectstart(num = self.main.ui.comboBox_effect{}.currentIndex(),\
+                                   colors = self.main.ui.plainTextEdit_input{}.toPlainText().split(),\
+                                   interval = self.main.ui.spinBox_time{}.value())'.format(num, num, num))
+        else:
+            self.timer.stop()
+
     def checkinput(self):
         text = self.main.sender().toPlainText()
         style = 'background-color: #ff0000' if not self.checktext(text) else ''
         self.main.sender().setStyleSheet(style)
+
+    def effectstart(self, num, colors, interval):
+        switch = {0: Effect.change,
+                  1: Effect.fadeblack,
+                  2: Effect.fadewhite,
+                  3: Effect.smooth,
+                  4: Effect.strob,
+                  5: Effect.strob2}
+        if self.checktext('\n'.join(colors)):
+            time, self.colorlist = switch[num](colors, interval)
+            self.cursor = 0
+            self.timer.start(time)
+        else:
+            self.main.sender().setChecked(False)
+
+    def setcolorinterrupt(self):
+        r, g, b = Color.hex2rgb(self.colorlist[self.cursor])
+        self.main.setcolor(r, g, b, 0)
+        self.cursor = self.cursor + 1 if self.cursor < len(self.colorlist)-1 else 0
 
     @staticmethod
     def checktext(text):
