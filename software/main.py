@@ -339,7 +339,7 @@ class TabSound(Tab):
         super().__init__(obj)
         self.dev = QAudioDeviceInfo.defaultInputDevice()
         audio = QAudioFormat()
-        audio.setSampleRate(4000)
+        audio.setSampleRate(44100)
         audio.setSampleType(QAudioFormat.UnSignedInt)
         audio.setSampleSize(8)
         audio.setCodec('audio/pcm')
@@ -354,10 +354,14 @@ class TabSound(Tab):
 
     def test(self):
         raw = self.stream.readAll().data()
-        val = [i-128 if i > 128 else 128-i for i in raw]
-        # print(len(val))
-        for i in val[-1:]:
-            print('#'*int(i))
+        if raw:
+            val = [i-128 for i in raw]
+            from numpy import fft
+            from numpy.ma import absolute
+            fur = absolute(fft.fft(val))
+            freq = fft.fftfreq(len(val), d=1/4000)
+            print(fur, freq)
+
 
     def enabletab(self, flag):
         self.main.ui.comboBox_player.setEnabled(flag)

@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
@@ -1228,213 +1228,102 @@ background-color: rgb(0, 0, 0);</string>
            </size>
           </property>
           <property name="text">
-           <string>Player</string>
+           <string>I&amp;nput</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
           <property name="buddy">
-           <cstring>comboBox_player</cstring>
+           <cstring>comboBox_input</cstring>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" colspan="3">
-         <widget class="QComboBox" name="comboBox_player">
-          <property name="enabled">
-           <bool>true</bool>
+        <item row="0" column="5" rowspan="7">
+         <widget class="QFrame" name="frame">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="8">
-         <widget class="QComboBox" name="comboBox_effect_music">
-          <property name="enabled">
-           <bool>true</bool>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="8" rowspan="3">
-         <widget class="QPlainTextEdit" name="plainTextEdit_bitdetector">
-          <property name="enabled">
-           <bool>false</bool>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="documentTitle">
-           <string/>
-          </property>
-          <property name="plainText">
-           <string>#ff0000
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_41">
+             <property name="maximumSize">
+              <size>
+               <width>75</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>E&amp;ffect</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="buddy">
+              <cstring>comboBox_effect_music</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_effect_music">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="plainTextEdit_bitdetector">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="documentTitle">
+              <string/>
+             </property>
+             <property name="plainText">
+              <string>#ff0000
 #00ff00
 #0000ff</string>
-          </property>
-          <property name="backgroundVisible">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="5">
-         <widget class="QGroupBox" name="groupBox_low">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="title">
-           <string>Low</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_16">
-           <item row="0" column="3" rowspan="2">
-            <widget class="QPushButton" name="pushButton_color_low">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
              </property>
+             <property name="backgroundVisible">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
              <property name="text">
-              <string>#ff0000</string>
+              <string>On/off</string>
              </property>
-            </widget>
-           </item>
-           <item row="0" column="1" rowspan="2">
-            <widget class="QSpinBox" name="spinBox_freq_low">
-             <property name="minimumSize">
-              <size>
-               <width>75</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <number>20</number>
-             </property>
-             <property name="maximum">
-              <number>1000</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-             <property name="value">
-              <number>80</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2" rowspan="2">
-            <widget class="QLabel" name="label_24">
-             <property name="text">
-              <string>Hz</string>
-             </property>
-             <property name="buddy">
-              <cstring>pushButton_color_low</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" rowspan="2">
-            <widget class="QSlider" name="horizontalSlider_freq_low">
-             <property name="minimum">
-              <number>20</number>
-             </property>
-             <property name="maximum">
-              <number>1000</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-             <property name="pageStep">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>80</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="2" column="0" colspan="5">
-         <widget class="QGroupBox" name="groupBox_medium">
+        <item row="0" column="1" colspan="4">
+         <widget class="QComboBox" name="comboBox_input">
           <property name="enabled">
            <bool>true</bool>
           </property>
-          <property name="title">
-           <string>Medium</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_17">
-           <item row="0" column="3" rowspan="2">
-            <widget class="QPushButton" name="pushButton_color_medium">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>#00ff00</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" rowspan="2">
-            <widget class="QSpinBox" name="spinBox_freq_medium">
-             <property name="minimumSize">
-              <size>
-               <width>75</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <number>100</number>
-             </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-             <property name="singleStep">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2" rowspan="2">
-            <widget class="QLabel" name="label_25">
-             <property name="text">
-              <string>Hz</string>
-             </property>
-             <property name="buddy">
-              <cstring>pushButton_color_medium</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" rowspan="2">
-            <widget class="QSlider" name="horizontalSlider_freq_medium">
-             <property name="minimum">
-              <number>100</number>
-             </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-             <property name="singleStep">
-              <number>100</number>
-             </property>
-             <property name="pageStep">
-              <number>1000</number>
-             </property>
-             <property name="value">
-              <number>500</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
-        <item row="3" column="0" colspan="5">
+        <item row="5" column="0" rowspan="2" colspan="5">
          <widget class="QGroupBox" name="groupBox_high">
           <property name="enabled">
            <bool>true</bool>
@@ -1459,7 +1348,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="0" column="2" rowspan="2">
             <widget class="QLabel" name="label_26">
              <property name="text">
-              <string>Hz</string>
+              <string>&amp;Hz</string>
              </property>
              <property name="buddy">
               <cstring>pushButton_color_high</cstring>
@@ -1513,23 +1402,162 @@ background-color: rgb(0, 0, 0);</string>
           </layout>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="label_41">
-          <property name="maximumSize">
-           <size>
-            <width>75</width>
-            <height>16777215</height>
-           </size>
+        <item row="3" column="0" rowspan="2" colspan="5">
+         <widget class="QGroupBox" name="groupBox_medium">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <property name="text">
-           <string>Effect</string>
+          <property name="title">
+           <string>Medium</string>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <item row="0" column="3" rowspan="2">
+            <widget class="QPushButton" name="pushButton_color_medium">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>#00ff00</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <widget class="QSpinBox" name="spinBox_freq_medium">
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>100</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2" rowspan="2">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>&amp;Hz</string>
+             </property>
+             <property name="buddy">
+              <cstring>pushButton_color_medium</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <widget class="QSlider" name="horizontalSlider_freq_medium">
+             <property name="minimum">
+              <number>100</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>100</number>
+             </property>
+             <property name="pageStep">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>500</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0" rowspan="2" colspan="5">
+         <widget class="QGroupBox" name="groupBox_low">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <property name="buddy">
-           <cstring>comboBox_effect_music</cstring>
+          <property name="title">
+           <string>Low</string>
           </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="0" column="3" rowspan="2">
+            <widget class="QPushButton" name="pushButton_color_low">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>#ff0000</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <widget class="QSpinBox" name="spinBox_freq_low">
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>80</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2" rowspan="2">
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>H&amp;z</string>
+             </property>
+             <property name="buddy">
+              <cstring>pushButton_color_low</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <widget class="QSlider" name="horizontalSlider_freq_low">
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="pageStep">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>80</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -1551,7 +1579,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="1" column="0">
             <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>1st zone</string>
+              <string>&amp;1st zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch1</cstring>
@@ -1581,7 +1609,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="5" column="0">
             <widget class="QLabel" name="label_29">
              <property name="text">
-              <string>3rd zone</string>
+              <string>&amp;3rd zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch3</cstring>
@@ -1591,7 +1619,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="11" column="0">
             <widget class="QLabel" name="label_5">
              <property name="text">
-              <string>6th zone</string>
+              <string>&amp;6th zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch6</cstring>
@@ -1601,7 +1629,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="7" column="0">
             <widget class="QLabel" name="label_28">
              <property name="text">
-              <string>4th zone</string>
+              <string>&amp;4th zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch4</cstring>
@@ -1611,7 +1639,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="9" column="0">
             <widget class="QLabel" name="label_6">
              <property name="text">
-              <string>5th zone</string>
+              <string>&amp;5th zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch5</cstring>
@@ -1621,7 +1649,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="0">
             <widget class="QLabel" name="label_27">
              <property name="text">
-              <string>2nd zone</string>
+              <string>&amp;2nd zone</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_ch2</cstring>
@@ -1672,7 +1700,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="1" column="3">
             <widget class="QLabel" name="label_36">
              <property name="text">
-              <string>Update interval</string>
+              <string>&amp;Update interval</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_update</cstring>
@@ -1766,7 +1794,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="3" column="3">
             <widget class="QLabel" name="label_38">
              <property name="text">
-              <string>Effect</string>
+              <string>E&amp;ffect</string>
              </property>
              <property name="buddy">
               <cstring>comboBox_effect_backlight</cstring>
@@ -1779,7 +1807,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="5" column="3">
             <widget class="QLabel" name="label_39">
              <property name="text">
-              <string>Effect time</string>
+              <string>Effe&amp;ct time</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_effect</cstring>
@@ -2070,7 +2098,6 @@ background-color: rgb(0, 0, 0);</string>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>pushButton_color</tabstop>
   <tabstop>horizontalSlider_r</tabstop>
   <tabstop>spinBox_r</tabstop>
@@ -2099,23 +2126,23 @@ background-color: rgb(0, 0, 0);</string>
   <tabstop>pushButton_last18</tabstop>
   <tabstop>pushButton_last19</tabstop>
   <tabstop>pushButton_last20</tabstop>
-  <tabstop>plainTextEdit_input1</tabstop>
   <tabstop>comboBox_effect1</tabstop>
   <tabstop>spinBox_time1</tabstop>
   <tabstop>pushButton_effect1</tabstop>
-  <tabstop>plainTextEdit_input2</tabstop>
+  <tabstop>plainTextEdit_input1</tabstop>
   <tabstop>comboBox_effect2</tabstop>
   <tabstop>spinBox_time2</tabstop>
   <tabstop>pushButton_effect2</tabstop>
-  <tabstop>plainTextEdit_input3</tabstop>
+  <tabstop>plainTextEdit_input2</tabstop>
   <tabstop>comboBox_effect3</tabstop>
   <tabstop>spinBox_time3</tabstop>
   <tabstop>pushButton_effect3</tabstop>
-  <tabstop>plainTextEdit_input4</tabstop>
+  <tabstop>plainTextEdit_input3</tabstop>
   <tabstop>comboBox_effect4</tabstop>
   <tabstop>spinBox_time4</tabstop>
   <tabstop>pushButton_effect4</tabstop>
-  <tabstop>comboBox_player</tabstop>
+  <tabstop>plainTextEdit_input4</tabstop>
+  <tabstop>comboBox_input</tabstop>
   <tabstop>horizontalSlider_freq_low</tabstop>
   <tabstop>spinBox_freq_low</tabstop>
   <tabstop>pushButton_color_low</tabstop>
@@ -2125,8 +2152,6 @@ background-color: rgb(0, 0, 0);</string>
   <tabstop>horizontalSlider_freq_high</tabstop>
   <tabstop>spinBox_freq_high</tabstop>
   <tabstop>pushButton_color_high</tabstop>
-  <tabstop>comboBox_effect_music</tabstop>
-  <tabstop>plainTextEdit_bitdetector</tabstop>
   <tabstop>pushButton_zones</tabstop>
   <tabstop>pushButton_on_off</tabstop>
   <tabstop>spinBox_ch1</tabstop>
