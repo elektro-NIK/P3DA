@@ -6,6 +6,7 @@ import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
 from PyQt5.QtCore import QTimer
+from PyQt5.QtMultimedia import QAudioInput, QAudioFormat, QAudioDeviceInfo
 
 
 class Connection:
@@ -58,7 +59,6 @@ class Color:
         return 'border: 0px; background-color: {}; color: {};'.format(background, textcolor)
 
 
-# TODO: smoots, strobs refactor
 class Effect:
     @staticmethod
     def change(colors, interval):
@@ -79,7 +79,7 @@ class Effect:
     @staticmethod
     def smooth(colors, interval):
         colors = [Color.hex2rgb(i) for i in colors]
-        step = interval / 11 if interval / 11 < 255 else 255
+        step = interval/11 if interval/11 < 255 else 255
         res = []
         for i in range(len(colors)):
             start, finish = colors[i - 1], colors[i]
@@ -90,7 +90,7 @@ class Effect:
             for j in range(int(step)):
                 res.append(Color.rgb2hex(int(r), int(g), int(b)))
                 r, g, b = r + steps['R'], g + steps['G'], b + steps['B']
-        return interval / step, res
+        return interval/step, res
 
     @staticmethod
     def strob(colors, interval):
@@ -337,8 +337,27 @@ class TabIlumination(Tab):
 class TabSound(Tab):
     def __init__(self, obj):
         super().__init__(obj)
+        self.dev = QAudioDeviceInfo.defaultInputDevice()
+        audio = QAudioFormat()
+        audio.setSampleRate(4000)
+        audio.setSampleType(QAudioFormat.UnSignedInt)
+        audio.setSampleSize(8)
+        audio.setCodec('audio/pcm')
+        audio.setChannelCount(1)
+        self.input = QAudioInput(self.dev, audio)
+        self.stream = self.input.start()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.test)
+        self.timer.start(20)
         # TODO: connections
         # TODO: update styles
+
+    def test(self):
+        raw = self.stream.readAll().data()
+        val = [i-128 if i > 128 else 128-i for i in raw]
+        # print(len(val))
+        for i in val[-1:]:
+            print('#'*int(i))
 
     def enabletab(self, flag):
         self.main.ui.comboBox_player.setEnabled(flag)
