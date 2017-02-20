@@ -6,7 +6,7 @@ import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
 from PyQt5.QtCore import QTimer
-from PyQt5.QtMultimedia import QAudioInput, QAudioFormat, QAudioDeviceInfo
+from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
 
 
 class Connection:
@@ -173,13 +173,13 @@ class TabLight(Tab):
 
     def palettebutton(self):
         color = self.main.sender().text()
-        r, g, b = Color.hex2rgb(color)
-        self.rgb = [r, g, b]
-        bright = int((r + g + b) / 3)
+        rgb = Color.hex2rgb(color)
+        self.rgb = [*rgb]
+        bright = int(sum(rgb) / 3)
         self.disconnectsliders()
-        self.main.ui.horizontalSlider_r.setValue(r)
-        self.main.ui.horizontalSlider_g.setValue(g)
-        self.main.ui.horizontalSlider_b.setValue(b)
+        self.main.ui.horizontalSlider_r.setValue(rgb[0])
+        self.main.ui.horizontalSlider_g.setValue(rgb[1])
+        self.main.ui.horizontalSlider_b.setValue(rgb[2])
         self.connectsliders()
         self.main.ui.pushButton_color.setText(color)
         self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
@@ -189,7 +189,7 @@ class TabLight(Tab):
         self.connectdial()
         self.main.ui.lcdNumber_bright.display(bright)
         for i in range(6):
-            self.main.setcolor(r, g, b, i)
+            self.main.setcolor(*rgb, i)
 
     def savergb(self):
         r = self.main.ui.horizontalSlider_r.value()
@@ -198,9 +198,7 @@ class TabLight(Tab):
         self.rgb = [r, g, b]
 
     def dialbright(self, value):
-        r = self.rgb[0]
-        g = self.rgb[1]
-        b = self.rgb[2]
+        r, g, b = self.rgb
         avr = (r + g + b) / 3 if any([r, g, b]) else 1
         add = value - avr
         if add > 0:
@@ -211,9 +209,7 @@ class TabLight(Tab):
             r += add * r / avr
             g += add * g / avr
             b += add * b / avr
-        r = int(r)
-        g = int(g)
-        b = int(b)
+        r, g, b = int(r), int(g), int(b)
         self.disconnectsliders()
         self.main.ui.horizontalSlider_r.setValue(r)
         self.main.ui.horizontalSlider_g.setValue(g)
@@ -246,12 +242,12 @@ class TabLight(Tab):
         dialog = QColorDialog().getColor()
         temp = '{:x}'.format(dialog.rgb())
         color = '#{}'.format(temp[2:])
-        r, g, b = Color.hex2rgb(color)
-        bright = int((r + g + b) / 3)
+        rgb = Color.hex2rgb(color)
+        bright = int(sum(rgb) / 3)
         self.disconnectsliders()
-        self.main.ui.horizontalSlider_r.setValue(r)
-        self.main.ui.horizontalSlider_g.setValue(g)
-        self.main.ui.horizontalSlider_b.setValue(b)
+        self.main.ui.horizontalSlider_r.setValue(rgb[0])
+        self.main.ui.horizontalSlider_g.setValue(rgb[1])
+        self.main.ui.horizontalSlider_b.setValue(rgb[2])
         self.connectsliders()
         self.main.ui.pushButton_color.setText(color)
         self.main.ui.pushButton_color.setStyleSheet(Color.plainbuttonstyle(color))
@@ -261,7 +257,7 @@ class TabLight(Tab):
         self.connectdial()
         self.main.ui.lcdNumber_bright.display(bright)
         for i in range(6):
-            self.main.setcolor(r, g, b, i)
+            self.main.setcolor(*rgb, i)
 
 
 class TabIlumination(Tab):
@@ -277,8 +273,8 @@ class TabIlumination(Tab):
             exec('self.main.ui.plainTextEdit_input{}.textChanged.connect(self.checkinput)'.format(i+1))
             exec('self.main.ui.pushButton_effect{}.toggled.connect(self.effectbutton)'.format(i+1))
         # update styles
+        _ = ["Change", "Fade black", "Fade white", "Smooth", "Strob", "Double stob"]
         for i in range(4):
-            _ = ["Change", "Fade black", "Fade white", "Smooth", "Strob", "Double stob"]
             exec('self.main.ui.comboBox_effect{}.addItems(_)'.format(i+1))
 
     def enabletab(self, flag):
@@ -289,7 +285,8 @@ class TabIlumination(Tab):
         for i in range(4):
             exec('self.main.ui.pushButton_effect{}.setEnabled(not flag)'.format(i + 1))
         self.main.sender().setEnabled(True)
-        num = int(self.main.sender().objectName()[17])  # read num of effect field
+        num = int(self.main.sender().objectName()[17])                                        # read num of effect field
+        self.main.settabsenable(not flag)
         if flag:
             exec('self.effectstart(num = self.main.ui.comboBox_effect{}.currentIndex(),\
                                    colors = self.main.ui.plainTextEdit_input{}.toPlainText().split(),\
@@ -317,8 +314,9 @@ class TabIlumination(Tab):
             self.main.sender().setChecked(False)
 
     def setcolorinterrupt(self):
-        r, g, b = Color.hex2rgb(self.colorlist[self.cursor])
-        self.main.setcolor(r, g, b, 0)
+        rgb = Color.hex2rgb(self.colorlist[self.cursor])
+        for i in range(6):
+            self.main.setcolor(*rgb, i)
         self.cursor = self.cursor + 1 if self.cursor < len(self.colorlist)-1 else 0
 
     @staticmethod
@@ -337,20 +335,81 @@ class TabIlumination(Tab):
 class TabSound(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        self.dev = QAudioDeviceInfo.defaultInputDevice()
+        # noinspection PyArgumentList
+        self.inputdevices = QAudioDeviceInfo.availableDevices(QAudio.AudioInput)
+        self.input = None
+        if self.inputdevices:
+            self.changeinput(0)
+        self.stream = None
+        self.timer = QTimer()
+        # connections
+        # noinspection PyUnresolvedReferences
+        self.timer.timeout.connect(self.test)  # TODO: refactor
+        self.main.ui.comboBox_input.currentIndexChanged.connect(self.changeinput)
+        self.main.ui.comboBox_effect_music.currentIndexChanged.connect(self.changetextedit)
+        self.main.ui.pushButton_color_low.clicked.connect(self.colorselector)
+        self.main.ui.pushButton_color_mid.clicked.connect(self.colorselector)
+        self.main.ui.pushButton_color_high.clicked.connect(self.colorselector)
+        self.main.ui.verticalSlider_lower_low.valueChanged.connect(self.changeslider)
+        self.main.ui.verticalSlider_lower_mid.valueChanged.connect(self.changeslider)
+        self.main.ui.verticalSlider_lower_high.valueChanged.connect(self.changeslider)
+        self.main.ui.verticalSlider_higher_low.valueChanged.connect(self.changeslider)
+        self.main.ui.verticalSlider_higher_mid.valueChanged.connect(self.changeslider)
+        self.main.ui.verticalSlider_higher_high.valueChanged.connect(self.changeslider)
+        self.main.ui.pushButton_sound_onoff.toggled.connect(self.soundbuttononoff)
+        # update styles
+        effects = ['Smooth', 'Change', 'Flash', 'Strob']
+        self.main.ui.comboBox_effect_music.addItems(effects)
+        inputs = [i.deviceName() for i in self.inputdevices]
+        self.main.ui.comboBox_input.addItems(inputs)
+        self.updatebuttons()
+
+    def enabletab(self, flag):
+        self.main.ui.comboBox_input.setEnabled(flag)
+        self.main.ui.comboBox_effect_music.setEnabled(flag)
+        self.main.ui.groupBox_freq.setEnabled(flag)
+        self.main.ui.groupBox_bit_detect.setEnabled(flag)
+        self.main.ui.pushButton_sound_onoff.setEnabled(flag)
+
+    def updatebuttons(self):
+        color = self.main.ui.pushButton_color_low.text()
+        self.main.ui.pushButton_color_low.setStyleSheet(Color.plainbuttonstyle(color))
+        color = self.main.ui.pushButton_color_mid.text()
+        self.main.ui.pushButton_color_mid.setStyleSheet(Color.plainbuttonstyle(color))
+        color = self.main.ui.pushButton_color_high.text()
+        self.main.ui.pushButton_color_high.setStyleSheet(Color.plainbuttonstyle(color))
+
+    def changeinput(self, val):
         audio = QAudioFormat()
         audio.setSampleRate(44100)
         audio.setSampleType(QAudioFormat.UnSignedInt)
         audio.setSampleSize(8)
         audio.setCodec('audio/pcm')
         audio.setChannelCount(1)
-        self.input = QAudioInput(self.dev, audio)
-        self.stream = self.input.start()
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.test)
-        self.timer.start(20)
-        # TODO: connections
-        # TODO: update styles
+        self.input = QAudioInput(self.inputdevices[val], audio)
+
+    def changetextedit(self, val):
+        self.main.ui.plainTextEdit_bitdetector.setEnabled(bool(val))
+
+    def changeslider(self, val):  # TODO: refactor
+        pass
+
+    def colorselector(self):
+        # noinspection PyArgumentList
+        dialog = QColorDialog().getColor()
+        temp = '{:x}'.format(dialog.rgb())
+        color = '#{}'.format(temp[2:])
+        self.main.sender().setText(color)
+        self.main.sender().setStyleSheet(Color.plainbuttonstyle(color))
+
+    def soundbuttononoff(self, flag):  # TODO: add check
+        if flag:
+            self.stream = self.input.start()
+            self.timer.start(50)
+        else:
+            self.input.stop()
+            self.timer.stop()
+            self.stream = None
 
     def test(self):
         raw = self.stream.readAll().data()
@@ -359,16 +418,26 @@ class TabSound(Tab):
             from numpy import fft
             from numpy.ma import absolute
             fur = absolute(fft.fft(val))
-            freq = fft.fftfreq(len(val), d=1/4000)
-            print(fur, freq)
-
-
-    def enabletab(self, flag):
-        self.main.ui.comboBox_player.setEnabled(flag)
-        self.main.ui.comboBox_effect_music.setEnabled(flag)
-        self.main.ui.groupBox_low.setEnabled(flag)
-        self.main.ui.groupBox_medium.setEnabled(flag)
-        self.main.ui.groupBox_high.setEnabled(flag)
+            freq = fft.fftfreq(len(val), d=1/44100)
+            fur = fur[1:int(len(fur) / 2)]
+            freq = freq[1:int(len(freq)/2)]
+            cols = 250
+            step = int(len(fur)/cols)
+            avgfur, avgfreq = [], []
+            for i in range(cols):
+                sumfur, sumfreq = 0, 0
+                for j in range(step*i, step*(i+1)):
+                    sumfur += fur[j]
+                    sumfreq += freq[j]
+                avgfur.append(sumfur/step)
+                avgfreq.append(sumfreq/step)
+            height = 12
+            out = ''
+            for i in range(height-1, -1, -1):
+                for j in avgfur:
+                    out += '#' if j > 1000/height*i else ' '
+                out += '\n'
+            print(out)
 
 
 class TabExtBacklight(Tab):
@@ -399,6 +468,7 @@ class MainWin(QMainWindow):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
+        # self.ui.comboBox_input.currentIndexChanged()
         # try connection
         self.con = Connection(baud=38400)
         try:
@@ -431,8 +501,14 @@ class MainWin(QMainWindow):
                   4: self.tabsetup.enabletab}
         switch[val](flag=self.con.connectionisopen())
 
+    def settabsenable(self, flag):
+        count = list(range(self.ui.tabWidget.count()))
+        count.remove(self.ui.tabWidget.currentIndex())
+        for i in count:
+            self.ui.tabWidget.setTabEnabled(i, flag)
+
     def detectdevices(self):
-        baddevices = ['Android Platform']  # bug with write on 38400 baud
+        baddevices = ['Android Platform', 'AndroidNet']                        # bug with write on 38400 baud (Windows?)
         res = []
         devs = self.con.devicesonline()
         coms = list(devs.keys())
