@@ -93,7 +93,7 @@ class Effect:
         return interval / step, res
 
     @staticmethod
-    def strob(colors, interval):
+    def flash(colors, interval):
         res = []
         for i in colors:
             flash = [i]
@@ -105,7 +105,7 @@ class Effect:
         return 20, res
 
     @staticmethod
-    def strob2(colors, interval):
+    def strob(colors, interval):
         res = []
         for i in colors:
             flash = [i, '#000000', '#000000', '#000000', i]
@@ -273,7 +273,7 @@ class TabIlumination(Tab):
             exec('self.main.ui.plainTextEdit_input{}.textChanged.connect(self.checkinput)'.format(i + 1))
             exec('self.main.ui.pushButton_effect{}.toggled.connect(self.effectbutton)'.format(i + 1))
         # update styles
-        _ = ["Change", "Fade black", "Fade white", "Smooth", "Strob", "Double stob"]
+        _ = ["Change", "Fade black", "Fade white", "Smooth", "Flash", "Strob"]
         for i in range(4):
             exec('self.main.ui.comboBox_effect{}.addItems(_)'.format(i + 1))
 
@@ -304,8 +304,8 @@ class TabIlumination(Tab):
                   1: Effect.fadeblack,
                   2: Effect.fadewhite,
                   3: Effect.smooth,
-                  4: Effect.strob,
-                  5: Effect.strob2}
+                  4: Effect.flash,
+                  5: Effect.strob}
         if self.main.checktext('\n'.join(colors)):
             time, self.colorlist = switch[num](colors, interval)
             self.cursor = 0
@@ -424,7 +424,8 @@ class TabSound(Tab):
         self.main.sender().setText(color)
         self.main.sender().setStyleSheet(Color.plainbuttonstyle(color))
 
-    def soundbuttononoff(self, flag):  # TODO: add check
+    def soundbuttononoff(self, flag):
+        self.main.settabsenable(not flag)
         if flag:
             self.mode = self.main.ui.comboBox_effect_music.currentText()
             text = self.main.ui.plainTextEdit_bitdetector.toPlainText()
@@ -549,23 +550,76 @@ class TabSound(Tab):
 class TabExtBacklight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        # TODO: connections
-        # TODO: update styles
+        self.zones = None
+        # connections
+        self.main.ui.pushButton_zones.clicked.connect(self.setzones)
+        self.main.ui.pushButton_ext_on_off.clicked.connect(self.extonoff)
 
     def enabletab(self, flag):
         self.main.ui.groupBox_setup_ext.setEnabled(flag)
+
+    # TODO: rects of capture
+    def setzones(self):
+        pass
+
+    # TODO: Ext backlight
+    def extonoff(self):
+        pass
 
 
 class TabSetup(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        # TODO: connections
-        # TODO: update styles
+        # connections
+        self.main.ui.comboBox_device.currentIndexChanged.connect(self.newconnection)
+        self.main.ui.pushButton_update.clicked.connect(self.updatedevs)
+        self.main.ui.horizontalSlider_wb_r.valueChanged.connect(self.updatewb)
+        self.main.ui.horizontalSlider_wb_g.valueChanged.connect(self.updatewb)
+        self.main.ui.horizontalSlider_wb_b.valueChanged.connect(self.updatewb)
+        self.main.ui.doubleSpinBox_gamma.valueChanged.connect(self.updategamma)
+        # update styles
+        devs = self.main.con.devicesonline()
+        self.main.ui.comboBox_device.addItems(self.main.devs)
+        if self.main.devs:
+            self.main.ui.label_device.setText(devs[self.main.devs[0]])
+        self.updategraphics()
 
     def enabletab(self, flag):
         self.main.ui.comboBox_device.setEnabled(flag)
         self.main.ui.groupBox_wb.setEnabled(flag)
         self.main.ui.groupBox_gamma.setEnabled(flag)
+
+    def newconnection(self, val):
+        try:
+            self.main.con.close()
+        except AttributeError:
+            pass
+        devs = self.main.con.devicesonline()
+        self.main.ui.label_device.setText(devs[self.main.devs[val]])
+        self.main.con.createconnection(self.main.devs[val])
+        self.enabletab(True)
+        self.main.ui.statusbar.showMessage('Connected to {}'.format(self.main.devs[val]))
+
+    def updatedevs(self):
+        self.main.devs = self.main.detectdevices()
+        self.main.ui.comboBox_device.clear()
+        self.main.ui.comboBox_device.addItems(self.main.devs)
+
+    def updatewb(self):
+        r = self.main.ui.horizontalSlider_wb_r.value()
+        g = self.main.ui.horizontalSlider_wb_g.value()
+        b = self.main.ui.horizontalSlider_wb_b.value()
+        self.main.wb = {'R': r, 'G': g, 'B': b}
+        for ch in range(6):
+            self.main.con.write('#S{:1}{:03x}{:03x}{:03x}'.format(ch, r, g, b))
+
+    def updategamma(self, val):
+        self.main.gamma = val
+        self.updategraphics()
+
+    # TODO: gamma graphic
+    def updategraphics(self):
+        pass
 
 
 class MainWin(QMainWindow):
@@ -574,12 +628,12 @@ class MainWin(QMainWindow):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
+        # self.ui.comboBox_device.currentIndexChanged()
         # try connection
         self.con = Connection(baud=38400)
-        try:
-            self.con.createconnection(self.detectdevices()[0])
-        except IndexError:
-            pass
+        self.devs = self.detectdevices()
+        if self.devs:
+            self.con.createconnection(self.devs[0])
         msg = 'Connected to {}'.format(self.con.dev) if self.con.con else 'No serial adapter found!'
         self.ui.statusbar.showMessage(msg)
         # initializing classes

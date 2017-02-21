@@ -36,7 +36,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1858,7 +1858,7 @@ background-color: rgb(0, 0, 0);</string>
         <string>Ext. backlight</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0" colspan="2">
+        <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox_setup_ext">
           <property name="enabled">
            <bool>true</bool>
@@ -1867,128 +1867,27 @@ background-color: rgb(0, 0, 0);</string>
            <string>Setup</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_19">
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_4">
+           <item row="0" column="1" colspan="2">
+            <widget class="QPushButton" name="pushButton_zones">
              <property name="text">
-              <string>&amp;1st zone</string>
+              <string>Set zones</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_38">
+             <property name="text">
+              <string>E&amp;ffect</string>
              </property>
              <property name="buddy">
-              <cstring>spinBox_ch1</cstring>
+              <cstring>comboBox_effect_backlight</cstring>
              </property>
             </widget>
            </item>
-           <item row="11" column="1">
-            <widget class="QSpinBox" name="spinBox_ch6">
-             <property name="maximum">
-              <number>6</number>
-             </property>
-             <property name="value">
-              <number>6</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="spinBox_ch1">
-             <property name="maximum">
-              <number>6</number>
-             </property>
-             <property name="value">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_29">
-             <property name="text">
-              <string>&amp;3rd zone</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_ch3</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>&amp;6th zone</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_ch6</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_28">
-             <property name="text">
-              <string>&amp;4th zone</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_ch4</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>&amp;5th zone</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_ch5</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_27">
-             <property name="text">
-              <string>&amp;2nd zone</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_ch2</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QSpinBox" name="spinBox_ch4">
-             <property name="maximum">
-              <number>6</number>
-             </property>
-             <property name="value">
-              <number>4</number>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="2">
-            <widget class="QLabel" name="label_34">
-             <property name="text">
-              <string>chanel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QSpinBox" name="spinBox_ch2">
-             <property name="maximum">
-              <number>6</number>
-             </property>
-             <property name="value">
-              <number>2</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
-            <widget class="QLabel" name="label_32">
-             <property name="text">
-              <string>chanel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="2">
-            <widget class="QLabel" name="label_35">
-             <property name="text">
-              <string>chanel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
+           <item row="8" column="1">
             <widget class="QLabel" name="label_36">
              <property name="text">
               <string>&amp;Update interval</string>
@@ -1998,25 +1897,40 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="2">
-            <widget class="QLabel" name="label_33">
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_39">
              <property name="text">
-              <string>chanel</string>
+              <string>Effe&amp;ct time</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_effect</cstring>
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QSpinBox" name="spinBox_ch3">
+           <item row="6" column="2">
+            <widget class="QComboBox" name="comboBox_effect_backlight"/>
+           </item>
+           <item row="7" column="2">
+            <widget class="QSpinBox" name="spinBox_effect">
+             <property name="suffix">
+              <string> ms</string>
+             </property>
              <property name="maximum">
-              <number>6</number>
+              <number>5000</number>
+             </property>
+             <property name="singleStep">
+              <number>50</number>
              </property>
              <property name="value">
-              <number>3</number>
+              <number>100</number>
              </property>
             </widget>
            </item>
-           <item row="1" column="4">
+           <item row="8" column="2">
             <widget class="QSpinBox" name="spinBox_update">
+             <property name="suffix">
+              <string> ms</string>
+             </property>
              <property name="minimum">
               <number>100</number>
              </property>
@@ -2031,97 +1945,33 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
-            <widget class="QLabel" name="label_31">
-             <property name="text">
-              <string>chanel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="3">
-            <widget class="QPushButton" name="pushButton_zones">
-             <property name="text">
-              <string>Set zones</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1">
-            <widget class="QSpinBox" name="spinBox_ch5">
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="spinBox_ch1">
              <property name="maximum">
               <number>6</number>
              </property>
              <property name="value">
-              <number>5</number>
+              <number>6</number>
              </property>
             </widget>
            </item>
-           <item row="1" column="5">
-            <widget class="QLabel" name="label_37">
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>ms</string>
+              <string>Count of zones</string>
+             </property>
+             <property name="buddy">
+              <cstring>spinBox_ch1</cstring>
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="label_30">
-             <property name="text">
-              <string>chanel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3" colspan="3">
-            <widget class="QPushButton" name="pushButton_on_off">
+           <item row="10" column="1" colspan="2">
+            <widget class="QPushButton" name="pushButton_ext_on_off">
              <property name="text">
               <string>On/off</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLabel" name="label_38">
-             <property name="text">
-              <string>E&amp;ffect</string>
-             </property>
-             <property name="buddy">
-              <cstring>comboBox_effect_backlight</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QComboBox" name="comboBox_effect_backlight"/>
-           </item>
-           <item row="5" column="3">
-            <widget class="QLabel" name="label_39">
-             <property name="text">
-              <string>Effe&amp;ct time</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_effect</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="4">
-            <widget class="QSpinBox" name="spinBox_effect">
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>50</number>
-             </property>
-             <property name="value">
-              <number>100</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="5">
-            <widget class="QLabel" name="label_40">
-             <property name="text">
-              <string>ms</string>
              </property>
             </widget>
            </item>
@@ -2356,7 +2206,7 @@ background-color: rgb(0, 0, 0);</string>
            <item row="0" column="2">
             <widget class="QLabel" name="label_device">
              <property name="text">
-              <string>None</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -2433,17 +2283,6 @@ background-color: rgb(0, 0, 0);</string>
   <tabstop>spinBox_time4</tabstop>
   <tabstop>pushButton_effect4</tabstop>
   <tabstop>plainTextEdit_input4</tabstop>
-  <tabstop>pushButton_zones</tabstop>
-  <tabstop>pushButton_on_off</tabstop>
-  <tabstop>spinBox_ch1</tabstop>
-  <tabstop>spinBox_ch2</tabstop>
-  <tabstop>spinBox_ch3</tabstop>
-  <tabstop>spinBox_ch4</tabstop>
-  <tabstop>spinBox_ch5</tabstop>
-  <tabstop>spinBox_ch6</tabstop>
-  <tabstop>spinBox_update</tabstop>
-  <tabstop>comboBox_effect_backlight</tabstop>
-  <tabstop>spinBox_effect</tabstop>
   <tabstop>comboBox_device</tabstop>
   <tabstop>pushButton_update</tabstop>
   <tabstop>horizontalSlider_wb_r</tabstop>
