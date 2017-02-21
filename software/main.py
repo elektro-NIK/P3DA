@@ -324,6 +324,8 @@ class TabSound(Tab):
     def __init__(self, obj):
         super().__init__(obj)
         self.mode = None
+        self.colors = None
+        self.count = 0
         # noinspection PyArgumentList
         self.inputdevices = QAudioDeviceInfo.availableDevices(QAudio.AudioInput)
         self.input = None
@@ -411,7 +413,7 @@ class TabSound(Tab):
             if val < self.main.ui.verticalSlider_higher_mid.value():
                 self.main.ui.verticalSlider_higher_mid.setValue(val)
         elif self.main.sender() == self.main.ui.verticalSlider_higher_high:
-            if self.main.ui.verticalSlider_lower_high.value():
+            if val < self.main.ui.verticalSlider_lower_high.value():
                 self.main.ui.verticalSlider_lower_high.setValue(val)
 
     def colorselector(self):
@@ -425,8 +427,15 @@ class TabSound(Tab):
     def soundbuttononoff(self, flag):  # TODO: add check
         if flag:
             self.mode = self.main.ui.comboBox_effect_music.currentText()
-            self.stream = self.input.start()
-            self.timer.start(100)
+            text = self.main.ui.plainTextEdit_bitdetector.toPlainText()
+            if self.main.checktext(text):
+                self.colors = text.split()
+                self.count = 0
+                self.stream = self.input.start()
+                timeout = 50 if self.mode == 'Smooth' else 200
+                self.timer.start(timeout)
+            else:
+                self.main.ui.pushButton_sound_onoff.setChecked(False)
         else:
             self.input.stop()
             self.timer.stop()
@@ -435,7 +444,6 @@ class TabSound(Tab):
     def setcolorinterrupt(self):
         val = self.stream.readAll().data()
         self.input.suspend()
-        # print(len(val))
         if val:
             from numpy import fft
             from numpy.ma import absolute
@@ -458,19 +466,23 @@ class TabSound(Tab):
         lowlimits = [self.main.ui.verticalSlider_lower_low.value(), self.main.ui.verticalSlider_higher_low.value()]
         midlimits = [self.main.ui.verticalSlider_lower_mid.value(), self.main.ui.verticalSlider_higher_mid.value()]
         highlimits = [self.main.ui.verticalSlider_lower_high.value(), self.main.ui.verticalSlider_higher_high.value()]
-        lowval = [val[i] if lowlimits[0] < freq[i] < lowlimits[1] else None for i in range(len(freq))]
-        midval = [val[i] if midlimits[0] < freq[i] < midlimits[1] else None for i in range(len(freq))]
-        highval = [val[i] if highlimits[0] < freq[i] < highlimits[1] else None for i in range(len(freq))]
-        for _ in range(lowval.count(None)): lowval.remove(None)
-        for _ in range(midval.count(None)): midval.remove(None)
-        for _ in range(highval.count(None)): highval.remove(None)
+        lowval, midval, highval = [], [], []
+        for i in range(len(freq)):
+            if lowlimits[0] < freq[i] < lowlimits[1]:
+                lowval.append(val[i])
+        for i in range(len(freq)):
+            if midlimits[0] < freq[i] < midlimits[1]:
+                midval.append(val[i])
+        for i in range(len(freq)):
+            if highlimits[0] < freq[i] < highlimits[1]:
+                highval.append(val[i])
         lowval = sum(lowval)/len(lowval) if lowval else 0
         midval = sum(midval)/len(midval) if midval else 0
         highval = sum(highval)/len(highval) if highval else 0
         mult = [self.main.ui.doubleSpinBox_mult_low.value(),
                 self.main.ui.doubleSpinBox_mult_mid.value(),
                 self.main.ui.doubleSpinBox_mult_high.value()]
-        noise = 2000
+        noise = self.main.ui.horizontalSlider_noise.value()
         limiter = max(val)
         if limiter > noise:
             multval = [(lowval-noise)/(limiter-noise) if lowval > noise else 0,
@@ -479,35 +491,59 @@ class TabSound(Tab):
             r = (lowcolor[0]+midcolor[0]+highcolor[0]) * mult[0] * multval[0]
             g = (lowcolor[1]+midcolor[1]+highcolor[1]) * mult[1] * multval[1]
             b = (lowcolor[2]+midcolor[2]+highcolor[2]) * mult[2] * multval[2]
-            self.main.setcolor(int(r), int(g), int(b), 0)
-        # print(max(val), '\t', end='')
-        # r = (lowcolor[0] + midcolor[0] + highcolor[0])
-        # cols = 3
-        # step = int(len(fur)/cols)
-        # avgfur, avgfreq = [], []
-        # for i in range(cols):
-        #     sumfur, sumfreq = 0, 0
-        #     for j in range(step*i, step*(i+1)):
-        #         sumfur += fur[j]
-        #         sumfreq += freq[j]
-        #     avgfur.append(sumfur/step)
-        #     avgfreq.append(sumfreq/step)
-        # height = 12
-        # out = ''
-        # for i in range(height-1, -1, -1):
-        #     for j in avgfur:
-        #         out += '#' if j > 1000/height*i else ' '
-        #     out += '\n'
-        # print(out)
+            for i in range(6):
+                self.main.setcolor(int(r), int(g), int(b), i)
+        else:
+            for i in range(6):
+                self.main.setcolor(0, 0, 0, i)
 
     def change(self, val, freq):
-        pass
+        freqlow = self.main.ui.verticalSlider_lower_low.value()
+        freqhigh = self.main.ui.verticalSlider_higher_low.value()
+        limit = self.main.ui.horizontalSlider_noise.value()
+        lvl = []
+        for i in range(len(freq)):
+            if freqlow < freq[i] < freqhigh:
+                lvl.append(val[i])
+        lvl = sum(lvl) / len(lvl)
+        if lvl > limit:
+            for i in range(6):
+                self.main.setcolor(*Color.hex2rgb(self.colors[self.count]), i)
+            self.count = self.count+1 if self.count < len(self.colors)-1 else 0
 
     def flash(self, val, freq):
-        pass
+        freqlow = self.main.ui.verticalSlider_lower_low.value()
+        freqhigh = self.main.ui.verticalSlider_higher_low.value()
+        limit = self.main.ui.horizontalSlider_noise.value()
+        lvl = []
+        for i in range(len(freq)):
+            if freqlow < freq[i] < freqhigh:
+                lvl.append(val[i])
+        lvl = sum(lvl) / len(lvl)
+        if lvl > limit:
+            for i in range(6):
+                self.main.setcolor(*Color.hex2rgb(self.colors[self.count]), i)
+            for i in range(6):
+                self.main.setcolor(0, 0, 0, i)
+            self.count = self.count + 1 if self.count < len(self.colors) - 1 else 0
 
     def strob(self, val, freq):
-        pass
+        freqlow = self.main.ui.verticalSlider_lower_low.value()
+        freqhigh = self.main.ui.verticalSlider_higher_low.value()
+        limit = self.main.ui.horizontalSlider_noise.value()
+        lvl = []
+        for i in range(len(freq)):
+            if freqlow < freq[i] < freqhigh:
+                lvl.append(val[i])
+        lvl = sum(lvl) / len(lvl)
+        if lvl > limit:
+            for _ in range(2):
+                for i in range(6):
+                    self.main.setcolor(*Color.hex2rgb(self.colors[self.count]), i)
+                for __ in range(3):
+                    for i in range(6):
+                        self.main.setcolor(0, 0, 0, i)
+            self.count = self.count + 1 if self.count < len(self.colors) - 1 else 0
 
 
 class TabExtBacklight(Tab):
@@ -538,7 +574,6 @@ class MainWin(QMainWindow):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.ui.comboBox_input.currentIndexChanged()
         # try connection
         self.con = Connection(baud=38400)
         try:
@@ -578,7 +613,7 @@ class MainWin(QMainWindow):
             self.ui.tabWidget.setTabEnabled(i, flag)
 
     def detectdevices(self):
-        baddevices = ['Android Platform', 'AndroidNet']  # bug with write on 38400 baud (Windows?)
+        baddevices = ['Android Platform', 'AndroidNet']                        # bug with write on 38400 baud (Windows?)
         res = []
         devs = self.con.devicesonline()
         coms = list(devs.keys())
