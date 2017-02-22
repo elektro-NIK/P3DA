@@ -390,31 +390,31 @@ class TabSound(Tab):
 
     def changeslider(self, val):  # 1 <= 2 <= 3 <= 4 <= 5 <= 6 (sliders)
         if self.main.sender() == self.main.ui.verticalSlider_lower_low:
-            if val > self.main.ui.verticalSlider_higher_low.value():
-                self.main.ui.verticalSlider_higher_low.setValue(val)
+            if val+10 > self.main.ui.verticalSlider_higher_low.value():
+                self.main.ui.verticalSlider_higher_low.setValue(val+10)
         elif self.main.sender() == self.main.ui.verticalSlider_higher_low:
             if val > self.main.ui.verticalSlider_lower_mid.value():
                 self.main.ui.verticalSlider_lower_mid.setValue(val)
-            if val < self.main.ui.verticalSlider_lower_low.value():
-                self.main.ui.verticalSlider_lower_low.setValue(val)
+            if val-10 < self.main.ui.verticalSlider_lower_low.value():
+                self.main.ui.verticalSlider_lower_low.setValue(val-10)
         elif self.main.sender() == self.main.ui.verticalSlider_lower_mid:
-            if val > self.main.ui.verticalSlider_higher_mid.value():
-                self.main.ui.verticalSlider_higher_mid.setValue(val)
+            if val+10 > self.main.ui.verticalSlider_higher_mid.value():
+                self.main.ui.verticalSlider_higher_mid.setValue(val+10)
             if val < self.main.ui.verticalSlider_higher_low.value():
                 self.main.ui.verticalSlider_higher_low.setValue(val)
         elif self.main.sender() == self.main.ui.verticalSlider_higher_mid:
             if val > self.main.ui.verticalSlider_lower_high.value():
                 self.main.ui.verticalSlider_lower_high.setValue(val)
-            if val < self.main.ui.verticalSlider_lower_mid.value():
-                self.main.ui.verticalSlider_lower_mid.setValue(val)
+            if val-10 < self.main.ui.verticalSlider_lower_mid.value():
+                self.main.ui.verticalSlider_lower_mid.setValue(val-10)
         elif self.main.sender() == self.main.ui.verticalSlider_lower_high:
-            if val > self.main.ui.verticalSlider_higher_high.value():
-                self.main.ui.verticalSlider_higher_high.setValue(val)
+            if val+10 > self.main.ui.verticalSlider_higher_high.value():
+                self.main.ui.verticalSlider_higher_high.setValue(val+10)
             if val < self.main.ui.verticalSlider_higher_mid.value():
                 self.main.ui.verticalSlider_higher_mid.setValue(val)
         elif self.main.sender() == self.main.ui.verticalSlider_higher_high:
-            if val < self.main.ui.verticalSlider_lower_high.value():
-                self.main.ui.verticalSlider_lower_high.setValue(val)
+            if val-10 < self.main.ui.verticalSlider_lower_high.value():
+                self.main.ui.verticalSlider_lower_high.setValue(val-10)
 
     def colorselector(self):
         # noinspection PyArgumentList
@@ -444,7 +444,7 @@ class TabSound(Tab):
 
     def setcolorinterrupt(self):
         val = self.stream.readAll().data()
-        self.input.suspend()
+        self.timer.stop()
         if val:
             from numpy import fft
             from numpy.ma import absolute
@@ -458,7 +458,8 @@ class TabSound(Tab):
                       'Flash': self.flash,
                       'Strob': self.strob}
             switch[self.mode](fur, freq)
-        self.input.resume()
+        timeout = 50 if self.mode == 'Smooth' else 200
+        self.timer.start(timeout)
 
     def smooth(self, val, freq):
         lowcolor = Color.hex2rgb(self.main.ui.pushButton_color_low.text())
@@ -477,9 +478,9 @@ class TabSound(Tab):
         for i in range(len(freq)):
             if highlimits[0] < freq[i] < highlimits[1]:
                 highval.append(val[i])
-        lowval = sum(lowval)/len(lowval) if lowval else 0
-        midval = sum(midval)/len(midval) if midval else 0
-        highval = sum(highval)/len(highval) if highval else 0
+        lowval = max(lowval) if lowval else 0
+        midval = max(midval) if midval else 0
+        highval = max(highval) if highval else 0
         mult = [self.main.ui.doubleSpinBox_mult_low.value(),
                 self.main.ui.doubleSpinBox_mult_mid.value(),
                 self.main.ui.doubleSpinBox_mult_high.value()]
