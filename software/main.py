@@ -7,6 +7,7 @@ import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
 from PyQt5.QtCore import QTimer
 from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
+from pyqtgraph import setConfigOptions, mkPen
 
 
 class Connection:
@@ -583,6 +584,9 @@ class TabSetup(Tab):
         self.main.ui.comboBox_device.addItems(self.main.devs)
         if self.main.devs:
             self.main.ui.label_device.setText(devs[self.main.devs[0]])
+        setConfigOptions(antialias=True)
+        self.main.ui.graphicsView_gamma.setRange(xRange=[0, 255], yRange=[0, 511])
+        self.main.ui.graphicsView_gamma.setMenuEnabled(False)
         self.updategraphics()
 
     def enabletab(self, flag):
@@ -611,6 +615,7 @@ class TabSetup(Tab):
         g = self.main.ui.horizontalSlider_wb_g.value()
         b = self.main.ui.horizontalSlider_wb_b.value()
         self.main.wb = {'R': r, 'G': g, 'B': b}
+        self.updategraphics()
         for ch in range(6):
             self.main.con.write('#S{:1}{:03x}{:03x}{:03x}'.format(ch, r, g, b))
 
@@ -618,9 +623,16 @@ class TabSetup(Tab):
         self.main.gamma = val
         self.updategraphics()
 
-    # TODO: gamma graphic
     def updategraphics(self):
-        pass
+        self.main.ui.graphicsView_gamma.clear()
+        main = [(x / 255) ** self.main.gamma * 511 for x in range(255)]
+        red = [(x/255) ** self.main.gamma * self.main.wb['R'] for x in range(255)]
+        green = [(x/255) ** self.main.gamma * self.main.wb['G'] for x in range(255)]
+        blue = [(x/255) ** self.main.gamma * self.main.wb['B'] for x in range(255)]
+        self.main.ui.graphicsView_gamma.plot(red, pen='#ff0000')
+        self.main.ui.graphicsView_gamma.plot(green, pen='#00ff00')
+        self.main.ui.graphicsView_gamma.plot(blue, pen='#0000ff')
+        self.main.ui.graphicsView_gamma.plot(main, pen=mkPen('#ffffff', width=2))
 
 
 class MainWin(QMainWindow):
@@ -637,18 +649,18 @@ class MainWin(QMainWindow):
             self.con.createconnection(self.devs[0])
         msg = 'Connected to {}'.format(self.con.dev) if self.con.con else 'No serial adapter found!'
         self.ui.statusbar.showMessage(msg)
-        # initializing classes
-        self.tablight = TabLight(self)
-        self.tabilumination = TabIlumination(self)
-        self.tabsound = TabSound(self)
-        self.tabextbacklight = TabExtBacklight(self)
-        self.tabsetup = TabSetup(self)
         # corrections
         self.gamma = self.ui.doubleSpinBox_gamma.value()
         r = self.ui.horizontalSlider_wb_r.value()
         g = self.ui.horizontalSlider_wb_g.value()
         b = self.ui.horizontalSlider_wb_b.value()
         self.wb = {'R': r, 'G': g, 'B': b}
+        # initializing classes
+        self.tablight = TabLight(self)
+        self.tabilumination = TabIlumination(self)
+        self.tabsound = TabSound(self)
+        self.tabextbacklight = TabExtBacklight(self)
+        self.tabsetup = TabSetup(self)
         # init
         self.ui.tabWidget.currentChanged.connect(self.updatetab)
         self.updatetab(0)

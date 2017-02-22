@@ -1009,7 +1009,7 @@ class Ui_MainWindow(object):
         self.groupBox_gamma.setObjectName("groupBox_gamma")
         self.gridLayout_13 = QtWidgets.QGridLayout(self.groupBox_gamma)
         self.gridLayout_13.setObjectName("gridLayout_13")
-        self.graphicsView_gamma = QtWidgets.QGraphicsView(self.groupBox_gamma)
+        self.graphicsView_gamma = PlotWidget(self.groupBox_gamma)
         self.graphicsView_gamma.setObjectName("graphicsView_gamma")
         self.gridLayout_13.addWidget(self.graphicsView_gamma, 0, 0, 1, 1)
         self.doubleSpinBox_gamma = QtWidgets.QDoubleSpinBox(self.groupBox_gamma)
@@ -1029,6 +1029,7 @@ class Ui_MainWindow(object):
         self.comboBox_device.setObjectName("comboBox_device")
         self.gridLayout_14.addWidget(self.comboBox_device, 0, 0, 1, 1)
         self.label_device = QtWidgets.QLabel(self.groupBox_device)
+        self.label_device.setText("")
         self.label_device.setObjectName("label_device")
         self.gridLayout_14.addWidget(self.label_device, 0, 2, 1, 1)
         self.pushButton_update = QtWidgets.QPushButton(self.groupBox_device)
@@ -1256,6 +1257,6 @@ class Ui_MainWindow(object):
         self.label_21.setText(_translate("MainWindow", "Blue"))
         self.groupBox_gamma.setTitle(_translate("MainWindow", "Gamma"))
         self.groupBox_device.setTitle(_translate("MainWindow", "Device selector"))
-        self.label_device.setText(_translate("MainWindow", "None"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_setup), _translate("MainWindow", "Setup"))
 
+from pyqtgraph import PlotWidget

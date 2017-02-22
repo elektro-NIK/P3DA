@@ -36,7 +36,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -2169,7 +2169,7 @@ background-color: rgb(0, 0, 0);</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_13">
            <item row="0" column="0">
-            <widget class="QGraphicsView" name="graphicsView_gamma"/>
+            <widget class="PlotWidget" name="graphicsView_gamma"/>
            </item>
            <item row="1" column="0">
             <widget class="QDoubleSpinBox" name="doubleSpinBox_gamma">
@@ -2238,6 +2238,13 @@ background-color: rgb(0, 0, 0);</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>pushButton_color</tabstop>
   <tabstop>horizontalSlider_r</tabstop>
