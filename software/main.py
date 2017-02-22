@@ -486,7 +486,7 @@ class TabSound(Tab):
                 self.main.ui.doubleSpinBox_mult_mid.value(),
                 self.main.ui.doubleSpinBox_mult_high.value()]
         noise = self.main.ui.horizontalSlider_noise.value()
-        limiter = max(val)
+        limiter = max(val) if max(val) > 4000 else 4000
         if limiter > noise:
             multval = [(lowval-noise)/(limiter-noise) if lowval > noise else 0,
                        (midval-noise)/(limiter-noise) if midval > noise else 0,
