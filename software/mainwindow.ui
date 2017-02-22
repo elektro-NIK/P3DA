@@ -1949,7 +1949,7 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QSpinBox" name="spinBox_ch1">
+            <widget class="QSpinBox" name="spinBox_count_zones">
              <property name="maximum">
               <number>6</number>
              </property>
@@ -1964,7 +1964,7 @@ background-color: rgb(0, 0, 0);</string>
               <string>Count of zones</string>
              </property>
              <property name="buddy">
-              <cstring>spinBox_ch1</cstring>
+              <cstring>spinBox_count_zones</cstring>
              </property>
             </widget>
            </item>

@@ -5,7 +5,7 @@ import serial
 import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
 from pyqtgraph import setConfigOptions, mkPen
 
@@ -552,17 +552,27 @@ class TabSound(Tab):
 class TabExtBacklight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
-        self.zones = None
+        self.zones = []
         # connections
-        self.main.ui.pushButton_zones.clicked.connect(self.setzones)
-        self.main.ui.pushButton_ext_on_off.clicked.connect(self.extonoff)
+        self.main.ui.pushButton_zones.toggled.connect(self.setzones)
+        self.main.ui.pushButton_ext_on_off.toggled.connect(self.extonoff)
 
     def enabletab(self, flag):
-        self.main.ui.groupBox_setup_ext.setEnabled(flag)
+        self.main.ui.groupBox_setup_ext.setEnabled(True)    # Fixme!!!
 
     # TODO: rects of capture
-    def setzones(self):
-        pass
+    def setzones(self, flag):
+        from PyQt5.QtWidgets import QWidget
+        if flag:
+            for i in range(self.main.ui.spinBox_count_zones.value()):
+                rect = QWidget(None, flags=Qt.WindowStaysOnTopHint and Qt.CustomizeWindowHint)
+                # TODO: move window without titlebar
+                rect.setWindowTitle('Zone {}'.format(i+1))
+                rect.setAcceptDrops(True)
+                self.zones.append(rect)
+                self.zones[i].show()
+        else:
+            self.zones = []
 
     # TODO: Ext backlight
     def extonoff(self):
