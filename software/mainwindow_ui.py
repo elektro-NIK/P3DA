@@ -767,6 +767,7 @@ class Ui_MainWindow(object):
         self.spinBox_higher_mid = QtWidgets.QSpinBox(self.groupBox_freq)
         self.spinBox_higher_mid.setMinimum(100)
         self.spinBox_higher_mid.setMaximum(2000)
+        self.spinBox_higher_mid.setProperty("value", 1000)
         self.spinBox_higher_mid.setObjectName("spinBox_higher_mid")
         self.gridLayout_16.addWidget(self.spinBox_higher_mid, 4, 4, 1, 1)
         self.spinBox_lower_mid = QtWidgets.QSpinBox(self.groupBox_freq)
