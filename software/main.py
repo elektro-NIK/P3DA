@@ -4,8 +4,8 @@ import sys
 import serial
 import serial.tools.list_ports
 import mainwindow_ui
-from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog, QWidget
+from PyQt5.QtCore import QTimer
 from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
 from pyqtgraph import setConfigOptions, mkPen
 
@@ -553,30 +553,40 @@ class TabExtBacklight(Tab):
     def __init__(self, obj):
         super().__init__(obj)
         self.zones = []
+        self.geometry = None
+        self.timer = QTimer()
         # connections
+        # noinspection PyUnresolvedReferences
+        self.timer.timeout.connect(self.newprintscreen)
         self.main.ui.pushButton_zones.toggled.connect(self.setzones)
         self.main.ui.pushButton_ext_on_off.toggled.connect(self.extonoff)
+        # TODO: combobox
 
     def enabletab(self, flag):
-        self.main.ui.groupBox_setup_ext.setEnabled(True)    # Fixme!!!
+        self.main.ui.groupBox_setup_ext.setEnabled(True)    # Fixme: !!!
 
-    # TODO: rects of capture
     def setzones(self, flag):
-        from PyQt5.QtWidgets import QWidget
+        self.main.ui.pushButton_ext_on_off.setEnabled(not flag)
         if flag:
-            for i in range(self.main.ui.spinBox_count_zones.value()):
-                rect = QWidget(None, flags=Qt.WindowStaysOnTopHint and Qt.CustomizeWindowHint)
-                # TODO: move window without titlebar
-                rect.setWindowTitle('Zone {}'.format(i+1))
-                rect.setAcceptDrops(True)
-                self.zones.append(rect)
-                self.zones[i].show()
+            self.zones = [ZoneRect(i+1) for i in range(self.main.ui.spinBox_count_zones.value())]
+            for rect in self.zones:
+                rect.show()
         else:
+            self.geometry = [rect.geometry() for rect in self.zones]
             self.zones = []
 
-    # TODO: Ext backlight
-    def extonoff(self):
-        pass
+    def extonoff(self, flag):
+        self.main.ui.pushButton_zones.setEnabled(not (flag and self.geometry))
+        if flag and self.geometry:
+            self.timer.start(self.main.ui.spinBox_update.value())
+        else:
+            self.main.ui.pushButton_ext_on_off.setChecked(False)
+            self.timer.stop()
+
+    # TODO: screen parsing
+    def newprintscreen(self):
+        # shot = QPixmap.grabWindow(QAplication.desktop().win.Id())
+        print('!'*len(self.geometry))
 
 
 class TabSetup(Tab):
@@ -643,6 +653,40 @@ class TabSetup(Tab):
         self.main.ui.graphicsView_gamma.plot(green, pen='#00ff00')
         self.main.ui.graphicsView_gamma.plot(blue, pen='#0000ff')
         self.main.ui.graphicsView_gamma.plot(main, pen=mkPen('#ffffff', width=2))
+
+
+class ZoneRect(QWidget):
+    def __init__(self, num):
+        from PyQt5.QtWidgets import QLabel, QHBoxLayout
+        from PyQt5.QtCore import Qt
+        from PyQt5.QtGui import QFont
+        from random import randint
+        super().__init__(parent=None, flags=Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
+        self.mpos = 0
+        self.setWindowTitle('Zone {}'.format(num))
+        label, layout, font = QLabel(), QHBoxLayout(), QFont()
+        font.setFamily("Arial")
+        font.setPointSize(40)
+        label.setFont(font)
+        label.setText(str(num))
+        layout.addWidget(label, 0, Qt.AlignHCenter | Qt.AlignVCenter)
+        self.setLayout(layout)
+        self.setWindowOpacity(0.5)
+        # noinspection PyArgumentList
+        height = QApplication.desktop().screenGeometry().height()
+        # noinspection PyArgumentList
+        width = QApplication.desktop().screenGeometry().width()
+        self.setGeometry(randint(0, width-100), randint(0, height-100), 100, 100)
+
+    def mousePressEvent(self, event):
+        self.mpos = event.pos()
+
+    def mouseMoveEvent(self, event):
+        from PyQt5.QtCore import Qt
+        if event.buttons() == Qt.LeftButton:
+            diff = event.pos() - self.mpos
+            newpos = self.pos() + diff
+            self.move(newpos)
 
 
 class MainWin(QMainWindow):
