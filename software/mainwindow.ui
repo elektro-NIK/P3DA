@@ -1593,7 +1593,7 @@ background-color: rgb(0, 0, 0);</string>
               <number>20000</number>
              </property>
              <property name="value">
-              <number>1000</number>
+              <number>20000</number>
              </property>
             </widget>
            </item>
