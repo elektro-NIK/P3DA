@@ -585,8 +585,10 @@ class TabExtBacklight(Tab):
 
     # TODO: screen parsing
     def newprintscreen(self):
-        # shot = QPixmap.grabWindow(QAplication.desktop().win.Id())
-        print('!'*len(self.geometry))
+        from PyQt5.QtGui import QGuiApplication
+        screen = QGuiApplication.primaryScreen()
+        shot = screen.grabWindow(QApplication.desktop().winId())
+        print('!'*len(self.geometry), shot)
 
 
 class TabSetup(Tab):
@@ -655,13 +657,15 @@ class TabSetup(Tab):
         self.main.ui.graphicsView_gamma.plot(main, pen=mkPen('#ffffff', width=2))
 
 
+# TODO: resizable zones
+# http://stackoverflow.com/questions/37047236/qt-resizable-and-movable-main-window-without-title-bar
 class ZoneRect(QWidget):
     def __init__(self, num):
         from PyQt5.QtWidgets import QLabel, QHBoxLayout
         from PyQt5.QtCore import Qt
         from PyQt5.QtGui import QFont
         from random import randint
-        super().__init__(parent=None, flags=Qt.CustomizeWindowHint | Qt.WindowStaysOnTopHint)
+        super().__init__(parent=None, flags=Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.mpos = 0
         self.setWindowTitle('Zone {}'.format(num))
         label, layout, font = QLabel(), QHBoxLayout(), QFont()
