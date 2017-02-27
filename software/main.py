@@ -563,7 +563,8 @@ class TabExtBacklight(Tab):
         # TODO: combobox
 
     def enabletab(self, flag):
-        self.main.ui.groupBox_setup_ext.setEnabled(True)    # Fixme: !!!
+        # Fixme: True -> flag
+        self.main.ui.groupBox_setup_ext.setEnabled(True)
 
     def setzones(self, flag):
         self.main.ui.pushButton_ext_on_off.setEnabled(not flag)
@@ -582,12 +583,19 @@ class TabExtBacklight(Tab):
         else:
             self.main.ui.pushButton_ext_on_off.setChecked(False)
             self.timer.stop()
+            # TODO: delete me!
+            from PyQt5.QtGui import QPixmap
+            self.main.ui.label_img.setPixmap(QPixmap())
 
-    # TODO: screen parsing
     def newprintscreen(self):
         from PyQt5.QtGui import QGuiApplication
+        # noinspection PyArgumentList
         screen = QGuiApplication.primaryScreen()
+        # noinspection PyArgumentList
         shot = screen.grabWindow(QApplication.desktop().winId())
+        shot = shot.scaledToHeight(self.main.ui.label_img.height())
+        # TODO: crop
+        self.main.ui.label_img.setPixmap(shot)
         print('!'*len(self.geometry), shot)
 
 
@@ -657,40 +665,35 @@ class TabSetup(Tab):
         self.main.ui.graphicsView_gamma.plot(main, pen=mkPen('#ffffff', width=2))
 
 
-# TODO: resizable zones
-# http://stackoverflow.com/questions/37047236/qt-resizable-and-movable-main-window-without-title-bar
 class ZoneRect(QWidget):
-    def __init__(self, num):
-        from PyQt5.QtWidgets import QLabel, QHBoxLayout
+    def __init__(self, num, x=0, y=0, width=100, height=100):
+        from PyQt5.QtWidgets import QLabel, QVBoxLayout, QStatusBar
         from PyQt5.QtCore import Qt
         from PyQt5.QtGui import QFont
-        from random import randint
         super().__init__(parent=None, flags=Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        # var
         self.mpos = 0
-        self.setWindowTitle('Zone {}'.format(num))
-        label, layout, font = QLabel(), QHBoxLayout(), QFont()
-        font.setFamily("Arial")
+        # setup
+        layout, label, font, statusbar = QVBoxLayout(), QLabel(), QFont(), QStatusBar()
+        font.setFamily("Arial");
         font.setPointSize(40)
         label.setFont(font)
         label.setText(str(num))
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(label, 0, Qt.AlignHCenter | Qt.AlignVCenter)
+        layout.addWidget(statusbar)
         self.setLayout(layout)
+        self.setWindowTitle('Zone {}'.format(num))
         self.setWindowOpacity(0.5)
-        # noinspection PyArgumentList
-        height = QApplication.desktop().screenGeometry().height()
-        # noinspection PyArgumentList
-        width = QApplication.desktop().screenGeometry().width()
-        self.setGeometry(randint(0, width-100), randint(0, height-100), 100, 100)
+        self.setGeometry(x, y, width, height)
 
     def mousePressEvent(self, event):
         self.mpos = event.pos()
 
     def mouseMoveEvent(self, event):
-        from PyQt5.QtCore import Qt
-        if event.buttons() == Qt.LeftButton:
-            diff = event.pos() - self.mpos
-            newpos = self.pos() + diff
-            self.move(newpos)
+        diff = event.pos() - self.mpos
+        newpos = self.pos() + diff
+        self.move(newpos)
 
 
 class MainWin(QMainWindow):
