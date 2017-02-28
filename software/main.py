@@ -563,8 +563,7 @@ class TabExtBacklight(Tab):
         # TODO: combobox
 
     def enabletab(self, flag):
-        # Fixme: True -> flag
-        self.main.ui.groupBox_setup_ext.setEnabled(True)
+        self.main.ui.groupBox_setup_ext.setEnabled(flag)
 
     def setzones(self, flag):
         self.main.ui.pushButton_ext_on_off.setEnabled(not flag)
@@ -578,14 +577,12 @@ class TabExtBacklight(Tab):
 
     def extonoff(self, flag):
         self.main.ui.pushButton_zones.setEnabled(not (flag and self.geometry))
+        self.main.settabsenable(not flag)
         if flag and self.geometry:
             self.timer.start(self.main.ui.spinBox_update.value())
         else:
             self.main.ui.pushButton_ext_on_off.setChecked(False)
             self.timer.stop()
-            # TODO: delete me!
-            from PyQt5.QtGui import QPixmap
-            self.main.ui.label_img.setPixmap(QPixmap())
 
     def newprintscreen(self):
         from PyQt5.QtGui import QGuiApplication
