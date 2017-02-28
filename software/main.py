@@ -593,10 +593,12 @@ class TabExtBacklight(Tab):
         screen = QGuiApplication.primaryScreen()
         # noinspection PyArgumentList
         shot = screen.grabWindow(QApplication.desktop().winId())
-        shot = shot.scaledToHeight(self.main.ui.label_img.height())
-        # TODO: crop
-        self.main.ui.label_img.setPixmap(shot)
-        print('!'*len(self.geometry), shot)
+        # TODO: add setup black, white
+        from PyQt5.QtCore import Qt
+        crop = [shot.copy(i).scaled(1, 1, transformMode=Qt.SmoothTransformation).toImage().pixel(0, 0) for i in self.geometry]
+        crop = ['#'+'{:x}'.format(i)[2:] for i in crop]
+        for i in range(len(crop)):
+            self.main.setcolor(*Color.hex2rgb(crop[i]), i)
 
 
 class TabSetup(Tab):
