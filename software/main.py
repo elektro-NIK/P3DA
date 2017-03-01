@@ -695,6 +695,7 @@ class ZoneRect(QWidget):
         self.move(newpos)
 
 
+# TODO: saving and restoring settings
 class MainWin(QMainWindow):
     # noinspection PyArgumentList
     def __init__(self, parent=None):

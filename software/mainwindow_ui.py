@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\elektroNIK\Desktop\P3DA\software\mainwindow.ui'
+# Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -926,15 +926,6 @@ class Ui_MainWindow(object):
         self.pushButton_ext_on_off.setCheckable(True)
         self.pushButton_ext_on_off.setObjectName("pushButton_ext_on_off")
         self.gridLayout_19.addWidget(self.pushButton_ext_on_off, 10, 1, 1, 2)
-        self.label_img = QtWidgets.QLabel(self.groupBox_setup_ext)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_img.sizePolicy().hasHeightForWidth())
-        self.label_img.setSizePolicy(sizePolicy)
-        self.label_img.setText("")
-        self.label_img.setObjectName("label_img")
-        self.gridLayout_19.addWidget(self.label_img, 11, 1, 1, 2)
         self.gridLayout_4.addWidget(self.groupBox_setup_ext, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_ext_backlight, "")
         self.tab_setup = QtWidgets.QWidget()
