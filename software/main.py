@@ -666,21 +666,21 @@ class TabSetup(Tab):
 
 class ZoneRect(QWidget):
     def __init__(self, num, x=0, y=0, width=100, height=100):
-        from PyQt5.QtWidgets import QLabel, QVBoxLayout, QStatusBar
+        from PyQt5.QtWidgets import QLabel, QVBoxLayout, QSizeGrip
         from PyQt5.QtCore import Qt
         from PyQt5.QtGui import QFont
         super().__init__(parent=None, flags=Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         # var
         self.mpos = 0
         # setup
-        layout, label, font, statusbar = QVBoxLayout(), QLabel(), QFont(), QStatusBar()
+        layout, label, font = QVBoxLayout(), QLabel(), QFont()
         font.setFamily("Arial");
         font.setPointSize(40)
         label.setFont(font)
         label.setText(str(num))
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(label, 0, Qt.AlignHCenter | Qt.AlignVCenter)
-        layout.addWidget(statusbar)
+        layout.addWidget(QSizeGrip(self), 0, Qt.AlignBottom | Qt.AlignRight)
         self.setLayout(layout)
         self.setWindowTitle('Zone {}'.format(num))
         self.setWindowOpacity(0.5)
@@ -689,10 +689,14 @@ class ZoneRect(QWidget):
     def mousePressEvent(self, event):
         self.mpos = event.pos()
 
+    def mouseReleaseEvent(self, event):
+        self.mpos = None
+
     def mouseMoveEvent(self, event):
-        diff = event.pos() - self.mpos
-        newpos = self.pos() + diff
-        self.move(newpos)
+        if self.mpos:
+            diff = event.pos() - self.mpos
+            newpos = self.pos() + diff
+            self.move(newpos)
 
 
 # TODO: saving and restoring settings
