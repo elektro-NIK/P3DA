@@ -1,0 +1,152 @@
+@startuml
+
+class Connections {
+    - <b>dev</b>:str
+    - <b>baud</b>:int
+    - <b>timeout</b>:float
+    - <b>con</b>: pyserial
+    + <b>{static} devicesonline</b>()
+    + <b>createconection</b>(dev:str)
+    + <b>connectionisopen</b>()
+    + <b>write</b>(msg:str)
+    + <b>read</b>(n:int)
+    + <b>readline</b>()
+    + <b>close</b>()
+}
+
+abstract class Color{
+    + <b>{static} hex2rgb</b>(color:str)
+    + <b>{static} rgb2hex</b>(r:int, g:int, b:int)
+    + <b>{static} plainbuttonstyle</b>(color:str)
+}
+
+abstract class Effect {
+    + <b>{static} change</b>(colors:str[], time:int)
+    + <b>{static} fadeblack</b>(colors:str[], time:int)
+    + <b>{static} fadewhite</b>(colors:str[], time:int)
+    + <b>{static} smooth</b>(colors:str[], time:int)
+    + <b>{static} flash</b>(colors:str[], time:int)
+    + <b>{static} strob</b>(colors:str[], time:int)
+}
+
+class Tab {
+    - <b>main</b>:QMainWindow
+    - <b>enabletab</b>(flag:bool)
+}
+
+class TabLight {
+    - <b>rgb</b>:int[]
+    - <b>updatepalette</b>()
+    - <b>connectsliders</b>()
+    - <b>disconnectsliders</b>()
+    - <b>connectdial</b>()
+    - <b>disconnectdial</b>()
+    - <b>palettebutton</b>()
+    - <b>savergb</b>()
+    - <b>dialbright</b>(val:int)
+    - <b>slidercolor</b>()
+    - <b>colorselector</b>()
+}
+
+class TabIlumination {
+    - <b>colorlist</b>:str[]
+    - <b>cursor</b>:int
+    - <b>timer</b>:QTimer
+    - <b>effectbutton</b>(flag:bool)
+    - <b>checkinput</b>()
+    - <b>effectstart</b>(num:int, colors:str[], time:int)
+    - <b>setcolorinterrupt</b>()
+}
+
+class TabSound {
+    - <b>mode</b>:str
+    - <b>colors</b>:str[]
+    - <b>count</b>:int
+    - <b>inputdevices</b>:QAudioInputDevice[]
+    - <b>input</b>:QAudioInput
+    - <b>stream</b>:QFile
+    - <b>timer</b>:QTimer
+    - <b>updatebuttons</b>()
+    - <b>checkinput</b>()
+    - <b>changeinput</b>(val:int)
+    - <b>changetextedit</b>(val:int)
+    - <b>changeslider</b>(val:int)
+    - <b>colorselector</b>()
+    - <b>soundbuttononoff</b>(flag:bool)
+    - <b>setcolorinterrupt</b>()
+    - <b>smooth</b>(val:float[], freq:float[])
+    - <b>change</b>(val:float[], freq:float[])
+    - <b>flash</b>(val:float[], freq:float[])
+    - <b>strob</b>(val:float[], freq:float[])
+}
+
+class TabExtBacklight {
+    - <b>zones</b>:ZoneRect[]
+    - <b>geometry</b>:QRect[]
+    - <b>timer</b>:QTimer
+    - <b>setzones</b>(flag:bool)
+    - <b>extonoff</b>(flag:bool)
+    - <b>newprintscreen</b>()
+    + <b><font color=#ff0000>TODO!!!()</font></b>
+
+}
+
+class TabSetup {
+    - <b>newconnection</b>(val:int)
+    - <b>updatedevs</b>()
+    - <b>updatewb</b>()
+    - <b>updategamma</b>(val:float)
+    - <b>updategraphics</b>()
+}
+
+class ZoneRect {
+    - <b>mpos</b>:QPoint
+    - <b>mousePressEvent</b>(event:QMouseEvent)
+    - <b>mouseReleaseEvent</b>(event:QMouseEvent)
+    - <b>mouseMoveEvent</b>(event:QMouseEvent)
+}
+
+class MainWin {
+    + <b>ui</b>:Ui_MainWindow
+    - <b>settings</b>:QSettings
+    - <b>con</b>:pyserial
+    - <b>devs</b>:dict
+    - <b>gamma</b>:float
+    - <b>wb</b>:dict
+    - <b>tablight</b>:TabLight
+    - <b>tabilumination</b>:TabIlumination
+    - <b>tabsound</b>:TabSound
+    - <b>tabextbacklight</b>:TabExtBacklight
+    - <b>tabsetup</b>:TabSetup
+    - <b>updatetab</b>(val:int)
+    - <b>settabsenable</b>(flag:bool)
+    - <b>detectdevices</b>()
+    - <b>setcolor</b>(r:int, g:int, b:int, ch:int)
+    - <b>gammacorrection</b>(val:int, color:str)
+    - <b>{static}checktext</b>(text:str)
+    - <b>closeEvent</b>(event:QEvent)
+}
+
+note top of MainWin
+    main
+end note
+
+MainWin          *-left-  Connections
+MainWin          *-down-  TabLight
+MainWin          *-down-  TabIlumination
+MainWin          *-down-  TabSound
+MainWin          *-down-  TabExtBacklight
+MainWin          *-down-  TabSetup
+Tab              <|-up-   TabLight
+Tab              <|-up-   TabIlumination
+Tab              <|-up-   TabSound
+Tab              <|-up-   TabExtBacklight
+Tab              <|-up-   TabSetup
+TabExtBacklight  o-up-    ZoneRect
+TabIlumination   <.down.  Effect
+TabLight         <.down.  Color
+TabIlumination   <.down.  Color
+TabSound         <.down.  Color
+TabExtBacklight  <.down.  Color
+
+@enduml

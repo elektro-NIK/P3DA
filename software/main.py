@@ -5,7 +5,7 @@ import serial
 import serial.tools.list_ports
 import mainwindow_ui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog, QWidget
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QSettings
 from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
 from pyqtgraph import setConfigOptions, mkPen
 
@@ -584,18 +584,18 @@ class TabExtBacklight(Tab):
             self.main.ui.pushButton_ext_on_off.setChecked(False)
             self.timer.stop()
 
+    # noinspection PyArgumentList
     def newprintscreen(self):
         from PyQt5.QtGui import QGuiApplication
-        # noinspection PyArgumentList
-        screen = QGuiApplication.primaryScreen()
-        # noinspection PyArgumentList
-        shot = screen.grabWindow(QApplication.desktop().winId())
-        # TODO: add setup black, white
         from PyQt5.QtCore import Qt
-        crop = [shot.copy(i).scaled(1, 1, transformMode=Qt.SmoothTransformation).toImage().pixel(0, 0) for i in self.geometry]
-        crop = ['#'+'{:x}'.format(i)[2:] for i in crop]
-        for i in range(len(crop)):
-            self.main.setcolor(*Color.hex2rgb(crop[i]), i)
+        screen = QGuiApplication.primaryScreen()
+        shot = screen.grabWindow(QApplication.desktop().winId())
+        colors = []
+        for i in self.geometry:
+            color = shot.copy(i).scaled(1, 1, transformMode=Qt.SmoothTransformation).toImage().pixel(0, 0)
+            colors.append('#'+'{:x}'.format(color)[2:])
+        for i in range(len(colors)):
+            self.main.setcolor(*Color.hex2rgb(colors[i]), i)
 
 
 class TabSetup(Tab):
@@ -674,7 +674,7 @@ class ZoneRect(QWidget):
         self.mpos = 0
         # setup
         layout, label, font = QVBoxLayout(), QLabel(), QFont()
-        font.setFamily("Arial");
+        font.setFamily("Arial")
         font.setPointSize(40)
         label.setFont(font)
         label.setText(str(num))
@@ -699,15 +699,18 @@ class ZoneRect(QWidget):
             self.move(newpos)
 
 
-# TODO: saving and restoring settings
 class MainWin(QMainWindow):
     # noinspection PyArgumentList
+    # TODO: restore settings
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.ui.comboBox_device.currentIndexChanged()
         # try connection
+        self.settings = QSettings('elektroNIK', 'P3DA')
+        self.ui.horizontalSlider_wb_r.setValue(self.wb['R'])
+        self.ui.horizontalSlider_wb_g.setValue(self.wb['G'])
+        self.ui.horizontalSlider_wb_b.setValue(self.wb['B'])
         self.con = Connection(baud=38400)
         self.devs = self.detectdevices()
         if self.devs:
@@ -787,6 +790,10 @@ class MainWin(QMainWindow):
             else:
                 return False
         return True
+
+    # TODO: save settings
+    def closeEvent(self, event):
+        pass
 
 
 if __name__ == "__main__":
