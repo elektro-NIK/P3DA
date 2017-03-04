@@ -708,9 +708,6 @@ class MainWin(QMainWindow):
         self.ui.setupUi(self)
         # try connection
         self.settings = QSettings('elektroNIK', 'P3DA')
-        self.ui.horizontalSlider_wb_r.setValue(self.wb['R'])
-        self.ui.horizontalSlider_wb_g.setValue(self.wb['G'])
-        self.ui.horizontalSlider_wb_b.setValue(self.wb['B'])
         self.con = Connection(baud=38400)
         self.devs = self.detectdevices()
         if self.devs:
@@ -791,9 +788,17 @@ class MainWin(QMainWindow):
                 return False
         return True
 
+    # TODO: add all
+    def savesetting(self):
+        pass
+
+    # TODO: add all
+    def restoresetting(self):
+        pass
+
     # TODO: save settings
     def closeEvent(self, event):
-        pass
+        self.savesettings()
 
 
 if __name__ == "__main__":
