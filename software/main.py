@@ -257,8 +257,17 @@ class TabLight(Tab):
         self.main.ui.dial_bright.setValue(bright)
         self.connectdial()
         self.main.ui.lcdNumber_bright.display(bright)
-        for i in range(6):
-            self.main.setcolor(*rgb, i)
+        colors = list()  # in exec don't work '=' with self
+        for i in range(19, 0, -1):
+            exec('colors.append(self.main.ui.pushButton_last{:02}.text())'.format(i))
+            style = Color.plainbuttonstyle(colors[-1])
+            exec('self.main.ui.pushButton_last{:02}.setText("{}")'.format(i+1, colors[-1]))
+            exec('self.main.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i+1, style))
+        self.main.ui.pushButton_last01.setText(color)
+        self.main.ui.pushButton_last01.setStyleSheet(Color.plainbuttonstyle(color))
+        self.updatepalette()
+        # for i in range(6):
+        #     self.main.setcolor(*rgb, i)
 
 
 class TabIlumination(Tab):
@@ -726,6 +735,8 @@ class MainWin(QMainWindow):
         self.tabsound = TabSound(self)
         self.tabextbacklight = TabExtBacklight(self)
         self.tabsetup = TabSetup(self)
+        # restoring
+        self.restoresettings()
         # init
         self.ui.tabWidget.currentChanged.connect(self.updatetab)
         self.updatetab(0)
@@ -789,12 +800,43 @@ class MainWin(QMainWindow):
         return True
 
     # TODO: add all
-    def savesetting(self):
-        pass
+    def savesettings(self):
+        colors = list()  # in exec don't work '=' with self
+        for i in range(20):
+            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i+1))
+        effects = []
+        for i in range(4):
+            exec("effects.append([self.ui.comboBox_effect{}.currentIndex(),\
+                                  self.ui.spinBox_time{}.value(),\
+                                  self.ui.plainTextEdit_input{}.toPlainText()])".format(i+1, i+1, i+1))
+        audioin = self.ui.comboBox_input.currentIndex()
+        self.settings.setValue('geometry', self.geometry())
+        self.settings.setValue('palette', colors)
+        self.settings.setValue('effects', effects)
+        self.settings.setValue('input', audioin)
 
     # TODO: add all
-    def restoresetting(self):
-        pass
+    def restoresettings(self):
+        temp = self.settings.value('geometry')
+        if temp:
+            self.setGeometry(temp)
+        temp = self.settings.value('palette')
+        if temp:
+            for i in range(len(temp)):
+                exec('self.ui.pushButton_last{:02}.setText("{}")'.format(i+1, temp[i]))
+                exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i+1, Color.plainbuttonstyle(temp[i])))
+        temp = self.settings.value('effects')
+        if temp:
+            for i in range(len(temp)):
+                index, time, text = temp[i]
+                exec('self.ui.comboBox_effect{}.setCurrentIndex({})'.format(i+1, index))
+                exec('self.ui.spinBox_time{}.setValue({})'.format(i+1, time))
+                exec('self.ui.plainTextEdit_input{}.clear()'.format(i+1))
+                for j in text.split():
+                    exec('self.ui.plainTextEdit_input{}.appendPlainText("{}")'.format(i+1, j))
+        temp = self.settings.value('input')
+        if temp:
+            self.ui.comboBox_input.setCurrentIndex(int(temp))
 
     # TODO: save settings
     def closeEvent(self, event):
