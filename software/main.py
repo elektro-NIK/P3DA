@@ -800,41 +800,53 @@ class MainWin(QMainWindow):
         return True
 
     def savesettings(self):
-        colors = list()  # in exec don't work '=' with self
+        # Window
+        self.settings.setValue('Window/geometry', self.geometry())
+        self.settings.setValue('Window/tab', self.ui.tabWidget.currentIndex())
+        # Tab light
+        self.settings.beginGroup('TabLight')
         for i in range(20):
-            exec('colors.append(self.ui.pushButton_last{:02}.text())'.format(i+1))
-        effects = []
+            exec('self.settings.setValue("color{:02}", self.ui.pushButton_last{:02}.text())'.format(i+1, i+1))
+        self.settings.setValue('color', self.ui.pushButton_color.text())
+        self.settings.endGroup()
+        # Tab effect
+        self.settings.beginGroup('TabEffect')
         for i in range(4):
-            exec("effects.append([self.ui.comboBox_effect{}.currentIndex(),\
-                                  self.ui.spinBox_time{}.value(),\
-                                  self.ui.plainTextEdit_input{}.toPlainText()])".format(i+1, i+1, i+1))
-        audiocolors = [self.ui.pushButton_color_low.text(),
-                       self.ui.pushButton_color_mid.text(),
-                       self.ui.pushButton_color_high.text()]
-        audiomult = [self.ui.doubleSpinBox_mult_low.value(),
-                     self.ui.doubleSpinBox_mult_mid.value(),
-                     self.ui.doubleSpinBox_mult_high.value()]
-        audiosliders = [[self.ui.verticalSlider_lower_low.value(), self.ui.verticalSlider_higher_low.value()],
-                        [self.ui.verticalSlider_lower_mid.value(), self.ui.verticalSlider_higher_mid.value()],
-                        [self.ui.verticalSlider_lower_high.value(), self.ui.verticalSlider_higher_high.value()]]
-        wb = [self.ui.horizontalSlider_wb_r.value(),
-              self.ui.horizontalSlider_wb_g.value(),
-              self.ui.horizontalSlider_wb_b.value()]
-        self.settings.setValue('geometry', self.geometry())
-        self.settings.setValue('palette', colors)
-        self.settings.setValue('effects', effects)
-        self.settings.setValue('audioinput', self.ui.comboBox_input.currentIndex())
-        self.settings.setValue('audiocolors', audiocolors)
-        self.settings.setValue('audiomult', audiomult)
-        self.settings.setValue('audiosliders', audiosliders)
-        self.settings.setValue('audionoise', self.ui.horizontalSlider_noise.value())
-        self.settings.setValue('audioeffect', self.ui.comboBox_effect_music.currentIndex())
-        self.settings.setValue('audiobitcolors', self.ui.plainTextEdit_bitdetector.toPlainText())
+            exec('self.settings.setValue("index{}", self.ui.comboBox_effect{}.currentIndex())'.format(i+1, i+1))
+            exec('self.settings.setValue("time{}", self.ui.spinBox_time{}.value())'.format(i+1, i+1))
+            exec('self.settings.setValue("colors{}", self.ui.plainTextEdit_input{}.toPlainText())'.format(i+1, i+1))
+        self.settings.endGroup()
+        # Tab sound
+        self.settings.beginGroup('TabSound')
+        self.settings.setValue('input', self.ui.comboBox_input.currentIndex())
+        self.settings.setValue('colors', [self.ui.pushButton_color_low.text(),
+                                          self.ui.pushButton_color_mid.text(),
+                                          self.ui.pushButton_color_high.text()])
+        self.settings.setValue('mult', [self.ui.doubleSpinBox_mult_low.value(),
+                                        self.ui.doubleSpinBox_mult_mid.value(),
+                                        self.ui.doubleSpinBox_mult_high.value()])
+        self.settings.setValue('sliderslow', [self.ui.verticalSlider_lower_low.value(),
+                                              self.ui.verticalSlider_higher_low.value()])
+        self.settings.setValue('slidersmid', [self.ui.verticalSlider_lower_mid.value(),
+                                              self.ui.verticalSlider_higher_mid.value()])
+        self.settings.setValue('slidershigh', [self.ui.verticalSlider_lower_high.value(),
+                                               self.ui.verticalSlider_higher_high.value()])
+        self.settings.setValue('noise', self.ui.horizontalSlider_noise.value())
+        self.settings.setValue('effect', self.ui.comboBox_effect_music.currentIndex())
+        self.settings.setValue('bitcolors', self.ui.plainTextEdit_bitdetector.toPlainText())
+        self.settings.endGroup()
+        # Tab ext backlight
         # TODO: ext backlight settings
+        self.settings.beginGroup('TabExtBacklight')
+        self.settings.endGroup()
+        # Tab setup
+        self.settings.beginGroup('TabSetup')
         self.settings.setValue('device', self.ui.comboBox_device.currentIndex())
-        self.settings.setValue('wb', wb)
+        self.settings.setValue('wb', [self.ui.horizontalSlider_wb_r.value(),
+                                      self.ui.horizontalSlider_wb_g.value(),
+                                      self.ui.horizontalSlider_wb_b.value()])
         self.settings.setValue('gamma', self.ui.doubleSpinBox_gamma.value())
-        self.settings.setValue('tab', self.ui.tabWidget.currentIndex())
+        self.settings.endGroup()
 
     def restoresettings(self):
         temp = self.settings.value('geometry')
