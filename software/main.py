@@ -849,70 +849,60 @@ class MainWin(QMainWindow):
         self.settings.endGroup()
 
     def restoresettings(self):
-        temp = self.settings.value('geometry')
-        if temp:
-            self.setGeometry(temp)
-        temp = self.settings.value('palette')
-        if temp:
-            for i in range(len(temp)):
-                exec('self.ui.pushButton_last{:02}.setText("{}")'.format(i+1, temp[i]))
-                exec('self.ui.pushButton_last{:02}.setStyleSheet("{}")'.format(i+1, Color.plainbuttonstyle(temp[i])))
-        temp = self.settings.value('effects')
-        if temp:
-            for i in range(len(temp)):
-                index, time, text = temp[i]
-                exec('self.ui.comboBox_effect{}.setCurrentIndex({})'.format(i+1, index))
-                exec('self.ui.spinBox_time{}.setValue({})'.format(i+1, time))
-                exec('self.ui.plainTextEdit_input{}.clear()'.format(i+1))
-                for j in text.split():
-                    exec('self.ui.plainTextEdit_input{}.appendPlainText("{}")'.format(i+1, j))
-        temp = self.settings.value('audioinput')
-        if temp:
-            self.ui.comboBox_input.setCurrentIndex(int(temp))
-        temp = self.settings.value('audiocolors')
-        if temp:
-            self.ui.pushButton_color_low.setText(temp[0])
-            self.ui.pushButton_color_mid.setText(temp[1])
-            self.ui.pushButton_color_high.setText(temp[2])
-        temp = self.settings.value('audiomult')
-        if temp:
-            self.ui.doubleSpinBox_mult_low.setValue(float(temp[0]))
-            self.ui.doubleSpinBox_mult_mid.setValue(float(temp[1]))
-            self.ui.doubleSpinBox_mult_high.setValue(float(temp[2]))
-        temp = self.settings.value('audiosliders')
-        if temp:
-            self.ui.verticalSlider_lower_low.setValue(temp[0][0])
-            self.ui.verticalSlider_higher_low.setValue(temp[0][1])
-            self.ui.verticalSlider_lower_mid.setValue(temp[1][0])
-            self.ui.verticalSlider_higher_mid.setValue(temp[1][1])
-            self.ui.verticalSlider_lower_high.setValue(temp[2][0])
-            self.ui.verticalSlider_higher_high.setValue(temp[2][1])
-        temp = self.settings.value('audionoise')
-        if temp:
-            self.ui.horizontalSlider_noise.setValue(int(temp))
-        temp = self.settings.value('audioeffect')
-        if temp:
-            self.ui.comboBox_effect_music.setCurrentIndex(int(temp))
-        temp = self.settings.value('audiobitcolors')
-        if temp:
-            self.ui.plainTextEdit_bitdetector.setPlainText(temp)
-        # TODO: ext backlight settings
-        temp = self.settings.value('device')
-        if temp:
-            self.ui.comboBox_device.setCurrentIndex(int(temp))
-        temp = self.settings.value('wb')
-        if temp:
-            self.ui.horizontalSlider_wb_r.setValue(int(temp[0]))
-            self.ui.horizontalSlider_wb_g.setValue(int(temp[1]))
-            self.ui.horizontalSlider_wb_b.setValue(int(temp[2]))
-        temp = self.settings.value('gamma')
-        if temp:
-            self.ui.doubleSpinBox_gamma.setValue(float(temp))
-        temp = self.settings.value('tab')
-        if temp:
-            self.ui.tabWidget.setCurrentIndex(int(temp))
-        else:
-            self.ui.tabWidget.setCurrentIndex(0)
+        if self.settings.allKeys():
+            # Window
+            self.setGeometry(self.settings.value('Window/geometry'))
+            self.ui.tabWidget.setCurrentIndex(int(self.settings.value('Window/tab')))
+            # Tab light
+            self.settings.beginGroup('TabLight')
+            for i in range(20):
+                exec('self.ui.pushButton_last{:02}.setText(self.settings.value("color{:02}"))'.format(i+1, i+1))
+                self.ui.pushButton_color.setText(self.settings.value('color'))
+            self.settings.endGroup()
+            # Tab effect
+            self.settings.beginGroup('TabEffect')
+            for i in range(4):
+                exec('self.ui.comboBox_effect{}.setCurrentIndex(int(self.settings.value("index{}")))'.format(i+1, i+1))
+                exec('self.ui.spinBox_time{}.setValue(int(self.settings.value("time{}")))'.format(i+1, i+1))
+                exec('self.ui.plainTextEdit_input{}.setPlainText(self.settings.value("colors{}"))'.format(i+1, i+1))
+            self.settings.endGroup()
+            # Tab sound
+            self.settings.beginGroup('TabSound')
+            self.ui.comboBox_input.setCurrentIndex(int(self.settings.value('input')))
+            low, mid, high = self.settings.value('colors')
+            self.ui.pushButton_color_low.setText(low)
+            self.ui.pushButton_color_mid.setText(mid)
+            self.ui.pushButton_color_high.setText(high)
+            low, mid, high = self.settings.value('mult')
+            self.ui.doubleSpinBox_mult_low.setValue(float(low))
+            self.ui.doubleSpinBox_mult_mid.setValue(float(mid))
+            self.ui.doubleSpinBox_mult_high.setValue(float(high))
+            low, high = self.settings.value('sliderslow')
+            self.ui.verticalSlider_lower_low.setValue(int(low))
+            self.ui.verticalSlider_higher_low.setValue(int(high))
+            low, high = self.settings.value('slidersmid')
+            self.ui.verticalSlider_lower_mid.setValue(int(low))
+            self.ui.verticalSlider_higher_mid.setValue(int(high))
+            low, high = self.settings.value('slidershigh')
+            self.ui.verticalSlider_lower_high.setValue(int(low))
+            self.ui.verticalSlider_higher_high.setValue(int(high))
+            self.ui.horizontalSlider_noise.setValue(int(self.settings.value('noise')))
+            self.ui.comboBox_effect_music.setCurrentIndex(int(self.settings.value('effect')))
+            self.ui.plainTextEdit_bitdetector.setPlainText(self.settings.value('bitcolors'))
+            self.settings.endGroup()
+            # Tab ext backlight
+            # TODO: ext backlight settings
+            self.settings.beginGroup('TabExtBacklight')
+            self.settings.endGroup()
+            # Tab setup
+            self.settings.beginGroup('TabSetup')
+            self.ui.comboBox_device.setCurrentIndex(int(self.settings.value('device')))
+            r, g, b = self.settings.value('wb')
+            self.ui.horizontalSlider_wb_r.setValue(int(r))
+            self.ui.horizontalSlider_wb_g.setValue(int(g))
+            self.ui.horizontalSlider_wb_b.setValue(int(b))
+            self.ui.doubleSpinBox_gamma.setValue(float(self.settings.value('gamma')))
+            self.settings.endGroup()
 
     def closeEvent(self, event):
         self.savesettings()
