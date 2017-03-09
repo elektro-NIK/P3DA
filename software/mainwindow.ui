@@ -1881,16 +1881,6 @@ background-color: rgb(0, 0, 0);</string>
             </widget>
            </item>
            <item row="6" column="1">
-            <widget class="QLabel" name="label_38">
-             <property name="text">
-              <string>E&amp;ffect</string>
-             </property>
-             <property name="buddy">
-              <cstring>comboBox_effect_backlight</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
             <widget class="QLabel" name="label_36">
              <property name="text">
               <string>&amp;Update interval</string>
@@ -1900,36 +1890,7 @@ background-color: rgb(0, 0, 0);</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
-            <widget class="QLabel" name="label_39">
-             <property name="text">
-              <string>Effe&amp;ct time</string>
-             </property>
-             <property name="buddy">
-              <cstring>spinBox_effect</cstring>
-             </property>
-            </widget>
-           </item>
            <item row="6" column="2">
-            <widget class="QComboBox" name="comboBox_effect_backlight"/>
-           </item>
-           <item row="7" column="2">
-            <widget class="QSpinBox" name="spinBox_effect">
-             <property name="suffix">
-              <string> ms</string>
-             </property>
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>50</number>
-             </property>
-             <property name="value">
-              <number>100</number>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="2">
             <widget class="QSpinBox" name="spinBox_update">
              <property name="suffix">
               <string> ms</string>
@@ -1950,6 +1911,9 @@ background-color: rgb(0, 0, 0);</string>
            </item>
            <item row="1" column="2">
             <widget class="QSpinBox" name="spinBox_count_zones">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
               <number>6</number>
              </property>
@@ -1961,14 +1925,14 @@ background-color: rgb(0, 0, 0);</string>
            <item row="1" column="1">
             <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>Count of zones</string>
+              <string>Count &amp;of zones</string>
              </property>
              <property name="buddy">
               <cstring>spinBox_count_zones</cstring>
              </property>
             </widget>
            </item>
-           <item row="10" column="1" colspan="2">
+           <item row="8" column="1" colspan="2">
             <widget class="QPushButton" name="pushButton_ext_on_off">
              <property name="text">
               <string>On/off</string>
