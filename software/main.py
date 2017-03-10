@@ -567,19 +567,25 @@ class TabExtBacklight(Tab):
         # connections
         # noinspection PyUnresolvedReferences
         self.timer.timeout.connect(self.newprintscreen)
-        self.main.ui.pushButton_zones.toggled.connect(self.setzones)
+        self.main.ui.pushButton_zones.toggled.connect(self.showzones)
         self.main.ui.pushButton_ext_on_off.toggled.connect(self.extonoff)
-        # TODO: combobox
 
     def enabletab(self, flag):
         self.main.ui.groupBox_setup_ext.setEnabled(flag)
 
-    def setzones(self, flag):
+    def getzones(self):
+        return self.geometry
+
+    def setzones(self, zones):
+        self.geometry = zones
+
+    def showzones(self, flag):
         self.main.ui.pushButton_ext_on_off.setEnabled(not flag)
         if flag:
-            self.zones = [ZoneRect(i+1) for i in range(self.main.ui.spinBox_count_zones.value())]
-            for rect in self.zones:
-                rect.show()
+            for i in range(self.main.ui.spinBox_count_zones.value()):
+                x, y, w, h = self.geometry[i] if self.geometry and i < len(self.geometry) else 0, 0, 100, 100
+                self.zones.append(ZoneRect(i+1, x, y, w, h))
+                self.zones[-1].show()
         else:
             self.geometry = [rect.geometry() for rect in self.zones]
             self.zones = []
@@ -710,7 +716,6 @@ class ZoneRect(QWidget):
 
 class MainWin(QMainWindow):
     # noinspection PyArgumentList
-    # TODO: restore settings
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = mainwindow_ui.Ui_MainWindow()
@@ -836,8 +841,10 @@ class MainWin(QMainWindow):
         self.settings.setValue('bitcolors', self.ui.plainTextEdit_bitdetector.toPlainText())
         self.settings.endGroup()
         # Tab ext backlight
-        # TODO: ext backlight settings
         self.settings.beginGroup('TabExtBacklight')
+        self.settings.setValue('count', self.ui.spinBox_count_zones.value())
+        self.settings.setValue('time', self.ui.spinBox_update.value())
+        self.settings.setValue('zones', self.tabextbacklight.getzones())
         self.settings.endGroup()
         # Tab setup
         self.settings.beginGroup('TabSetup')
@@ -891,8 +898,10 @@ class MainWin(QMainWindow):
             self.ui.plainTextEdit_bitdetector.setPlainText(self.settings.value('bitcolors'))
             self.settings.endGroup()
             # Tab ext backlight
-            # TODO: ext backlight settings
             self.settings.beginGroup('TabExtBacklight')
+            self.ui.spinBox_count_zones.setValue(int(self.settings.value('count')))
+            self.ui.spinBox_update.setValue(int(self.settings.value('time')))
+            self.tabextbacklight.setzones(self.settings.value('zones'))
             self.settings.endGroup()
             # Tab setup
             self.settings.beginGroup('TabSetup')
