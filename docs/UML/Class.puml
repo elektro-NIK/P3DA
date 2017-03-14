@@ -84,11 +84,11 @@ class TabExtBacklight {
     - <b>zones</b>:ZoneRect[]
     - <b>geometry</b>:QRect[]
     - <b>timer</b>:QTimer
-    - <b>setzones</b>(flag:bool)
+    - <b>getzones</b>()
+    - <b>setzones</b>(zones:QRect[])
+    - <b>showzones</b>(flag:bool)
     - <b>extonoff</b>(flag:bool)
     - <b>newprintscreen</b>()
-    + <b><font color=#ff0000>TODO!!!()</font></b>
-
 }
 
 class TabSetup {
@@ -118,6 +118,8 @@ class MainWin {
     - <b>tabsound</b>:TabSound
     - <b>tabextbacklight</b>:TabExtBacklight
     - <b>tabsetup</b>:TabSetup
+    - <b>savesettings</b>:()
+    - <b>restoresettings</b>()
     - <b>updatetab</b>(val:int)
     - <b>settabsenable</b>(flag:bool)
     - <b>detectdevices</b>()
