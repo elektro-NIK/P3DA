@@ -4,8 +4,9 @@ import sys
 import serial
 import serial.tools.list_ports
 import mainwindow_ui
-from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog, QWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog, QWidget, QSplashScreen
 from PyQt5.QtCore import QTimer, QSettings
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtMultimedia import QAudio, QAudioInput, QAudioFormat, QAudioDeviceInfo
 from pyqtgraph import setConfigOptions, mkPen
 
@@ -919,6 +920,9 @@ class MainWin(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    splash = QSplashScreen(QPixmap('icons/splash.png'))
+    splash.show()
     myapp = MainWin()
+    splash.finish(myapp)
     myapp.show()
     sys.exit(app.exec_())
