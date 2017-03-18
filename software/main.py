@@ -267,8 +267,8 @@ class TabLight(Tab):
         self.main.ui.pushButton_last01.setText(color)
         self.main.ui.pushButton_last01.setStyleSheet(Color.plainbuttonstyle(color))
         self.updatepalette()
-        # for i in range(6):
-        #     self.main.setcolor(*rgb, i)
+        for i in range(6):
+            self.main.setcolor(*rgb, i)
 
 
 class TabIlumination(Tab):
@@ -786,8 +786,6 @@ class MainWin(QMainWindow):
                                                 self.gammacorrection(r, 'R'),
                                                 self.gammacorrection(g, 'G'),
                                                 self.gammacorrection(b, 'B'))
-        if ch == 0:
-            print(msg)
         self.con.write(msg)
 
     def gammacorrection(self, val, color):
