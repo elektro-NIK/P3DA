@@ -2,59 +2,59 @@
 #define DDR_RED0    DDRD
 #define DDR_GREEN0  DDRD
 #define DDR_BLUE0   DDRD
-#define DDR_RED1    DDRC
-#define DDR_GREEN1  DDRC
-#define DDR_BLUE1   DDRC
+#define DDR_RED1    DDRD
+#define DDR_GREEN1  DDRD
+#define DDR_BLUE1   DDRD
 #define DDR_RED2    DDRB
 #define DDR_GREEN2  DDRB
 #define DDR_BLUE2   DDRB
 #define DDR_RED3    DDRB
 #define DDR_GREEN3  DDRB
 #define DDR_BLUE3   DDRB
-#define DDR_RED4    DDRB
-#define DDR_GREEN4  DDRB
-#define DDR_BLUE4   DDRB
-#define DDR_RED5    DDRB
-#define DDR_GREEN5  DDRB
-#define DDR_BLUE5   DDRB
+#define DDR_RED4    DDRC
+#define DDR_GREEN4  DDRC
+#define DDR_BLUE4   DDRC
+#define DDR_RED5    DDRC
+#define DDR_GREEN5  DDRC
+#define DDR_BLUE5   DDRC
 
 #define PORT_RED0   PORTD
 #define PORT_GREEN0 PORTD
 #define PORT_BLUE0  PORTD
-#define PORT_RED1   PORTC
-#define PORT_GREEN1 PORTC
-#define PORT_BLUE1  PORTC
+#define PORT_RED1   PORTD
+#define PORT_GREEN1 PORTD
+#define PORT_BLUE1  PORTD
 #define PORT_RED2   PORTB
 #define PORT_GREEN2 PORTB
 #define PORT_BLUE2  PORTB
 #define PORT_RED3   PORTB
 #define PORT_GREEN3 PORTB
 #define PORT_BLUE3  PORTB
-#define PORT_RED4   PORTB
-#define PORT_GREEN4 PORTB
-#define PORT_BLUE4  PORTB
-#define PORT_RED5   PORTB
-#define PORT_GREEN5 PORTB
-#define PORT_BLUE5  PORTB
+#define PORT_RED4   PORTC
+#define PORT_GREEN4 PORTC
+#define PORT_BLUE4  PORTC
+#define PORT_RED5   PORTC
+#define PORT_GREEN5 PORTC
+#define PORT_BLUE5  PORTC
 
-#define RED0        PD2
-#define GREEN0      PD3
-#define BLUE0       PD4
-#define RED1        PC5
-#define GREEN1      PC4
-#define BLUE1       PC3
-#define RED2        PB6
-#define GREEN2      PB6
-#define BLUE2       PB6
-#define RED3        PB6
-#define GREEN3      PB6
-#define BLUE3       PB6
-#define RED4        PB6
-#define GREEN4      PB6
-#define BLUE4       PB6
-#define RED5        PB6
-#define GREEN5      PB6
-#define BLUE5       PB5
+#define RED0        PD3
+#define GREEN0      PD4
+#define BLUE0       PD2
+#define RED1        PD6
+#define GREEN1      PD7
+#define BLUE1       PD5
+#define RED2        PB1
+#define GREEN2      PB2
+#define BLUE2       PB0
+#define RED3        PB3
+#define GREEN3      PB5
+#define BLUE3       PB4
+#define RED4        PC1
+#define GREEN4      PC2
+#define BLUE4       PC0
+#define RED5        PC4
+#define GREEN5      PC5
+#define BLUE5       PC3
 /*@}*/
 
 /*@{*/ // LEDs setup
@@ -66,7 +66,7 @@
 
 #define COLORS      3
 #define CHANELS     6
-#define COMMON      ANODE                 // Common electrode in RGB. CATHODE or ANODE
+#define COMMON      CATHODE                 // Common electrode in RGB. CATHODE or ANODE
 /*@}*/
 
 /*@{*/ // PWM setup
