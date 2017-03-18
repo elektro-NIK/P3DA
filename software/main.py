@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!.virtualenv/bin/python
 
 import sys
 import serial
@@ -743,6 +743,7 @@ class MainWin(QMainWindow):
         self.tabsetup = TabSetup(self)
         # restoring
         self.restoresettings()
+        self.tablight.updatepalette()
         # init
         self.ui.tabWidget.currentChanged.connect(self.updatetab)
         self.updatetab(self.ui.tabWidget.currentIndex())
