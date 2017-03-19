@@ -1,9 +1,10 @@
 #!.virtualenv/bin/python
 
-import sys
-import serial
-import serial.tools.list_ports
-import mainwindow_ui
+from sys import argv, exit
+from serial import Serial, serialutil
+from serial import time as delay
+from serial.tools import list_ports
+from mainwindow_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication, QColorDialog, QWidget, QSplashScreen
 from PyQt5.QtCore import QTimer, QSettings
 from PyQt5.QtGui import QPixmap
@@ -19,8 +20,8 @@ class Connection:
     def createconnection(self, dev=None):
         self.dev = dev if dev else self.dev
         try:
-            self.con = serial.Serial(port=self.dev, baudrate=self.baud, timeout=self.timeout)
-        except serial.serialutil.SerialException:
+            self.con = Serial(port=self.dev, baudrate=self.baud, timeout=self.timeout)
+        except serialutil.SerialException:
             pass
 
     def write(self, msg):
@@ -38,7 +39,7 @@ class Connection:
 
     @staticmethod
     def devicesonline():
-        coms = serial.tools.list_ports.comports()
+        coms = list_ports.comports()
         return {i.device: i.description for i in coms[::-1]}
 
     def connectionisopen(self):
@@ -719,7 +720,7 @@ class MainWin(QMainWindow):
     # noinspection PyArgumentList
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.ui = mainwindow_ui.Ui_MainWindow()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         # try connection
         self.settings = QSettings('elektroNIK', 'P3DA')
@@ -774,7 +775,7 @@ class MainWin(QMainWindow):
                     bad = True
             if not bad:
                 self.con.createconnection(i)
-                serial.time.sleep(1.5)
+                delay.sleep(1.5)
                 self.con.write('#T')
                 answ = self.con.read(3)
                 if answ == '#OK':
@@ -918,10 +919,10 @@ class MainWin(QMainWindow):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication(argv)
     splash = QSplashScreen(QPixmap('icons/splash.png'))
     splash.show()
     myapp = MainWin()
     splash.finish(myapp)
     myapp.show()
-    sys.exit(app.exec_())
+    exit(app.exec_())
