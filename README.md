@@ -8,5 +8,10 @@ Features:
 - light, effect, sound, external backlight modes
 - white balance, gamma correction
 
-- `/software/test.py` - rainbow ilumination on 0 channel
-- `/software/main.py` - GUI
+Install:
+- `pip3 install PyQt5` and `python3 setup.py install` for use in your system
+- or `pip install -e .` for install all necessary modules
+
+Using: 
+- `./software/main.py` for starting
+- `/software/test.py` test rainbow ilumination on 0 channel
