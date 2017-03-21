@@ -1,4 +1,4 @@
-#!.virtualenv/bin/python
+#!/usr/bin/env python3
 
 from sys import argv, exit
 from serial import Serial, serialutil
@@ -455,7 +455,7 @@ class TabSound(Tab):
             self.stream = None
 
     def setcolorinterrupt(self):
-        val = self.stream.readAll().data()
+        val = self.stream.readAll().data()[-5000:]
         self.timer.stop()
         if val:
             from numpy import fft
