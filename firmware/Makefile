@@ -2,7 +2,7 @@
 TARG = P3DA
 
 # MCU type & frequency
-MCU=atmega328p
+MCU=atmega168
 F_CPU=16000000L
 
 # Files in the project
@@ -33,4 +33,5 @@ clean:
 	rm -f $(SRCS:.c=.elf) $(TARG).elf $(OBJS)
 
 prog:
-	avrdude -carduino -P/dev/ttyUSB0 -p$(MCU) -b57600 -D -Uflash:w:$(TARG).hex:i
+	avrdude -carduino -P/dev/ttyUSB0 -p$(MCU) -b19200 -D -Uflash:w:$(TARG).hex:i # Arduino Nano ATmega168
+# 	avrdude -carduino -P/dev/ttyUSB0 -p$(MCU) -b57600 -D -Uflash:w:$(TARG).hex:i # Arduino Nano ATmega328
