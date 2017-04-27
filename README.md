@@ -10,7 +10,7 @@ Features:
 
 Install:
 - `pip3 install PyQt5` and `python3 setup.py install` for use in your system
-- or `pip install -e .` for install all necessary modules
+- or `pip3 install -e .` for install all necessary modules
 
 Using: 
 - `./software/main.py` for starting
